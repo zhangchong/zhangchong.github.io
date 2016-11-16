@@ -1,0 +1,976 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="SpringSpring的Bean的管理注解开发xml：结构清晰注解：开发方便(属性注入)
+Spring的IOC注解基础
+引包(Spring-aop的包)，Spring4.x版本需要引，低的版本不用引了，都内置了
+引入约束，在spring-framework-4.2.4.RELEASE\docs\spring-framework-reference\html\xsd-configuration.h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring第二阶段">
+<meta property="og:url" content="http://yoursite.com/2016/07/05/Spring第二阶段/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="SpringSpring的Bean的管理注解开发xml：结构清晰注解：开发方便(属性注入)
+Spring的IOC注解基础
+引包(Spring-aop的包)，Spring4.x版本需要引，低的版本不用引了，都内置了
+引入约束，在spring-framework-4.2.4.RELEASE\docs\spring-framework-reference\html\xsd-configuration.h">
+<meta property="og:updated_time" content="2016-11-14T12:52:18.034Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring第二阶段">
+<meta name="twitter:description" content="SpringSpring的Bean的管理注解开发xml：结构清晰注解：开发方便(属性注入)
+Spring的IOC注解基础
+引包(Spring-aop的包)，Spring4.x版本需要引，低的版本不用引了，都内置了
+引入约束，在spring-framework-4.2.4.RELEASE\docs\spring-framework-reference\html\xsd-configuration.h">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/05/Spring第二阶段/"/>
+
+
+  <title> Spring第二阶段 | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring第二阶段
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-05T21:24:30+08:00" content="2016-07-05">
+              2016-07-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/05/Spring第二阶段/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/05/Spring第二阶段/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/05/Spring第二阶段/" class="leancloud_visitors" data-flag-title="Spring第二阶段">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><h2 id="Spring的Bean的管理注解开发"><a href="#Spring的Bean的管理注解开发" class="headerlink" title="Spring的Bean的管理注解开发"></a>Spring的Bean的管理注解开发</h2><p>xml：结构清晰<br>注解：开发方便(属性注入)</p>
+<h3 id="Spring的IOC注解基础"><a href="#Spring的IOC注解基础" class="headerlink" title="Spring的IOC注解基础"></a>Spring的IOC注解基础</h3><ol>
+<li>引包(Spring-aop的包)，Spring4.x版本需要引，低的版本不用引了，都内置了</li>
+<li>引入约束，在<code>spring-framework-4.2.4.RELEASE\docs\spring-framework-reference\html\xsd-configuration.html</code> 中找到context的约束。</li>
+<li>要想设置离线提示信息，则要在window中的属性设置一下，约束文件设置context的约束文件</li>
+<li>开启组件扫描 <code>&lt;context:component-scan base-package=&quot;包路劲注意不要到类&quot;&gt;&lt;/component&gt;</code></li>
+<li>加注解：在类上加 <code>@Component(&quot;userDao&quot;)</code></li>
+<li>要想用属性，可以在实体类中添加一个私有的属性注解直接加在属性上就行<code>@Value(&quot; &quot;)</code> ，如果有set方法则需要加在set方法上。</li>
+</ol>
+<h3 id="Spring的IOC的注解详情"><a href="#Spring的IOC的注解详情" class="headerlink" title="Spring的IOC的注解详情"></a>Spring的IOC的注解详情</h3><ul>
+<li><p>定义Bean的注解：</p>
+<ul>
+<li>@Component:修饰类，相当于<code>&lt;bean id=&quot;&quot;&gt;</code><ul>
+<li>Spring 中提供了三个衍生注解：<ul>
+<li>@Controller  : 修饰web层类的</li>
+<li>@Service     : 修饰业务层类的</li>
+<li>@Repository  : 修饰DAO层类的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>属性注入的注解：</p>
+<ul>
+<li>@Value ：注入普通类型的值</li>
+<li>@Autowired ：对象类型的属性注入，但是默认是按类型注入的，不是按名称注入<ul>
+<li>要想按名称去注入，可以使用@Qulifer(value=””)的注解与@Autowired一起使用</li>
+<li>还有一个Resource ：相当于@Qulifer(value=””)的注解与@Autowired一起使用的效果，此注解不是Spring包中的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Bean的作用范围的注解:</p>
+<ul>
+<li>@Scope(“ “) ：控制Bean的作用范围，默认是单例的，里面的属性跟xml里的一样。</li>
+</ul>
+</li>
+<li><p>Bean的生命周期的注解：(在要运行的方法上)</p>
+<ul>
+<li>PostConstruct：初始化注解</li>
+<li>PreDestory：销毁注解</li>
+</ul>
+</li>
+</ul>
+<h2 id="Spring的AOP"><a href="#Spring的AOP" class="headerlink" title="Spring的AOP"></a>Spring的AOP</h2><h3 id="什么是AOP"><a href="#什么是AOP" class="headerlink" title="什么是AOP"></a>什么是AOP</h3><p>   AOP最初是AOP联盟开发出来的，Spring用的人家的。</p>
+<p>   AOP(Aspect Oriented Programming) ：面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是OOP的延续，是开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生范型。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。</p>
+<p>   AOP：<strong>面向切面编程，是OOP(面向对象编程)扩展和延伸，解决OOP中一些问题而出现。传统方式使用是纵向继承体系，AOP采用叫做横向抽取机制取代传统方式纵向继承机制对程序扩展和延伸</strong></p>
+<h3 id="为什莫学习AOP"><a href="#为什莫学习AOP" class="headerlink" title="为什莫学习AOP"></a>为什莫学习AOP</h3><p>   可以不修改源代码，对程序进行扩展。<br>   主流应用：权限校验，日志记录，事务管理，性能检测。</p>
+<h3 id="AOP的底层实现原理（代理机制）"><a href="#AOP的底层实现原理（代理机制）" class="headerlink" title="AOP的底层实现原理（代理机制）"></a>AOP的底层实现原理（代理机制）</h3><p>Spring底层实现AOP的原理：</p>
+<ul>
+<li>JDK动态代理  ：对实现了接口的类才可以产生代理</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public class JdkProxy &#123;</div><div class="line">    </div><div class="line">    private UserDao userDao;</div><div class="line"></div><div class="line">    public JdkProxy(UserDao userDao) &#123;</div><div class="line">        this.userDao = userDao;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public UserDao createProxy()&#123;</div><div class="line">        UserDao proxy = (UserDao)Proxy.newProxyInstance(userDao.getClass().getClassLoader(), userDao.getClass().getInterfaces(), new InvocationHandler() &#123;</div><div class="line">            </div><div class="line">            @Override</div><div class="line">            public Object invoke(Object obj, Method method, Object[] args) throws Throwable &#123;</div><div class="line">                if(method.getName().equals(&quot;save&quot;))&#123;</div><div class="line">                    System.out.println(&quot;权限校验===========&quot;);</div><div class="line">                    return method.invoke(userDao, args);</div><div class="line">                &#125;</div><div class="line">                return method.invoke(userDao, args);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        return proxy;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>Cglib动态代理：对没有实现接口的类产生代理。底层字节码增强，产生子类对象。<br>使用的时候直接把Spring的包引进来就行，因为，他里边已经集合了Cglib的包</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">//这里边实现MethodInterceptor的意思是实现回掉函数，下边的intercept就相当于JDK代理中的invoke方法。所以增强方法中的setCallback中传入一个this即可</div><div class="line">public class CglibProxy implements MethodInterceptor&#123;</div><div class="line"></div><div class="line">    private ProductDao productDao;</div><div class="line"></div><div class="line">    public CglibProxy(ProductDao productDao)&#123;</div><div class="line">        this.productDao = productDao;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public ProductDao createProxy()&#123;</div><div class="line">        // 创建Cglib的产生代理核心类：</div><div class="line">        Enhancer enhancer = new Enhancer();</div><div class="line">        // 设置父类:</div><div class="line">        enhancer.setSuperclass(productDao.getClass());</div><div class="line">        // 设置回调：类似InvocationHandler</div><div class="line">        enhancer.setCallback(this);</div><div class="line">        // 产生代理：</div><div class="line">        ProductDao proxy = (ProductDao) enhancer.create();</div><div class="line">        return proxy;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Object intercept(Object proxy, Method method, Object[] args, MethodProxy methodProxy) throws Throwable &#123;</div><div class="line"></div><div class="line">        if(method.getName().equals(&quot;save&quot;))&#123;</div><div class="line">            System.out.println(&quot;权限校验=========&quot;);</div><div class="line">            return methodProxy.invokeSuper(proxy, args);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return methodProxy.invokeSuper(proxy, args);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="SpringAOP中的相关的术语"><a href="#SpringAOP中的相关的术语" class="headerlink" title="SpringAOP中的相关的术语"></a>SpringAOP中的相关的术语</h3><ol>
+<li>JoinPoint：连接点，可以被拦截(增强)到的点。</li>
+<li>Pointcut：切入点，真实被拦截到的点。</li>
+<li>Advice： 通知/增强，增强的代码的实现。<ul>
+<li>权限校验代码/日志记录  的这种代码称为是通知，增强</li>
+</ul>
+</li>
+<li>Introduction：引介，增强的一种。类层面的增强。（一般不用）</li>
+<li>Target：目标，被增强的类（UserDao）</li>
+<li>Weaving：织入，将Advice应用到Target的过程。</li>
+<li>Proxy：被增强织入以后产生的代理类</li>
+<li>Aspect：切面，切面指的是多个切入点和多个通知的组合。</li>
+</ol>
+<h3 id="SpringAOP的入门"><a href="#SpringAOP的入门" class="headerlink" title="SpringAOP的入门"></a>SpringAOP的入门</h3><ol>
+<li>引入jar包 <code>spring-aop-4.2.4.RESEASE.jar</code><ul>
+<li>还有依赖包中aop的联盟的包<code>com.springsource.org.aopalliance</code></li>
+<li>因为Spring用的AOP中aspectj的技术，所以还得引一个他们的依赖包：<code>com.springsource.org.aspectj.weaver</code></li>
+<li>还有一个Spring整合aspectj的包（在lib中）：<code>sprin g-aspects</code></li>
+</ul>
+</li>
+<li>编写接口跟实现类</li>
+<li>创建一个Spring的配置文件，约束引入AOP的部分</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> &lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; xsi:schemaLocation=&quot;</div><div class="line">        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd&quot;&gt;</div></pre></td></tr></table></figure>
+<ol>
+<li>将类配置到Spring中</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> &lt;bean id=&quot;customerDao&quot; class=&quot;com.aop.demo3.CustomerDaoImpl&quot;&gt;</div><div class="line">&lt;/bean&gt;</div><div class="line"></div><div class="line">&lt;bean id=&quot;myAspectXml&quot; class=&quot;&quot; /&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>编写一个切类面</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public class MyAspectXml&#123;</div><div class="line">    public void checkPrivilege()&#123;</div><div class="line">        syso(&quot;权限校验------&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>配置切面类</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">  //配置Spring的AOP</div><div class="line">   &lt;!-- 配置Spring的AOP --&gt;</div><div class="line">   &lt;aop:config&gt;</div><div class="line">       &lt;!-- 切入点: --&gt;</div><div class="line">       &lt;aop:pointcut expression=&quot;execution(* com.itheima.aop.demo3.CustomerDaoImpl.save(..))&quot; id=&quot;pointcut1&quot;/&gt;</div><div class="line">       &lt;!-- 配置切面 --&gt;</div><div class="line">       &lt;aop:aspect ref=&quot;myAspectXml&quot;&gt;</div><div class="line">           &lt;aop:before method=&quot;checkPrivilege&quot; pointcut-ref=&quot;pointcut1&quot;/&gt;</div><div class="line">       &lt;/aop:aspect&gt;</div><div class="line">   &lt;/aop:config&gt;</div></pre></td></tr></table></figure>
+<h3 id="Spring的AOP的切入点的表达式写法"><a href="#Spring的AOP的切入点的表达式写法" class="headerlink" title="Spring的AOP的切入点的表达式写法"></a>Spring的AOP的切入点的表达式写法</h3><ul>
+<li>语法：很灵活，随便写<ul>
+<li>[访问修饰符] 方法的返回值 类名.方法名(参数)<ul>
+<li>举例: <code>*</code> 表示任意类，任意返回值，任意方法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">   public void com.aop.demo.CustomerDaoImpl.save(..); //save()跟save(..)效果是一样的</div><div class="line">   * *.*.demo.*DaoImpl.save(..);</div><div class="line">   * com.aop.demo.CustomerDao+.save(..); // +表示它的实现类</div><div class="line">   * com.aop.demo..*DaoImpl.save(..);   //表示任意包下的</div></pre></td></tr></table></figure>
+<h3 id="Spring的AOP的通知的类型"><a href="#Spring的AOP的通知的类型" class="headerlink" title="Spring的AOP的通知的类型"></a>Spring的AOP的通知的类型</h3><ul>
+<li>前置通知（before） ： 在方法执行之前进行增强，可以获得切入点的信息</li>
+</ul>
+<p>获得切入点的信息，传一个joinPoint对象进去<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public void before(JoinPoint joinPoint)&#123;</div><div class="line">   syso(前置通知=====joinPoint);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>后置通知(after-returning) ：在方法执行之后进行增强，获取方法的返回值。</li>
+</ul>
+<p>获得返回值：在配置文件标签上加一个<code>resulting=&quot;result名字随便起&quot;</code><br>然后再在增强的类中加一个<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public void before(Object result)&#123;</div><div class="line">   syso(后置通知=====result);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>环绕通知(around) ：在方法执行之前跟执行之后进行增强，阻止目标方法的执行</li>
+</ul>
+<p>//要想执行原有的目标方法要加一个ProceedingJoinPoint,因为增强的方法不知道是否有返回值所以一般会返回一个Object</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public Object around(ProceedingJoinPoint joinPoint)&#123;</div><div class="line">   syso(&quot;通知前&quot;);</div><div class="line">   Object obj = joinPoint.proceed();</div><div class="line">   syso(&quot;通知后&quot;);</div><div class="line">   return obj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>异常抛出通知(afterThrowing):在方法执行出现异常的时候进行增强，获取异常的信息。<br>异常抛出之后后面的就不执行了，因为是运行时异常</li>
+</ul>
+<p>可以获得异常的信息：在标签上加一个属性<code>throwing=&quot;result任意起名&quot;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public void around(Throwable e)&#123;</div><div class="line">   syso(&quot;异常抛出通知---&quot;+e.getMessage());</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>最终通知(after)：类似try，catch中的finally。无论方法是否成功都会执行.</p>
+</li>
+<li><p>引介通知(不关注)</p>
+</li>
+</ul>
+<hr>
+<p>如果一个类实现了接口，则Spring用JDK代理，如果不加接口就默认用Cglib动态代理实现。当然都不能加final，都要产生子类的</p>
+<h3 id="Spring与Junit的整合"><a href="#Spring与Junit的整合" class="headerlink" title="Spring与Junit的整合"></a>Spring与Junit的整合</h3><ul>
+<li><p>引入test包<code>spring-test</code>(lib包中)，当然环境下有JUnit</p>
+</li>
+<li><p>然后再在测试类上加两个注解</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@ContextConfiguration(&quot;classpath:applicationContext.xml&quot;) //全名</div></pre></td></tr></table></figure>
+</li>
+<li><p>下边想用哪个类直接注入即可用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@Resource(name=&quot;customerDao&quot;)</div><div class="line">private CustomerDao customerDao;</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后下边的Test单元测试中直接用customerDao即可，不用再加载配置文件那么麻烦</p>
+<ul>
+<li>注：这里是只有是Spring跟JUnit整合的时候才能用，因为他里面已经做了一些操作，要想在别的地方使用注解的话，就必须要导包加扫描了</li>
+</ul>
+</li>
+</ul>
+<h3 id="扩展XML和注解整合开发"><a href="#扩展XML和注解整合开发" class="headerlink" title="扩展XML和注解整合开发"></a>扩展XML和注解整合开发</h3><ul>
+<li>xml：管理类</li>
+<li>注解：属性注入</li>
+</ul>
+<ol>
+<li>把service跟Dao都在配置文件中实例化了</li>
+<li>不要开扫描否则会出错因为扫描会扫描类上的注解文件，但是类上面没有只有属性上有，所以开启<code>&lt;context:annotation-config /&gt;</code>即可， 支持<code>@Resource，@Value,@Autowared</code>等属性上的注解</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@Resource(name=&quot;UserDao&quot;)</div><div class="line">private UserDao userDao;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag">#Spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/03/Spring第一阶段/" rel="next" title="Spring第一阶段">
+                <i class="fa fa-chevron-left"></i> Spring第一阶段
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/08/Spring第三阶段/" rel="prev" title="Spring第三阶段">
+                Spring第三阶段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/07/05/Spring第二阶段/"
+     data-title="Spring第二阶段"
+     data-content=""
+     data-url="http://yoursite.com/2016/07/05/Spring第二阶段/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/05/Spring第二阶段/"
+           data-title="Spring第二阶段" data-url="http://yoursite.com/2016/07/05/Spring第二阶段/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring"><span class="nav-number">1.</span> <span class="nav-text">Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring的Bean的管理注解开发"><span class="nav-number">1.1.</span> <span class="nav-text">Spring的Bean的管理注解开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring的IOC注解基础"><span class="nav-number">1.1.1.</span> <span class="nav-text">Spring的IOC注解基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring的IOC的注解详情"><span class="nav-number">1.1.2.</span> <span class="nav-text">Spring的IOC的注解详情</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring的AOP"><span class="nav-number">1.2.</span> <span class="nav-text">Spring的AOP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是AOP"><span class="nav-number">1.2.1.</span> <span class="nav-text">什么是AOP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什莫学习AOP"><span class="nav-number">1.2.2.</span> <span class="nav-text">为什莫学习AOP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOP的底层实现原理（代理机制）"><span class="nav-number">1.2.3.</span> <span class="nav-text">AOP的底层实现原理（代理机制）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringAOP中的相关的术语"><span class="nav-number">1.2.4.</span> <span class="nav-text">SpringAOP中的相关的术语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringAOP的入门"><span class="nav-number">1.2.5.</span> <span class="nav-text">SpringAOP的入门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring的AOP的切入点的表达式写法"><span class="nav-number">1.2.6.</span> <span class="nav-text">Spring的AOP的切入点的表达式写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring的AOP的通知的类型"><span class="nav-number">1.2.7.</span> <span class="nav-text">Spring的AOP的通知的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring与Junit的整合"><span class="nav-number">1.2.8.</span> <span class="nav-text">Spring与Junit的整合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展XML和注解整合开发"><span class="nav-number">1.2.9.</span> <span class="nav-text">扩展XML和注解整合开发</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,953 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="struts2," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="strust2入门与介绍什么是Struts2是基于MVC设计模式的WEB层框架
+WEB层框架Struts1，WebWork，Struts2，SpringMVC
+Struts2的内核是基于WebWork的
+前端控制器模式
+Struts2的入门
+解压之后：
+
+
+apps ：Struts2 里面提供的一些测试的应用
+docs ：Struts2 里面的帮助文档
+lib  ：Struts2的提供的开发的ja">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Struts第一阶段">
+<meta property="og:url" content="http://yoursite.com/2016/06/10/Struts01/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="strust2入门与介绍什么是Struts2是基于MVC设计模式的WEB层框架
+WEB层框架Struts1，WebWork，Struts2，SpringMVC
+Struts2的内核是基于WebWork的
+前端控制器模式
+Struts2的入门
+解压之后：
+
+
+apps ：Struts2 里面提供的一些测试的应用
+docs ：Struts2 里面的帮助文档
+lib  ：Struts2的提供的开发的ja">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/01/ea699e92-9b6e-4355-b3e7-638eb49a16b2.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/01/1d7bc130-8656-419f-af1a-7df299e7522c.png">
+<meta property="og:updated_time" content="2016-11-14T12:52:21.309Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Struts第一阶段">
+<meta name="twitter:description" content="strust2入门与介绍什么是Struts2是基于MVC设计模式的WEB层框架
+WEB层框架Struts1，WebWork，Struts2，SpringMVC
+Struts2的内核是基于WebWork的
+前端控制器模式
+Struts2的入门
+解压之后：
+
+
+apps ：Struts2 里面提供的一些测试的应用
+docs ：Struts2 里面的帮助文档
+lib  ：Struts2的提供的开发的ja">
+<meta name="twitter:image" content="http://yoursite.com/uploads/Struts2/01/ea699e92-9b6e-4355-b3e7-638eb49a16b2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/10/Struts01/"/>
+
+
+  <title> Struts第一阶段 | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Struts第一阶段
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-10T21:06:29+08:00" content="2016-06-10">
+              2016-06-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/struts2/" itemprop="url" rel="index">
+                    <span itemprop="name">struts2</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/10/Struts01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/10/Struts01/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/06/10/Struts01/" class="leancloud_visitors" data-flag-title="Struts第一阶段">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="strust2入门与介绍"><a href="#strust2入门与介绍" class="headerlink" title="strust2入门与介绍"></a>strust2入门与介绍</h1><h2 id="什么是Struts2"><a href="#什么是Struts2" class="headerlink" title="什么是Struts2"></a>什么是Struts2</h2><p>是基于MVC设计模式的<code>WEB</code>层框架</p>
+<h2 id="WEB层框架"><a href="#WEB层框架" class="headerlink" title="WEB层框架"></a>WEB层框架</h2><p>Struts1，WebWork，Struts2，SpringMVC</p>
+<p>Struts2的内核是基于WebWork的</p>
+<h2 id="前端控制器模式"><a href="#前端控制器模式" class="headerlink" title="前端控制器模式"></a>前端控制器模式</h2><p><img src="/uploads/Struts2/01/ea699e92-9b6e-4355-b3e7-638eb49a16b2.jpg" alt=""></p>
+<h2 id="Struts2的入门"><a href="#Struts2的入门" class="headerlink" title="Struts2的入门"></a>Struts2的入门</h2><ol>
+<li>解压之后：</li>
+</ol>
+<ul>
+<li>apps ：Struts2 里面提供的一些测试的应用</li>
+<li>docs ：Struts2 里面的帮助文档</li>
+<li>lib  ：Struts2的提供的开发的jar包</li>
+<li>src  ：Struts2提供的源码</li>
+</ul>
+<ol>
+<li>导包，导最少的包，找到blank项目下的jar包，导这些即可</li>
+<li>写一个jsp页面，跳转的目标的路径是<code>xxx.action</code>.</li>
+</ol>
+<p><code>&lt;h3&gt; &lt;a href=&quot;${pageContext.request.contextPath}/hello.action&quot;&gt;访问Struts2框架&lt;/a&gt;&lt;/h3&gt;</code></p>
+<ol>
+<li>配置Struts2的核心过滤器，前端控制器(完成部分功能)，会默认执行拦截器（过滤器路径在<code>struts2-core/包后边是filter/StrutsPrepareAndExecuteFilter.class</code>），然后会跳到配置文件中</li>
+<li><p>写action类里面有一个execute方法，方法的格式是固定的：<br>必须是public ，返回值是String，方法名execute，方法中没有参数</p>
+</li>
+<li><p>配置action类的配置文件<br> struts2默认的配置文件是<code>struts.xml</code>，写在src下。</p>
+<ul>
+<li>配置文件写法：copy约束，struts标签，里边有package<ul>
+<li>package标签属性：name   extends   namespace</li>
+<li>package里边有action：name     class类action的全路径</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>修改struts2配置文件：加一个result标签<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;struts&gt;</div><div class="line">   &lt;package name=&quot;demo01&quot; extends=&quot;struts-default&quot; namespace=&quot;/&quot;&gt;</div><div class="line">       &lt;action name=&quot;jsp中的xxx&quot; class=&quot;类action的全路径&quot;&gt;</div><div class="line">           &lt;result name=&quot;success(action传过来的字符串)&quot;&gt;要跳转的路径&lt;/result&gt;</div><div class="line">       &lt;/action&gt;</div><div class="line">   &lt;/package&gt;</div><div class="line">&lt;/struts&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="struts2的执行流程"><a href="#struts2的执行流程" class="headerlink" title="struts2的执行流程"></a>struts2的执行流程</h2><p>当一个页面发送一个请求的时候，首先经过<code>核心过滤器(StrutsPrepareAndExecuteFilter)</code>,在这个过滤器中其实会执行一组<code>拦截器</code>(这组拦截器就完成了部分的功能)，执行完这组拦截器之后，执行<code>目标Action</code>，返回一个结果视图，根据返回结果跳转不同界面。</p>
+<h2 id="struts2常见的配置"><a href="#struts2常见的配置" class="headerlink" title="struts2常见的配置"></a>struts2常见的配置</h2><h3 id="struts2的配置文件的加载顺序：（了解）"><a href="#struts2的配置文件的加载顺序：（了解）" class="headerlink" title="struts2的配置文件的加载顺序：（了解）"></a>struts2的配置文件的加载顺序：（了解）</h3><p>过滤器<code>StrutsPrepareAndExecuteFilter</code>会在服务器启动时初始化。<br>在过滤器中会执行<code>dispatcher = init.initDispatcher(config);</code>,然后在执行<code>dispatcher.init();</code>,再然后会执行下面的配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">init_DefaultProperties(); // [1]                -----default.properties 核心包里第一个包下边呢</div><div class="line">init_TraditionalXmlConfigurations(); // [2]        -----struts-default.xml,struts-plugin.xml,struts.xml</div><div class="line">init_LegacyStrutsProperties(); // [3]            -----struts.properties</div><div class="line">init_CustomConfigurationProviders(); // [5]        -----客户自定义提供类</div><div class="line">init_FilterInitParameters() ; // [6]            -----加载web.xml中过滤器中的参数</div><div class="line">init_AliasStandardObjects() ; // [7]            -----加载自定义类</div></pre></td></tr></table></figure>
+<p>这几个值规定了加载配配置文件的顺序:</p>
+<ul>
+<li>default.properties</li>
+<li>struts-default.xml</li>
+<li>struts-plugin.xml</li>
+<li><code>struts.xml</code></li>
+<li><code>struts.properties</code></li>
+<li><code>web.xml</code></li>
+</ul>
+<p><strong>主要用的后三个，顺序是由上到下</strong></p>
+<h3 id="struts2的主要配置文件："><a href="#struts2的主要配置文件：" class="headerlink" title="struts2的主要配置文件："></a>struts2的主要配置文件：</h3><h4 id="struts2中Action的配置-struts-xml"><a href="#struts2中Action的配置-struts-xml" class="headerlink" title="struts2中Action的配置(struts.xml)"></a>struts2中Action的配置(struts.xml)</h4><ol>
+<li><p>包的配置(package)</p>
+<p>Struts2为了更好的管理Action，将Action分包进行管理的。</p>
+<ul>
+<li>/&lt; package /&gt;包中的顺序<ul>
+<li>name  :包名，一个配置文件中不要出现重复的包名</li>
+<li>extends：继承别的包，通常继承struts-default</li>
+<li>namespace：<strong>名称空间</strong>，跟下边的/<action>中的name属性共同决定访问路劲<ul>
+<li>namespace=””;      最后在找这个，在/之后</li>
+<li>namespace=”/“;     没有指定的名称的执行这个，一般就会写这个</li>
+<li>namespace=”/aaa”;  首先找带名称空间的，这个是最大化</li>
+</ul>
+</action></li>
+<li>abstract：是否可以被别的包继承，true表示可以应用于其他包的继承</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Action的配置</p>
+<ul>
+<li>/&lt; action /&gt; 的配置<ul>
+<li>name：与名称空间共同决定访问路劲</li>
+<li>class：Action类的全路径</li>
+<li>method：Action中要执行的方法的名称，默认值execute</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="Structs2中常量的位置"><a href="#Structs2中常量的位置" class="headerlink" title="Structs2中常量的位置"></a>Structs2中常量的位置</h4><p>Struct中常量有三个配置的位置:</p>
+<ul>
+<li><p>struts.xml（推荐）<br><code>&lt;constant name=&quot;struts.action.extension&quot; value=&quot;action&quot;&gt;</code></p>
+</li>
+<li><p>struts.properties<br><code>struts.actioin.extension=action</code></p>
+</li>
+<li><p>web.xml</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  // &lt;filter&gt;中加一个</div><div class="line">  &lt;init-param&gt;</div><div class="line">     &lt;param-name&gt;struts.actioin.extension&lt;/param-name&gt;</div><div class="line">     &lt;param-value&gt;action&lt;/param-value&gt;</div><div class="line">  &lt;/init-param&gt;</div></pre></td></tr></table></figure>
+<p>这里的struts.actioin.extension常量，表示访问的时候，路径的后缀名要加什么，默认是<code>action, ,</code>表示action跟空</p>
+<h4 id="Struts2分模块开发的配置"><a href="#Struts2分模块开发的配置" class="headerlink" title="Struts2分模块开发的配置"></a>Struts2分模块开发的配置</h4><p>在struts2.xml 配置文件中用<code>&lt;include file=&quot;要包含的子配置文件&quot;/&gt;</code></p>
+<h3 id="Action的编写"><a href="#Action的编写" class="headerlink" title="Action的编写"></a>Action的编写</h3><h4 id="Action本身是一个POJO的类"><a href="#Action本身是一个POJO的类" class="headerlink" title="Action本身是一个POJO的类"></a>Action本身是一个POJO的类</h4><p>POJO(plain ordinary java object)的类,简单的java类：没有继承任何类。</p>
+<h4 id="Action实现一个Action的接口"><a href="#Action实现一个Action的接口" class="headerlink" title="Action实现一个Action的接口"></a>Action实现一个Action的接口</h4><p>在action的接口中，提供了个常量（逻辑视图名称）</p>
+<ul>
+<li>SUCCESS ：成功</li>
+<li>NONE    ：不跳转</li>
+<li>ERROR   ：跳转到错误的页面</li>
+<li>INPUT   ：表单校验</li>
+<li>LOGIN   ：跳转到登陆页面</li>
+</ul>
+<h4 id="Action继承一个ActionSupport的类"><a href="#Action继承一个ActionSupport的类" class="headerlink" title="Action继承一个ActionSupport的类"></a>Action继承一个ActionSupport的类</h4><p>ActionSupport实现Action的接口，还有好多扩展的方法<br>在父类里面的execute里，直接返回的SUCCESS。</p>
+<p>以后写的时候最好使用这种方法。</p>
+<h3 id="Action的访问"><a href="#Action的访问" class="headerlink" title="Action的访问"></a>Action的访问</h3><p>现在已经可以访问到Action，但是一次请求对应了一个Action的，需要一个模块的多次请求添加到一个Action中。</p>
+<h4 id="可以在struts-xml中配配置"><a href="#可以在struts-xml中配配置" class="headerlink" title="可以在struts.xml中配配置"></a>可以在struts.xml中配配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">//页面</div><div class="line">&lt;h1&gt;客户管理&lt;/h1&gt;</div><div class="line"></div><div class="line">&lt;h3&gt;&lt;a href=&quot;$&#123; pageContext.request.contextPath &#125;/addCustomer.action&quot;&gt;添加客户&lt;/a&gt;&lt;/h3&gt;</div><div class="line">&lt;h3&gt;&lt;a href=&quot;$&#123; pageContext.request.contextPath &#125;/findCustomer.action&quot;&gt;查询客户&lt;/a&gt;&lt;/h3&gt;</div><div class="line">&lt;h3&gt;&lt;a href=&quot;$&#123; pageContext.request.contextPath &#125;/updateCustomer.action&quot;&gt;修改客户&lt;/a&gt;&lt;/h3&gt;</div><div class="line">&lt;h3&gt;&lt;a href=&quot;$&#123; pageContext.request.contextPath &#125;/deleteCustomer.action&quot;&gt;删除客户&lt;/a&gt;&lt;/h3&gt;</div><div class="line"></div><div class="line">//编写action</div><div class="line">public class CustomerAction extends ActionSupport&#123;</div><div class="line"></div><div class="line">    public String add()&#123;</div><div class="line">        System.out.println(&quot;保存客户...&quot;);</div><div class="line">        return NONE;</div><div class="line">    &#125;</div><div class="line">    public String find()&#123;</div><div class="line">        System.out.println(&quot;查询客户...&quot;);</div><div class="line">        return NONE;</div><div class="line">    &#125;</div><div class="line">    public String update()&#123;</div><div class="line">        System.out.println(&quot;修改客户...&quot;);</div><div class="line">        return NONE;</div><div class="line">    &#125;</div><div class="line">    public String delete()&#123;</div><div class="line">        System.out.println(&quot;删除客户...&quot;);</div><div class="line">        return NONE;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//配置action</div><div class="line">&lt;!-- 配置package包 --&gt;</div><div class="line">    &lt;package name=&quot;demo3&quot; extends=&quot;struts-default&quot; namespace=&quot;/&quot;&gt;</div><div class="line">        &lt;!-- 配置action --&gt;</div><div class="line">        &lt;action name=&quot;addCustomer&quot; class=&quot;com.itheima.struts2.action3.CustomerAction&quot; method=&quot;add&quot;/&gt;</div><div class="line">        &lt;action name=&quot;findCustomer&quot; class=&quot;com.itheima.struts2.action3.CustomerAction&quot; method=&quot;find&quot;/&gt;</div><div class="line">        &lt;action name=&quot;updateCustomer&quot; class=&quot;com.itheima.struts2.action3.CustomerAction&quot; method=&quot;update&quot;/&gt;</div><div class="line">        &lt;action name=&quot;deleteCustomer&quot; class=&quot;com.itheima.struts2.action3.CustomerAction&quot; method=&quot;delete&quot;/&gt;</div><div class="line">    &lt;/package&gt;</div></pre></td></tr></table></figure>
+<h4 id="通配符的方式"><a href="#通配符的方式" class="headerlink" title="通配符的方式"></a>通配符的方式</h4><p>//第一个*代表的数就是传过来的那个参数的后部分，正好是method里的东西</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">//页面</div><div class="line">&lt;h1&gt;商品管理&lt;/h1&gt;</div><div class="line">&lt;h3&gt;&lt;a href=&quot;$&#123; pageContext.request.contextPath &#125;/product_add.action&quot;&gt;添加客户&lt;/a&gt;&lt;/h3&gt;</div><div class="line">&lt;h3&gt;&lt;a href=&quot;$&#123; pageContext.request.contextPath &#125;/product_find.action&quot;&gt;查询客户&lt;/a&gt;&lt;/h3&gt;</div><div class="line">&lt;h3&gt;&lt;a href=&quot;$&#123; pageContext.request.contextPath &#125;/product_update.action&quot;&gt;修改客户&lt;/a&gt;&lt;/h3&gt;</div><div class="line">&lt;h3&gt;&lt;a href=&quot;$&#123; pageContext.request.contextPath &#125;/product_delete.action&quot;&gt;删除客户&lt;/a&gt;&lt;/h3&gt;</div><div class="line"></div><div class="line">//编写Action</div><div class="line">public class ProductAction extends ActionSupport&#123;</div><div class="line"></div><div class="line">    public String add()&#123;</div><div class="line">        System.out.println(&quot;保存商品...&quot;);</div><div class="line">        return NONE;</div><div class="line">    &#125;</div><div class="line">    public String find()&#123;</div><div class="line">        System.out.println(&quot;查询商品...&quot;);</div><div class="line">        return NONE;</div><div class="line">    &#125;</div><div class="line">    public String update()&#123;</div><div class="line">        System.out.println(&quot;修改商品...&quot;);</div><div class="line">        return NONE;</div><div class="line">    &#125;</div><div class="line">    public String delete()&#123;</div><div class="line">        System.out.println(&quot;删除商品...&quot;);</div><div class="line">        return NONE;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//配置Action:</div><div class="line">        &lt;!-- 通配符的方式的配置 --&gt;</div><div class="line">        &lt;action name=&quot;product_*&quot; class=&quot;com.itheima.struts2.action3.ProductAction&quot; method=&quot;&#123;1&#125;&quot;/&gt;</div></pre></td></tr></table></figure>
+<p>更通配的写法：<br><img src="/uploads/Struts2/01/1d7bc130-8656-419f-af1a-7df299e7522c.png" alt=""></p>
+<h4 id="动态方法访问"><a href="#动态方法访问" class="headerlink" title="动态方法访问"></a>动态方法访问</h4><pre><code>在struts2中默认是关闭的，需要开启，在default.porperties中，需要在配置文件中修改称true
+</code></pre><p><code>&lt;constant name=&quot;struts.enable.DynamicMethodInvocation&quot; value=&quot;true&quot;&gt;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//页面</div><div class="line">&lt;h1&gt;订单管理&lt;/h1&gt;</div><div class="line">&lt;h3&gt;&lt;a href=&quot;$&#123; pageContext.request.contextPath &#125;/order!add.action&quot;&gt;添加订单&lt;/a&gt;&lt;/h3&gt;</div><div class="line">&lt;h3&gt;&lt;a href=&quot;$&#123; pageContext.request.contextPath &#125;/order!find.action&quot;&gt;查询订单&lt;/a&gt;&lt;/h3&gt;</div><div class="line">&lt;h3&gt;&lt;a href=&quot;$&#123; pageContext.request.contextPath &#125;/order!update.action&quot;&gt;修改订单&lt;/a&gt;&lt;/h3&gt;</div><div class="line">&lt;h3&gt;&lt;a href=&quot;$&#123; pageContext.request.contextPath &#125;/order!delete.action&quot;&gt;删除订单&lt;/a&gt;&lt;/h3&gt;</div><div class="line"></div><div class="line">//配置。不用写method</div><div class="line">&lt;!-- 动态方法的访问 --&gt;</div><div class="line">&lt;action name=&quot;order&quot; class=&quot;com.itheima.struts2.action3.OrderAction&quot;/&gt;</div></pre></td></tr></table></figure>
+<p>跳转之后，如果result里边是success可以省略。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/struts2/" rel="tag">#struts2</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/17/Hibernate04/" rel="next" title="Hibernate第四阶段">
+                <i class="fa fa-chevron-left"></i> Hibernate第四阶段
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/13/Struts02/" rel="prev" title="Struts第二阶段">
+                Struts第二阶段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/06/10/Struts01/"
+     data-title="Struts第一阶段"
+     data-content=""
+     data-url="http://yoursite.com/2016/06/10/Struts01/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/10/Struts01/"
+           data-title="Struts第一阶段" data-url="http://yoursite.com/2016/06/10/Struts01/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#strust2入门与介绍"><span class="nav-number">1.</span> <span class="nav-text">strust2入门与介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Struts2"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Struts2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WEB层框架"><span class="nav-number">1.2.</span> <span class="nav-text">WEB层框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端控制器模式"><span class="nav-number">1.3.</span> <span class="nav-text">前端控制器模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Struts2的入门"><span class="nav-number">1.4.</span> <span class="nav-text">Struts2的入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#struts2的执行流程"><span class="nav-number">1.5.</span> <span class="nav-text">struts2的执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#struts2常见的配置"><span class="nav-number">1.6.</span> <span class="nav-text">struts2常见的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#struts2的配置文件的加载顺序：（了解）"><span class="nav-number">1.6.1.</span> <span class="nav-text">struts2的配置文件的加载顺序：（了解）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#struts2的主要配置文件："><span class="nav-number">1.6.2.</span> <span class="nav-text">struts2的主要配置文件：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#struts2中Action的配置-struts-xml"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">struts2中Action的配置(struts.xml)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Structs2中常量的位置"><span class="nav-number">1.6.2.2.</span> <span class="nav-text">Structs2中常量的位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Struts2分模块开发的配置"><span class="nav-number">1.6.2.3.</span> <span class="nav-text">Struts2分模块开发的配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Action的编写"><span class="nav-number">1.6.3.</span> <span class="nav-text">Action的编写</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Action本身是一个POJO的类"><span class="nav-number">1.6.3.1.</span> <span class="nav-text">Action本身是一个POJO的类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Action实现一个Action的接口"><span class="nav-number">1.6.3.2.</span> <span class="nav-text">Action实现一个Action的接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Action继承一个ActionSupport的类"><span class="nav-number">1.6.3.3.</span> <span class="nav-text">Action继承一个ActionSupport的类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Action的访问"><span class="nav-number">1.6.4.</span> <span class="nav-text">Action的访问</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可以在struts-xml中配配置"><span class="nav-number">1.6.4.1.</span> <span class="nav-text">可以在struts.xml中配配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通配符的方式"><span class="nav-number">1.6.4.2.</span> <span class="nav-text">通配符的方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态方法访问"><span class="nav-number">1.6.4.3.</span> <span class="nav-text">动态方法访问</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,1024 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hibernate," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Hibernate[TOC]
+1.Hibernate的学习路线2.Hibernate的概述框架：就是一个=软件的半成品，完成部分功能
+2.1什么是Hibernate是持久层的ORM框架
+2.2什么是ORMHibernate是一个优秀的ORM实现框架
+ORM(Object-Relational Mapping):对象关系映射
+
+开发语言是java是面向对象
+数据库是Mysql 是关系型数据库让jav">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hibernate第一阶段">
+<meta property="og:url" content="http://yoursite.com/2016/05/10/Hibernate01/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="Hibernate[TOC]
+1.Hibernate的学习路线2.Hibernate的概述框架：就是一个=软件的半成品，完成部分功能
+2.1什么是Hibernate是持久层的ORM框架
+2.2什么是ORMHibernate是一个优秀的ORM实现框架
+ORM(Object-Relational Mapping):对象关系映射
+
+开发语言是java是面向对象
+数据库是Mysql 是关系型数据库让jav">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/01/1.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/01/2.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/01/3.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/01/4.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/01/5.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/01/6.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/01/7.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/01/8.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/01/9.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/01/10.jpg">
+<meta property="og:updated_time" content="2016-11-13T15:30:31.544Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hibernate第一阶段">
+<meta name="twitter:description" content="Hibernate[TOC]
+1.Hibernate的学习路线2.Hibernate的概述框架：就是一个=软件的半成品，完成部分功能
+2.1什么是Hibernate是持久层的ORM框架
+2.2什么是ORMHibernate是一个优秀的ORM实现框架
+ORM(Object-Relational Mapping):对象关系映射
+
+开发语言是java是面向对象
+数据库是Mysql 是关系型数据库让jav">
+<meta name="twitter:image" content="http://yoursite.com/uploads/Hibernate/01/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/10/Hibernate01/"/>
+
+
+  <title> Hibernate第一阶段 | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hibernate第一阶段
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-10T23:52:29+08:00" content="2016-05-10">
+              2016-05-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hibernate/" itemprop="url" rel="index">
+                    <span itemprop="name">Hibernate</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/10/Hibernate01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/10/Hibernate01/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/10/Hibernate01/" class="leancloud_visitors" data-flag-title="Hibernate第一阶段">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Hibernate"><a href="#Hibernate" class="headerlink" title="Hibernate"></a>Hibernate</h1><p>[TOC]</p>
+<h2 id="1-Hibernate的学习路线"><a href="#1-Hibernate的学习路线" class="headerlink" title="1.Hibernate的学习路线"></a>1.Hibernate的学习路线</h2><h2 id="2-Hibernate的概述"><a href="#2-Hibernate的概述" class="headerlink" title="2.Hibernate的概述"></a>2.Hibernate的概述</h2><p>框架：就是一个=软件的半成品，完成部分功能</p>
+<h3 id="2-1什么是Hibernate"><a href="#2-1什么是Hibernate" class="headerlink" title="2.1什么是Hibernate"></a>2.1什么是Hibernate</h3><p>是持久层的ORM框架</p>
+<h3 id="2-2什么是ORM"><a href="#2-2什么是ORM" class="headerlink" title="2.2什么是ORM"></a>2.2什么是ORM</h3><p>Hibernate是一个优秀的ORM实现框架</p>
+<p><code>ORM(Object-Relational Mapping)</code>:对象关系映射</p>
+<ul>
+<li>开发语言是java是面向对象</li>
+<li>数据库是Mysql 是关系型数据库<br>让java跟数据库中的表之间产生关系，直接操作对象就可以操作数据库<br><img src="/uploads/Hibernate/01/1.jpg" alt=""></li>
+</ul>
+<p>传统方式的不足</p>
+<ul>
+<li>表中的字段获得类中的属性发生变化，DAO中的代码都要跟着发生变化（修改程序源代码）</li>
+</ul>
+<h3 id="2-3为什莫学习Hibernate："><a href="#2-3为什莫学习Hibernate：" class="headerlink" title="2.3为什莫学习Hibernate："></a>2.3为什莫学习Hibernate：</h3><p><img src="/uploads/Hibernate/01/2.jpg" alt=""></p>
+<h2 id="3-Hibernate的入门"><a href="#3-Hibernate的入门" class="headerlink" title="3.Hibernate的入门"></a>3.Hibernate的入门</h2><h3 id="3-1下载Hibernate的开发包"><a href="#3-1下载Hibernate的开发包" class="headerlink" title="3.1下载Hibernate的开发包"></a>3.1下载Hibernate的开发包</h3><p>解压之后：</p>
+<ul>
+<li>documentation：Hibernate的开发文档跟规范，还有一些测试的项目</li>
+<li>lib：Hibernate的开发包，required是必须的，别的是可选的</li>
+<li>product：一些相关的项目的源代码模板</li>
+</ul>
+<h3 id="3-2创建项目，引入jar包，日志文件"><a href="#3-2创建项目，引入jar包，日志文件" class="headerlink" title="3.2创建项目，引入jar包，日志文件"></a>3.2创建项目，引入jar包，日志文件</h3><p>引入required必须包，<code>还有他要用到的数据库驱动包connection</code><br>还需要log4j的jar包</p>
+<ul>
+<li>slf4j 简单日志门面，是一个接口，log4j是整合日志的一个规范</li>
+</ul>
+<p>可以把日志文件的配置文件引入<code>log4j.properties</code><br>打开配置文件，可以在最后边更改，从而设置日志信息打印在哪，默认是在控制台，可以加一个file打印在文件中，路径上面可以更改。</p>
+<h3 id="3-3创建表跟实体类"><a href="#3-3创建表跟实体类" class="headerlink" title="3.3创建表跟实体类"></a>3.3创建表跟实体类</h3><h3 id="3-4创建映射文件-ORM框架"><a href="#3-4创建映射文件-ORM框架" class="headerlink" title="3.4创建映射文件(ORM框架)"></a>3.4创建映射文件(ORM框架)</h3><ul>
+<li>映射文件通常是一个XML文件，而且这个文件是可以任意命名。通常情况下名称：<code>类名.hbm.xml</code><br>创建约束：Hibernate 的核心包core下第一个后边位置，找到3.0 mapping的约束里面的<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE hibernate-mapping PUBLIC </div><div class="line">    &quot;-//Hibernate/Hibernate Mapping DTD 3.0//EN&quot;</div><div class="line">    &quot;http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd&quot;&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>，copy过去</p>
+<ul>
+<li>建立类和表的映射<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;hibernate-mapping&gt;</div><div class="line">   &lt;class name=&quot;实体类路劲&quot; table=&quot;表名&quot;&gt;</div><div class="line">       &lt;id name=&quot;实体主键属性名&quot; column=&quot;表主键名&quot;&gt;</div><div class="line">           &lt;generator class=&quot;native&quot;/&gt;</div><div class="line">       &lt;/id&gt;</div><div class="line">       //普通属性与表中字段建立映射</div><div class="line">       &lt;property name=&quot;实体名&quot; column=&quot;属性名&quot; /&gt; //两个名字是一样的</div><div class="line">       &lt;property name=&quot;&quot; column=&quot;&quot; /&gt;</div><div class="line">       &lt;property name=&quot;&quot; column=&quot;&quot; /&gt;</div><div class="line">        。。。</div><div class="line">   &lt;/class&gt;</div><div class="line">&lt;/hibernate-mapping&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="3-5创建核心配置文件连接哪个数据库"><a href="#3-5创建核心配置文件连接哪个数据库" class="headerlink" title="3.5创建核心配置文件连接哪个数据库"></a>3.5创建核心配置文件连接哪个数据库</h3><ul>
+<li>src下创建一个固定名称的xml   hibernate.cfg.xml<br>创建约束：project下etc下的<code>hibernate.cfg.xml</code>里面的约束copy过去，或者找<br>Hibernate 的核心包core下第一个后边位置，找到3.0 configuration的约束dtd里面的约束<br>两个是一样的</li>
+</ul>
+<ul>
+<li>参数：<br>project下etc下的hibernate.properties是模板，找到参数写<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;hibernate-configuration&gt;</div><div class="line">   &lt;session-factory&gt;</div><div class="line">      //连接数据库的基本参数</div><div class="line">      &lt;property name=&quot;hibernate.connection.driver_class&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;</div><div class="line">      &lt;property name=&quot;hibernate.connection.url&quot;&gt;jdbc:mysql///表名&lt;/property&gt;</div><div class="line">      &lt;property name=&quot;hibernate.connection.username&quot;&gt;root&lt;/property&gt;</div><div class="line">      &lt;property name=&quot;hibernate.connection.password&quot;&gt;123&lt;/property&gt;</div><div class="line">      </div><div class="line">     // 配置hibernate的属性：</div><div class="line">     //hibernate的方言：(也是在上面那个文件中找，mysql是这莫写)</div><div class="line">     &lt;property name=&quot;hibernate.dialect&quot;&gt;org.hibernate.dialect.MySQLDialect&lt;/property&gt;</div><div class="line">     //可以配置一些其他的属性</div><div class="line">     //打印出sql语句</div><div class="line">      &lt;property name=&quot;hibernate.show_sql&quot;&gt;true&lt;/property&gt;</div><div class="line">     //格式化一下</div><div class="line">      &lt;property name=&quot;hibernate.format_sql&quot;&gt;true&lt;/property&gt;</div><div class="line">      </div><div class="line">     //hbm2ddl.auto:对应数据库的ddl操作：create,create-drop,update,validate</div><div class="line">     &lt;property name=&quot;hibernate.hbm2ddl.auto&quot;&gt;update&lt;/property&gt;</div><div class="line">     </div><div class="line">      //加载映射文件</div><div class="line">      &lt;mapping resource=&quot;com/itheima/domain/...xml（**映射文件的路劲**中间是/并且以src下面的第一个包开头前面不加/）&quot; /&gt;</div><div class="line">   &lt;/session-factory&gt;</div><div class="line">&lt;/hibernate-configuration&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="3-6使用Hibernate"><a href="#3-6使用Hibernate" class="headerlink" title="3.6使用Hibernate"></a>3.6使用Hibernate</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//加载配置文件</div><div class="line">Configuration con=new Configuration().configure();</div><div class="line">//创建一个SessionFactory：类似连接池</div><div class="line">SessionFactory sess=con.buildSessionFactory();</div><div class="line">//创建一个Session：相当于Connection</div><div class="line">Session session=sess.openSession();</div><div class="line">//开启事务：</div><div class="line">Transaction tran=session.beginTransaction();</div><div class="line">//操作：</div><div class="line">Customer customer=new Customer();</div><div class="line">customer.setCust_name(&quot;要田间的属性名&quot;);</div><div class="line">//提交事务：</div><div class="line">transaction.commit();</div><div class="line">//释放资源：</div><div class="line">session.close();</div></pre></td></tr></table></figure>
+<h2 id="4-Hibernate-常见的配置"><a href="#4-Hibernate-常见的配置" class="headerlink" title="4.Hibernate 常见的配置"></a>4.Hibernate 常见的配置</h2><h3 id="4-1配置文件的配置"><a href="#4-1配置文件的配置" class="headerlink" title="4.1配置文件的配置"></a>4.1配置文件的配置</h3><p>映射文件：将对象与表建立映射关系。<code>类名.hbm.xml</code></p>
+<p><strong>配置没有网的时候，编写配置文件的提示信息：</strong></p>
+<p>先复制，约束下边的路劲<br>在window属性中找到<br>xml catalog点  add  在找本地的dtd约束，引入，改为url，粘贴刚才复制的。</p>
+<h4 id="4-1-1class标签：建立类与表的映射"><a href="#4-1-1class标签：建立类与表的映射" class="headerlink" title="4.1.1class标签：建立类与表的映射"></a>4.1.1class标签：建立类与表的映射</h4><ul>
+<li>name：实体类的全路劲</li>
+<li>table：数据库的表名（如果类名与表明相同，则table可以省略）</li>
+<li>catalog:写数据库名（可以不写）</li>
+</ul>
+<h4 id="4-1-2id标签：-用来表中的主键与类中属性建立映射"><a href="#4-1-2id标签：-用来表中的主键与类中属性建立映射" class="headerlink" title="4.1.2id标签： 用来表中的主键与类中属性建立映射"></a>4.1.2id标签： 用来表中的主键与类中属性建立映射</h4><ul>
+<li>name ：类中的属性名</li>
+<li>column：表中的字段名（如果属性名跟字段名一致则可以省略）</li>
+<li>type (从这个以下可以省略)：数据的类型(hibernate类型，java类型，数据库类型)</li>
+</ul>
+<p>也可以这么写：<br><img src="/uploads/Hibernate/01/3.jpg" alt=""></p>
+<h4 id="4-1-3property标签：表中的字段与类中的属性的映射"><a href="#4-1-3property标签：表中的字段与类中的属性的映射" class="headerlink" title="4.1.3property标签：表中的字段与类中的属性的映射"></a>4.1.3property标签：表中的字段与类中的属性的映射</h4><p>跟id大同小异</p>
+<ul>
+<li>length ：代表表中的长度（因为hibernate可以帮助你建表，<strong>默认设置为255</strong>）</li>
+</ul>
+<h3 id="4-2核心配置文件"><a href="#4-2核心配置文件" class="headerlink" title="4.2核心配置文件"></a>4.2核心配置文件</h3><p>不能联网的时候配置一下，就可以提醒了</p>
+<p><code>如果没有写在src底下，在加载的时候记得传一个路劲过去。</code></p>
+<h4 id="4-2-1分类"><a href="#4-2-1分类" class="headerlink" title="4.2.1分类"></a>4.2.1分类</h4><ul>
+<li>hibernate.properties<ul>
+<li>格式：key=value键值对的形式，但是不能加载映射文件。（手动写）</li>
+<li>加载：<code>Configuration con=new Configuration();</code></li>
+</ul>
+</li>
+<li>hibernate.cfg.xml<ul>
+<li>格式：格式化的格式</li>
+<li>加载：<code>Configuration con=new Configuration().configure();</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="4-2-2内容"><a href="#4-2-2内容" class="headerlink" title="4.2.2内容"></a>4.2.2内容</h4><ul>
+<li><p>配置基本配置参数</p>
+</li>
+<li><p>其他参数</p>
+</li>
+<li><p>加载映射文件<br><code>&lt;mapping resource=&quot;com/itheima.domain/...xml&quot; /&gt;</code></p>
+</li>
+</ul>
+<p>hbm2ddl.auto参数（hibernate mapping to ddl）:对应数据库的ddl操作：（<strong>一般会使用update，validata</strong>，别的一般用作测试）</p>
+<ul>
+<li>create： 如果数据库有表，先删掉，重新创建一个新的表</li>
+<li>create-drop：如果数据库有表，先删掉，重新创建，使用完毕，会删除该表（没有表也会创建使用完再删除）</li>
+<li>update：如果有表使用原来的表，没有则创建新表，并且可以更新，插入的时候没有字段创建一个新的字段</li>
+<li>validate：如果没表则报错，有表使用原来的表，并对表进行校验（实体对象的属性跟表的字段不一样时会报错）</li>
+</ul>
+<p><img src="/uploads/Hibernate/01/4.jpg" alt=""></p>
+<h2 id="5-Hibernate的常用API"><a href="#5-Hibernate的常用API" class="headerlink" title="5.Hibernate的常用API"></a>5.Hibernate的常用API</h2><h3 id="5-1Configuration：配置对象"><a href="#5-1Configuration：配置对象" class="headerlink" title="5.1Configuration：配置对象"></a>5.1Configuration：配置对象</h3><h4 id="5-1-2加载核心配置文件"><a href="#5-1-2加载核心配置文件" class="headerlink" title="5.1.2加载核心配置文件"></a>5.1.2加载核心配置文件</h4><p>因为核心配置文件有两种书写方式。</p>
+<ul>
+<li>hibernate.properties<ul>
+<li>格式：key=value键值对的形式，但是不能加载映射文件。（手动写）</li>
+<li>加载：<code>Configuration con=new Configuration();</code></li>
+</ul>
+</li>
+<li>hibernate.cfg.xml<ul>
+<li>格式：格式化的格式</li>
+<li>加载：<code>Configuration con=new Configuration().configure();</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="5-1-3-加载映射配置文件"><a href="#5-1-3-加载映射配置文件" class="headerlink" title="5.1.3 加载映射配置文件"></a>5.1.3 加载映射配置文件</h4><p>如果不用配置文件来加载映射文件可以<br>手动加载映射文件：(两种方法)<br><code>Configuration.addResource(路劲...);</code><br>//这种方法有一个条件，就是实体类跟配置文件在同一个包中<br><code>Configuration.addClass(实体类名.class);</code></p>
+<h3 id="5-2-SessionFactory"><a href="#5-2-SessionFactory" class="headerlink" title="5.2 SessionFactory"></a>5.2 SessionFactory</h3><p>  SessionFactory 对象内部维护了连接池和二级缓存（不讲）。是一个线程安全重量级的对象，所以说一般情况下，一个项目只对应一个SessionFactory。<br>  所以一般把他单独抽出来。</p>
+<h4 id="5-2-1抽取一个工厂的工具类"><a href="#5-2-1抽取一个工厂的工具类" class="headerlink" title="5.2.1抽取一个工厂的工具类"></a>5.2.1抽取一个工厂的工具类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">private static final Configuration cfg;</div><div class="line">private static final SessionFactory sf;</div><div class="line"></div><div class="line">static&#123;</div><div class="line">   cfg=new Configuration().config();</div><div class="line">   sf=cfg.buildSessionFactory();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public static Session getSession()&#123;</div><div class="line">    return sf.openSession();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-2-2配置连接池"><a href="#5-2-2配置连接池" class="headerlink" title="5.2.2配置连接池"></a>5.2.2配置连接池</h4><p>Hibernate中自带了连接池，但是可以自己配置c3p0</p>
+<ul>
+<li><p>引入c3p0相关的jar包，包括hibernate跟其整合的包，<br>在lib中option中的c3p0中</p>
+</li>
+<li><p>配置核心配置文件：在session-factory中</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 配置C3P0连接池 --&gt;</div><div class="line">        &lt;property name=&quot;connection.provider_class&quot;&gt;org.hibernate.connection.C3P0ConnectionProvider&lt;/property&gt;</div><div class="line">        &lt;!--在连接池中可用的数据库连接的最少数目 --&gt;</div><div class="line">        &lt;property name=&quot;c3p0.min_size&quot;&gt;5&lt;/property&gt;</div><div class="line">        &lt;!--在连接池中所有数据库连接的最大数目  --&gt;</div><div class="line">        &lt;property name=&quot;c3p0.max_size&quot;&gt;20&lt;/property&gt;</div><div class="line">        &lt;!--设定数据库连接的过期时间,以秒为单位,</div><div class="line">        如果连接池中的某个数据库连接处于空闲状态的时间超过了timeout时间,就会从连接池中清除 --&gt;</div><div class="line">        &lt;property name=&quot;c3p0.timeout&quot;&gt;120&lt;/property&gt;</div><div class="line">         &lt;!--每3000秒检查所有连接池中的空闲连接 以秒为单位--&gt;</div><div class="line">        &lt;property name=&quot;c3p0.idle_test_period&quot;&gt;3000&lt;/property&gt;</div></pre></td></tr></table></figure>
+<h3 id="5-3session（完成基本的CRUD的操作）"><a href="#5-3session（完成基本的CRUD的操作）" class="headerlink" title="5.3session（完成基本的CRUD的操作）"></a>5.3session（完成基本的CRUD的操作）</h3><p><code>Session session=sessionFactory.openSession();</code></p>
+<ul>
+<li><p>相当于JDBC中的connection，生命周期是以事务的开始跟结束为界限</p>
+</li>
+<li><p>不是线程安全的，所以最好定义成局部变量</p>
+</li>
+<li><p>是数据库核心对象</p>
+</li>
+</ul>
+<h4 id="5-3-1save"><a href="#5-3-1save" class="headerlink" title="5.3.1save"></a>5.3.1save</h4><p><img src="/uploads/Hibernate/01/5.jpg" alt=""><br>save方法中：</p>
+<ul>
+<li>先查询在，修改对象里面的东西，save跟update的效果是一样的</li>
+<li>新建一个对象，然后设置id跟其他的值后save，只要主键生成策略不是<code>assigned</code>，那么则不用手动设置id，设置了也没用</li>
+</ul>
+<h4 id="5-3-2查询get-load"><a href="#5-3-2查询get-load" class="headerlink" title="5.3.2查询get/load"></a>5.3.2查询get/load</h4><ul>
+<li>get:<ul>
+<li>查询一个：get(实体类的class,数据库id); //这里的id在实体里用的long型，所以加L</li>
+<li><code>Customer customer=sess.get(Customer.class, 1l);</code></li>
+</ul>
+</li>
+<li><p>load</p>
+<ul>
+<li>查询一个：load(实体类的class,数据库id);</li>
+<li><code>Customer customer=sess.load(Customer.class, 1l);</code><blockquote>
+<p>重要</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><code>**get跟load的区别：**</code></p>
+<ul>
+<li>加载时间<ul>
+<li>get方法：当程序执行到这行的时候，马上发送一条sql语句，返回Customer的对象</li>
+<li>load方法：当程序执行到这行的时候，没有马上发送sql语句(使用的是Hibernate中延迟加载的策略lazy，真正使用该对象的时候才会加载)（使用的时候才执行，不用根本不加载，只用id也不行，因为人家已经知道了）</li>
+</ul>
+</li>
+<li>返回值<ul>
+<li>load返回的实体类的代理对象</li>
+<li>get返回实体类本身</li>
+</ul>
+</li>
+<li>查询找不到的对象<ul>
+<li>load抛出ObjectNotFoundException</li>
+<li>get 返回一个null，或报空指针</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-3-3-update修改"><a href="#5-3-3-update修改" class="headerlink" title="5.3.3 update修改"></a>5.3.3 update修改</h4><ol>
+<li><p>先创建对象在修改<br><img src="/uploads/Hibernate/01/6.jpg" alt=""></p>
+</li>
+<li><p>先查询在修改<br><img src="/uploads/Hibernate/01/7.jpg" alt=""></p>
+</li>
+</ol>
+<h4 id="5-3-4-delete删除"><a href="#5-3-4-delete删除" class="headerlink" title="5.3.4 delete删除"></a>5.3.4 delete删除</h4><ol>
+<li>直接创建对象 然后删除<br><img src="/uploads/Hibernate/01/8.jpg" alt=""></li>
+<li>先查询在删除(推荐，为以后的级联删除方便)<br><img src="/uploads/Hibernate/01/9.jpg" alt=""></li>
+</ol>
+<h4 id="5-3-5-saveOrUpdate-保存或更新"><a href="#5-3-5-saveOrUpdate-保存或更新" class="headerlink" title="5.3.5 saveOrUpdate 保存或更新"></a>5.3.5 saveOrUpdate 保存或更新</h4><p>没有id即保存，有id即更新<br><img src="/uploads/Hibernate/01/10.jpg" alt=""></p>
+<h4 id="5-3-6-查询全部"><a href="#5-3-6-查询全部" class="headerlink" title="5.3.6 查询全部"></a>5.3.6 查询全部</h4><p>HQL：Hibernate Query Language<br><code>Query query=session.createQuery(&quot;from Customer&quot;);
+List&lt;Customer&gt; lists=query.list();</code></p>
+<h3 id="5-4-Transaction-事务操作"><a href="#5-4-Transaction-事务操作" class="headerlink" title="5.4 Transaction 事务操作"></a>5.4 Transaction 事务操作</h3><p>beginTranscction（）；  //开启事务<br>commit（）； //提交事务</p>
+<ul>
+<li>注：hibernate5中有一个特性，就是会自动提交，前提是必须使用内置的连接池，但是为了低版本跟防止多事务提交出现错误，一般都要手动提交</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hibernate/" rel="tag">#Hibernate</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/18/Redis/" rel="next" title="Redis">
+                <i class="fa fa-chevron-left"></i> Redis
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/12/Hibernate02/" rel="prev" title="Hibernate第二阶段">
+                Hibernate第二阶段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/05/10/Hibernate01/"
+     data-title="Hibernate第一阶段"
+     data-content=""
+     data-url="http://yoursite.com/2016/05/10/Hibernate01/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/10/Hibernate01/"
+           data-title="Hibernate第一阶段" data-url="http://yoursite.com/2016/05/10/Hibernate01/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hibernate"><span class="nav-number">1.</span> <span class="nav-text">Hibernate</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Hibernate的学习路线"><span class="nav-number">1.1.</span> <span class="nav-text">1.Hibernate的学习路线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Hibernate的概述"><span class="nav-number">1.2.</span> <span class="nav-text">2.Hibernate的概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1什么是Hibernate"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1什么是Hibernate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2什么是ORM"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2什么是ORM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3为什莫学习Hibernate："><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3为什莫学习Hibernate：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Hibernate的入门"><span class="nav-number">1.3.</span> <span class="nav-text">3.Hibernate的入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1下载Hibernate的开发包"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1下载Hibernate的开发包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2创建项目，引入jar包，日志文件"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2创建项目，引入jar包，日志文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3创建表跟实体类"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3创建表跟实体类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4创建映射文件-ORM框架"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4创建映射文件(ORM框架)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5创建核心配置文件连接哪个数据库"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5创建核心配置文件连接哪个数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6使用Hibernate"><span class="nav-number">1.3.6.</span> <span class="nav-text">3.6使用Hibernate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Hibernate-常见的配置"><span class="nav-number">1.4.</span> <span class="nav-text">4.Hibernate 常见的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1配置文件的配置"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1配置文件的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1class标签：建立类与表的映射"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">4.1.1class标签：建立类与表的映射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2id标签：-用来表中的主键与类中属性建立映射"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">4.1.2id标签： 用来表中的主键与类中属性建立映射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3property标签：表中的字段与类中的属性的映射"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">4.1.3property标签：表中的字段与类中的属性的映射</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2核心配置文件"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2核心配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1分类"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">4.2.1分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2内容"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">4.2.2内容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Hibernate的常用API"><span class="nav-number">1.5.</span> <span class="nav-text">5.Hibernate的常用API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1Configuration：配置对象"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1Configuration：配置对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2加载核心配置文件"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">5.1.2加载核心配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-3-加载映射配置文件"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">5.1.3 加载映射配置文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-SessionFactory"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 SessionFactory</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1抽取一个工厂的工具类"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">5.2.1抽取一个工厂的工具类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2配置连接池"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">5.2.2配置连接池</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3session（完成基本的CRUD的操作）"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3session（完成基本的CRUD的操作）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-1save"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">5.3.1save</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-2查询get-load"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">5.3.2查询get/load</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-3-update修改"><span class="nav-number">1.5.3.3.</span> <span class="nav-text">5.3.3 update修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-4-delete删除"><span class="nav-number">1.5.3.4.</span> <span class="nav-text">5.3.4 delete删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-5-saveOrUpdate-保存或更新"><span class="nav-number">1.5.3.5.</span> <span class="nav-text">5.3.5 saveOrUpdate 保存或更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-6-查询全部"><span class="nav-number">1.5.3.6.</span> <span class="nav-text">5.3.6 查询全部</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-Transaction-事务操作"><span class="nav-number">1.5.4.</span> <span class="nav-text">5.4 Transaction 事务操作</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

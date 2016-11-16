@@ -1,0 +1,948 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="struts2," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Struts2OGNL的概述
+OGNL(Object Graph Navigation Language):对象图导航语言是一个独立的表达式语言，Struts2感觉OGNL很强大，将OGNL引入到自身
+
+OGNL比EL强大很多倍的表达式的语言。（EL获取的数据来源与四个作用域，EL提供11个Web对象）
+
+
+
+作用：
+
+
+OGNL的要素context（OgnlContext），root(Compo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Struts第三阶段">
+<meta property="og:url" content="http://yoursite.com/2016/06/17/Struts03/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="Struts2OGNL的概述
+OGNL(Object Graph Navigation Language):对象图导航语言是一个独立的表达式语言，Struts2感觉OGNL很强大，将OGNL引入到自身
+
+OGNL比EL强大很多倍的表达式的语言。（EL获取的数据来源与四个作用域，EL提供11个Web对象）
+
+
+
+作用：
+
+
+OGNL的要素context（OgnlContext），root(Compo">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/03/8c96fc0a-1938-47a8-9f42-476310501bee.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/03/b6e18ac2-dc51-4e76-bc13-28c89aa56db5.png">
+<meta property="og:image" content="http://yoursite.com/index_files/c9b29e92-72b9-42ce-a542-2a79a59ed910.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/03/2a3e3632-08cd-4f74-841f-15bbfeaa0c93.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/03/634585fd-dc75-4109-b392-f3016ca6a3c5.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/03/6dc1c33a-db02-4cc6-8df3-d4e7df7c5546.png">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/03/51c11578-000b-457c-85bb-48787684ee06.jpg">
+<meta property="og:updated_time" content="2016-11-14T12:52:22.681Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Struts第三阶段">
+<meta name="twitter:description" content="Struts2OGNL的概述
+OGNL(Object Graph Navigation Language):对象图导航语言是一个独立的表达式语言，Struts2感觉OGNL很强大，将OGNL引入到自身
+
+OGNL比EL强大很多倍的表达式的语言。（EL获取的数据来源与四个作用域，EL提供11个Web对象）
+
+
+
+作用：
+
+
+OGNL的要素context（OgnlContext），root(Compo">
+<meta name="twitter:image" content="http://yoursite.com/uploads/Struts2/03/8c96fc0a-1938-47a8-9f42-476310501bee.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/17/Struts03/"/>
+
+
+  <title> Struts第三阶段 | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Struts第三阶段
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-17T20:24:45+08:00" content="2016-06-17">
+              2016-06-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/struts2/" itemprop="url" rel="index">
+                    <span itemprop="name">struts2</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/17/Struts03/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/17/Struts03/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/06/17/Struts03/" class="leancloud_visitors" data-flag-title="Struts第三阶段">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Struts2"><a href="#Struts2" class="headerlink" title="Struts2"></a>Struts2</h1><h2 id="OGNL的概述"><a href="#OGNL的概述" class="headerlink" title="OGNL的概述"></a>OGNL的概述</h2><ul>
+<li><p>OGNL(Object Graph Navigation Language):对象图导航语言<br>是一个独立的表达式语言，Struts2感觉OGNL很强大，将OGNL引入到自身</p>
+</li>
+<li><p>OGNL比EL强大很多倍的表达式的语言。（EL获取的数据来源与四个作用域，EL提供11个Web对象）</p>
+</li>
+</ul>
+<blockquote>
+<p>作用：</p>
+</blockquote>
+<p><img src="/uploads/Struts2/03/8c96fc0a-1938-47a8-9f42-476310501bee.jpg" alt=""></p>
+<h3 id="OGNL的要素"><a href="#OGNL的要素" class="headerlink" title="OGNL的要素"></a>OGNL的要素</h3><p>context（OgnlContext），root(CompoundRoot)，表达式</p>
+<h3 id="OGNL在java中的使用-了解）"><a href="#OGNL在java中的使用-了解）" class="headerlink" title="OGNL在java中的使用(了解）"></a>OGNL在java中的使用(了解）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">//获取对象的方法</div><div class="line">@Test</div><div class="line">public void demo01()&#123;</div><div class="line">    //获得数据</div><div class="line">    OgnlContext context=new OgnlContext();</div><div class="line">    Object obj = Ognl.getValue(&quot;&apos;helloworld&apos;.length()&quot;,context,context.getRoot());</div><div class="line">    System.out.println(obj);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//获取静态对象的方法</div><div class="line">@Test</div><div class="line">public void demo02()&#123;</div><div class="line">    //获得数据</div><div class="line">    OgnlContext context=new OgnlContext();</div><div class="line">    Object obj = Ognl.getValue(&quot;@java.lang.Math@random()&quot;,context,context.getRoot());</div><div class="line">    System.out.println(obj); //打印一个1以内的小数</div><div class="line">&#125;</div><div class="line"></div><div class="line">//获取root中的数据</div><div class="line">@Test</div><div class="line">public void demo03()&#123;</div><div class="line"></div><div class="line">    Product product = new Product();</div><div class="line">    product.setName(&quot;john&quot;);</div><div class="line">    </div><div class="line">    //获得数据</div><div class="line">    OgnlContext context=new OgnlContext();</div><div class="line">    context.setRoot(product);</div><div class="line">    </div><div class="line">    Object obj = Ognl.getValue(&quot;name&quot;,context,context.getRoot());</div><div class="line">    System.out.println(obj);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//OGNL获取context的数据</div><div class="line">//context中存入的List集合，其他的普通的值</div><div class="line">//获取context数据需加#</div><div class="line">@Test</div><div class="line">public void demo03()&#123;</div><div class="line">    //获得context</div><div class="line">    OgnlContext context=new OgnlContext();</div><div class="line">    context.put(&quot;key&quot;,&quot;阿斯顿&quot;);</div><div class="line">    Object obj =Ognl.getValue(&quot;#key&quot;,context,context.getRoot());</div><div class="line">    System.out.println(obj);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="值栈"><a href="#值栈" class="headerlink" title="值栈"></a>值栈</h2><h3 id="什么是值栈"><a href="#什么是值栈" class="headerlink" title="什么是值栈"></a>什么是值栈</h3><p>   ValueStack：相当于Struts2的数据的中转站，<strong>ValueStack贯穿了整个action的生命周期。</strong><br>   Action是多例的，一次请求服务器请求就会创建一个Action，同时会为这个Action创建一个ValueStack对象。Struts2通过OGNL表达式获取值栈的数据。<br>   ValueStack是Struck2的一个接口，OGNLValueStack是该接口的实现类。</p>
+<h3 id="值栈的内部结构"><a href="#值栈的内部结构" class="headerlink" title="值栈的内部结构"></a>值栈的内部结构</h3><ul>
+<li>值栈分为root区跟context区，root(CompoundRoot)区是一个list集合，context(OgnlContext)是一个map<ul>
+<li>操作值栈一般是操作root</li>
+<li>context中存入了root，还有session等多个域</li>
+</ul>
+</li>
+</ul>
+<p><img src="/uploads/Struts2/03/b6e18ac2-dc51-4e76-bc13-28c89aa56db5.png" alt=""></p>
+<p>查看值栈的内部结构：</p>
+<ol>
+<li><p>debug看结构,在action中运行下面获取ValueStack<br><code>ValueStack valueStack=ActionContext.getContext().getValueStack();</code></p>
+</li>
+<li><p>让其跳转到一个页面，页面上加一个<code>&lt;s:debug/&gt;</code>,运行后点开<br><img src="index_files/c9b29e92-72b9-42ce-a542-2a79a59ed910.jpg" alt=""></p>
+</li>
+</ol>
+<h3 id="ActionContext与值栈的关系"><a href="#ActionContext与值栈的关系" class="headerlink" title="ActionContext与值栈的关系"></a>ActionContext与值栈的关系</h3><ul>
+<li><p>ActionContext：代表Action的上下文对象</p>
+</li>
+<li><p>通过源码查看：Struts的核心过滤器执行的过程中，创建ActionContext对象，在创建ActionContext对象的同时创建一个ValueStack，并且将ValueStack存入到ActionContext中。所以通过ActionContext对象，获得值栈。其实在ValueStack的内部有一个ActionContext的引用。</p>
+</li>
+<li><p>ActionContext中有ValueStack的引用，ValueStack中也有ActionStack的引用。</p>
+</li>
+<li><p><strong>ActionContext之所以之能访问Servlet的API其实也是依赖了值栈的。</strong></p>
+</li>
+</ul>
+<h3 id="2-4如何获得值栈"><a href="#2-4如何获得值栈" class="headerlink" title="2.4如何获得值栈"></a>2.4如何获得值栈</h3><p>其实在request中也存放了ValueStack：<br>    核心过滤器—&gt;执行action—&gt;serviceAction—&gt;proxy代理类中。</p>
+<ul>
+<li><p>获取值栈：通过ActionContext获取</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ValueStack valueStack=ActionContext.getContext().getValueStack();</div></pre></td></tr></table></figure>
+</li>
+<li><p>通过request域对象</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ValueStack valueStack02=(ValueStack)ServletActionContext.getRequest().getAttribute(ServletActionContext.STRUTS_VALUESTACK_KEY);</div></pre></td></tr></table></figure>
+<ul>
+<li>两种获取值栈的方法是一样的，因为同一个action类只能加载一个值栈</li>
+</ul>
+<h3 id="如何操作值栈对象-操作root区"><a href="#如何操作值栈对象-操作root区" class="headerlink" title="如何操作值栈对象(操作root区)"></a>如何操作值栈对象(操作root区)</h3><h4 id="存入值栈"><a href="#存入值栈" class="headerlink" title="存入值栈"></a>存入值栈</h4><p>一. 直接操作值栈对象, 在值栈中封装数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//void set(String name,Object value);   ----将数据封装到map集合中在存入，一般操作字符串</div><div class="line">valueStack.set(&quot;name&quot;,&quot;value&quot;);</div><div class="line"></div><div class="line"></div><div class="line">//void push(Object obj);    -----直接将对象压入值栈中，一般操作对象</div><div class="line">valueStack.push(User);</div></pre></td></tr></table></figure>
+<p>二. 直接在Action对象中提供成员属性<br>   当Action的实例被创建了，默认的情况下(没有手动操作值栈，没有实现模型驱动)，Action对象在栈顶的位置，Action的属性也会在栈顶位置，提供一个属性，对该属性提供一个get方法就可以了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class valueStackAction extends ActionSupport&#123;</div><div class="line"></div><div class="line">    private String name;</div><div class="line"></div><div class="line">    public String getName()&#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String execute()&#123;</div><div class="line">        name=&quot;张三&quot;;</div><div class="line">        return SUCCESS;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="获取值栈（root）"><a href="#获取值栈（root）" class="headerlink" title="获取值栈（root）"></a>获取值栈（root）</h4><ul>
+<li><p>在jsp中需要先引标签库，<code>&lt;%@ taglib uri=&quot;/struts-tags&quot; prefix=&quot;s&quot; %&gt;</code></p>
+</li>
+<li><p>使用OGNL表达式</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//s:property标签中value的属性放的是OGNL的表达式</div><div class="line">//调用对象的方法</div><div class="line">&lt;s:property value=&quot;&apos;HelloWorld&apos;.length()&quot;/&gt;</div><div class="line"></div><div class="line">//调用静态对象的方法</div><div class="line">//在struts中默认关掉了静态访问的方法，需要开开，现在struts.xml配置常量</div><div class="line">&lt;s:property value=&quot;@java.lang.Math@random&quot;/&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>取出存入的值</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//通过set存入的字符串值</div><div class="line">&lt;s:property value=&quot;name&quot;/&gt;</div><div class="line">//通过set存入的list集合,list集合中存放的对象中有name属性</div><div class="line">&lt;s:property value=&quot;list[0].name&quot;/&gt;</div><div class="line"></div><div class="line">//通过push存入对象</div><div class="line">&lt;s:property value=&quot;对象的属性&quot;/&gt;</div></pre></td></tr></table></figure>
+<h3 id="操作context区域的区域"><a href="#操作context区域的区域" class="headerlink" title="操作context区域的区域"></a>操作context区域的区域</h3><h4 id="在action存"><a href="#在action存" class="headerlink" title="在action存"></a>在action存</h4><p>就是通过<code>ActionContext</code>对象,来操作API</p>
+<h4 id="在jsp取"><a href="#在jsp取" class="headerlink" title="在jsp取"></a>在jsp取</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;s:property value=&quot;#session.name&quot;/&gt;</div><div class="line"></div><div class="line">&lt;s:property value=&quot;#request.name&quot;/&gt;</div><div class="line"></div><div class="line">&lt;s:property value=&quot;#appliaction.name&quot;/&gt;</div></pre></td></tr></table></figure>
+<p><code>&lt;s:property value=&quot;#attr.name&quot;/&gt;</code> 表示取域最小中的值，没有的话找大一级的<br>pageContext /&lt; request /&lt; session /&lt; application</p>
+<p><code>&lt;s:property value=&quot;#parameters.name&quot;/&gt;</code>表示取传过来的属性值，没有就为空</p>
+<h3 id="EL也可以获取值栈的数据"><a href="#EL也可以获取值栈的数据" class="headerlink" title="EL也可以获取值栈的数据"></a>EL也可以获取值栈的数据</h3><p>EL也能获取到值栈的数据，因为过滤器中，会增强request，查看值栈中是否有数据，有的话存到request域中。</p>
+<h2 id="OGNL中的特殊字符的使用"><a href="#OGNL中的特殊字符的使用" class="headerlink" title="OGNL中的特殊字符的使用"></a>OGNL中的特殊字符的使用</h2><h3 id="号"><a href="#号" class="headerlink" title="#号"></a>#号</h3><ul>
+<li>获取context部分的数据</li>
+<li>构建map集合</li>
+</ul>
+<p><img src="/uploads/Struts2/03/2a3e3632-08cd-4f74-841f-15bbfeaa0c93.jpg" alt=""></p>
+<ul>
+<li>单选按钮(其实也使用的map集合)</li>
+</ul>
+<p><img src="/uploads/Struts2/03/634585fd-dc75-4109-b392-f3016ca6a3c5.jpg" alt=""></p>
+<p>或</p>
+<p><img src="/uploads/Struts2/03/6dc1c33a-db02-4cc6-8df3-d4e7df7c5546.png" alt=""></p>
+<h3 id="号-1"><a href="#号-1" class="headerlink" title="%号"></a>%号</h3><ul>
+<li>强制解析OGNL表达式<br>数据回显的时候，取出域中的值</li>
+</ul>
+<p><img src="/uploads/Struts2/03/51c11578-000b-457c-85bb-48787684ee06.jpg" alt=""></p>
+<ul>
+<li>强制不解析OGNL表达式</li>
+</ul>
+<h3 id="符"><a href="#符" class="headerlink" title="$符"></a>$符</h3><ul>
+<li>在配置文件中获取值栈中的数据(通过OGNL获取)。</li>
+</ul>
+<p>文件下载的时候：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;result type=&quot;stream&quot;&gt;</div><div class="line">   &lt;param name=&quot;Content-Disposition&quot;&gt;attachement;filename=$&#123;fileName&#125;&lt;/param&gt;</div><div class="line">&lt;/result&gt;</div></pre></td></tr></table></figure>
+<p>国际化：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">message_zh_CN.properties</div><div class="line">name=您好：$&#123;#request.name&#125;</div><div class="line">message_en_US.properties</div><div class="line">name=Hello:$&#123;#request.name&#125;</div></pre></td></tr></table></figure>
+<h2 id="OGNL遍历"><a href="#OGNL遍历" class="headerlink" title="OGNL遍历"></a>OGNL遍历</h2><p>前提是list是一个Customer类型的集合：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;s:iterator value=&quot;list&quot;&gt;</div><div class="line">  &lt;s:property value=&quot;custName&quot;/&gt;</div><div class="line">&lt;/s:iterator&gt;</div></pre></td></tr></table></figure>
+<p>s标签不能嵌套s标签，html标签中能</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/struts2/" rel="tag">#struts2</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/13/Struts02/" rel="next" title="Struts第二阶段">
+                <i class="fa fa-chevron-left"></i> Struts第二阶段
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/25/Struts04/" rel="prev" title="Struts第四阶段">
+                Struts第四阶段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/06/17/Struts03/"
+     data-title="Struts第三阶段"
+     data-content=""
+     data-url="http://yoursite.com/2016/06/17/Struts03/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/17/Struts03/"
+           data-title="Struts第三阶段" data-url="http://yoursite.com/2016/06/17/Struts03/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Struts2"><span class="nav-number">1.</span> <span class="nav-text">Struts2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OGNL的概述"><span class="nav-number">1.1.</span> <span class="nav-text">OGNL的概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OGNL的要素"><span class="nav-number">1.1.1.</span> <span class="nav-text">OGNL的要素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OGNL在java中的使用-了解）"><span class="nav-number">1.1.2.</span> <span class="nav-text">OGNL在java中的使用(了解）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#值栈"><span class="nav-number">1.2.</span> <span class="nav-text">值栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是值栈"><span class="nav-number">1.2.1.</span> <span class="nav-text">什么是值栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#值栈的内部结构"><span class="nav-number">1.2.2.</span> <span class="nav-text">值栈的内部结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ActionContext与值栈的关系"><span class="nav-number">1.2.3.</span> <span class="nav-text">ActionContext与值栈的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4如何获得值栈"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4如何获得值栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何操作值栈对象-操作root区"><span class="nav-number">1.2.5.</span> <span class="nav-text">如何操作值栈对象(操作root区)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#存入值栈"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">存入值栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取值栈（root）"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">获取值栈（root）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作context区域的区域"><span class="nav-number">1.2.6.</span> <span class="nav-text">操作context区域的区域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在action存"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">在action存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在jsp取"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">在jsp取</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EL也可以获取值栈的数据"><span class="nav-number">1.2.7.</span> <span class="nav-text">EL也可以获取值栈的数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OGNL中的特殊字符的使用"><span class="nav-number">1.3.</span> <span class="nav-text">OGNL中的特殊字符的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#号"><span class="nav-number">1.3.1.</span> <span class="nav-text">#号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#号-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">%号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#符"><span class="nav-number">1.3.3.</span> <span class="nav-text">$符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OGNL遍历"><span class="nav-number">1.4.</span> <span class="nav-text">OGNL遍历</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

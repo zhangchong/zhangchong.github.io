@@ -1,0 +1,915 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="struts2," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Struts2拦截器的概述什么是拦截器   拦截器是Struts2中的核心。其实就是一个类对Action的访问进行拦截。
+拦截器与过滤器的区别：
+过滤器过滤的是从客户端向服务器发送的请求。过滤器是可以过滤Html, JSP…
+拦截器拦截的是从客户端向Action发送的请求。拦截器只能拦截Action，拦截器更细粒度的实施拦截。拦截到Action中具体的方法。
+
+Struts2的执行流程：
+请求访问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Struts第四阶段">
+<meta property="og:url" content="http://yoursite.com/2016/06/25/Struts04/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="Struts2拦截器的概述什么是拦截器   拦截器是Struts2中的核心。其实就是一个类对Action的访问进行拦截。
+拦截器与过滤器的区别：
+过滤器过滤的是从客户端向服务器发送的请求。过滤器是可以过滤Html, JSP…
+拦截器拦截的是从客户端向Action发送的请求。拦截器只能拦截Action，拦截器更细粒度的实施拦截。拦截到Action中具体的方法。
+
+Struts2的执行流程：
+请求访问">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/04/a49529f6-6bee-4816-877b-6fe20e1ea9a6.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/04/b40ea8f8-6502-4901-b5b6-1c1545497ec7.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/04/d82cc1ee-377b-4977-a377-eae2b6da9804.jpg">
+<meta property="og:updated_time" content="2016-11-14T12:52:23.308Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Struts第四阶段">
+<meta name="twitter:description" content="Struts2拦截器的概述什么是拦截器   拦截器是Struts2中的核心。其实就是一个类对Action的访问进行拦截。
+拦截器与过滤器的区别：
+过滤器过滤的是从客户端向服务器发送的请求。过滤器是可以过滤Html, JSP…
+拦截器拦截的是从客户端向Action发送的请求。拦截器只能拦截Action，拦截器更细粒度的实施拦截。拦截到Action中具体的方法。
+
+Struts2的执行流程：
+请求访问">
+<meta name="twitter:image" content="http://yoursite.com/uploads/Struts2/04/a49529f6-6bee-4816-877b-6fe20e1ea9a6.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/25/Struts04/"/>
+
+
+  <title> Struts第四阶段 | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Struts第四阶段
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-25T13:52:49+08:00" content="2016-06-25">
+              2016-06-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/struts2/" itemprop="url" rel="index">
+                    <span itemprop="name">struts2</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/25/Struts04/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/25/Struts04/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/06/25/Struts04/" class="leancloud_visitors" data-flag-title="Struts第四阶段">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Struts2"><a href="#Struts2" class="headerlink" title="Struts2"></a>Struts2</h1><h2 id="拦截器的概述"><a href="#拦截器的概述" class="headerlink" title="拦截器的概述"></a>拦截器的概述</h2><h3 id="什么是拦截器"><a href="#什么是拦截器" class="headerlink" title="什么是拦截器"></a>什么是拦截器</h3><p>   拦截器是Struts2中的核心。其实就是一个类对Action的访问进行拦截。</p>
+<h4 id="拦截器与过滤器的区别："><a href="#拦截器与过滤器的区别：" class="headerlink" title="拦截器与过滤器的区别："></a>拦截器与过滤器的区别：</h4><ul>
+<li>过滤器过滤的是从客户端向服务器发送的请求。过滤器是可以过滤Html, JSP…</li>
+<li>拦截器拦截的是从客户端向Action发送的请求。拦截器只能拦截Action，拦截器更细粒度的实施拦截。拦截到Action中具体的方法。</li>
+</ul>
+<h3 id="Struts2的执行流程："><a href="#Struts2的执行流程：" class="headerlink" title="Struts2的执行流程："></a>Struts2的执行流程：</h3><ul>
+<li>请求访问Action，请求首先到达核心过滤器，过滤器会调用Dispather中的ServiceAction的方法</li>
+<li>在这个方法内部，Struts2框架创建一个Action代理对象，执行代理对象中的execute方法，在execute内部方法调用Actioninvocatin中的invoke方法。</li>
+<li>在invoke方法内部，递归调用拦截器的拦截的方法，如果没有下一个拦截器，执行目标Actioin，根据Action返回Result进行页面跳转，由Response做出响应。</li>
+</ul>
+<p><img src="/uploads/Struts2/04/a49529f6-6bee-4816-877b-6fe20e1ea9a6.jpg" alt=""></p>
+<h3 id="自定义拦截器"><a href="#自定义拦截器" class="headerlink" title="自定义拦截器"></a>自定义拦截器</h3><ol>
+<li>实现Interceptor接口或者继承AbstractInterceptor类</li>
+<li>配置拦截器</li>
+</ol>
+<p>编写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class InterceptorDemo1 extends AbstractInterceptor&#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String intercept(ActionInvocation invocation) throws Exception &#123;</div><div class="line">        System.out.println(&quot;InterceptorDemo1执行了...&quot;);</div><div class="line">        </div><div class="line">        String s = invocation.invoke();</div><div class="line">        </div><div class="line">        System.out.println(&quot;InterceptorDemo1执行结束了...&quot;);</div><div class="line">        </div><div class="line">        return s;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>配置拦截器</p>
+<ul>
+<li>配置的时候会有顺序，默认的在前面，就先执行默认的，自己定义的在前面就先执行自己的</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//在&lt;package&gt;标签中配置</div><div class="line">&lt;interceptors&gt;</div><div class="line">   &lt;interceptor name=&quot;名字&quot; class=&quot;拦截器路劲&quot; &gt;&lt;/interceptor&gt;</div><div class="line">&lt;/interceptors&gt;</div><div class="line"></div><div class="line">//**因为自定义之后默认的拦截器就不引用了，所以得引用一下默认的拦截器**</div><div class="line">&lt;interceptor-ref name=&quot;defaultStack&quot;&gt;</div><div class="line">//然后再&lt;action&gt; 标签中引用一下</div><div class="line">&lt;interceptor-ref name=&quot;拦截器名字&quot; /&gt;</div></pre></td></tr></table></figure>
+<p>2.还可以定义一个拦截器栈，在一块引用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;interceptors&gt;</div><div class="line">   &lt;interceptor name=&quot;interceptor01&quot; class=&quot;路劲&quot; /&gt;</div><div class="line">   &lt;interceptor name=&quot;interceptor02&quot; class=&quot;路劲&quot; /&gt;</div><div class="line">   &lt;interceptor-stack name=&quot;myStack&quot;&gt;</div><div class="line">      &lt;interceptor-ref name=&quot;defaultStack&quot;/&gt;</div><div class="line">      &lt;interceptor-ref name=&quot;interceptor01&quot;/&gt;</div><div class="line">      &lt;interceptor-ref name=&quot;interceptor02&quot;/&gt;</div><div class="line">   &lt;/interceptor-stack&gt;</div><div class="line">&lt;/interceptors&gt;</div><div class="line"></div><div class="line">//引用的时候只需要引用拦截器栈就可以了</div><div class="line">&lt;interceptor-ref name=&quot;myStack&quot;/&gt;</div></pre></td></tr></table></figure>
+<h2 id="案例：登陆页面"><a href="#案例：登陆页面" class="headerlink" title="案例：登陆页面"></a>案例：登陆页面</h2><h3 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h3><p>回显错误信息：转发到登陆页面，否则actionerror用不了<br>这里用到了<code>actionerror</code></p>
+<ul>
+<li>把错误信息存到值栈中 <code>this.addactionError(&quot;错误信息&quot;);</code></li>
+<li>在jsp中回显错误信息 <code>&lt;s:actionerror/&gt;</code></li>
+</ul>
+<h3 id="登陆权限"><a href="#登陆权限" class="headerlink" title="登陆权限"></a>登陆权限</h3><ul>
+<li>编写拦截器</li>
+</ul>
+<p>注：拦截一个方法用的是<code>MethodFilterInterceptor</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public class PrivilegeInterceptor extends MethodFilterInterceptor&#123;</div><div class="line"></div><div class="line">   @override</div><div class="line">   protected String doIntercept(ActionInvocation invocation)&#123;</div><div class="line">      //获得已存在的用户信息</div><div class="line">      User existUser = (User) ServletActionContext.getRequest().getSession().getAttribute(&quot;existUser&quot;);</div><div class="line">      if(exiteUser!=null)&#123;</div><div class="line">         return invocation.invoke();</div><div class="line">      &#125;else&#123;</div><div class="line">         ActionSupport actionSupport=(ActionSupport)invocation.getAction();</div><div class="line">         actionSupport.addActionError(&quot;您还没有登陆！您还没有访问权限！&quot;);</div><div class="line">         return actionSupport.LOGIN;</div><div class="line">      &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>配置拦截器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//配置拦截器</div><div class="line">&lt;interceptors&gt;</div><div class="line">  &lt;interceptor name=&quot;PrivilegeInterceptor&quot; class=&quot;。。。 &quot;/&gt;</div><div class="line">&lt;interceptors&gt;</div><div class="line"></div><div class="line">//在`action`中引用拦截器</div><div class="line">&lt;interceptor-ref name=&quot;PrivilegeInterceptor&quot;&gt;</div><div class="line">   //因为在登陆的页面就不需要拦截了，所以可以加一个`param`来避免要拦截的页面</div><div class="line">   &lt;param name=&quot;excludeMethods&quot;&gt;登陆时的方法名&lt;/param&gt;</div><div class="line">&lt;/interceptor-ref&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>还得配一个全局的login，就拦截的信息转到login，dtd规定全局配置必须在拦截器下边</p>
+</li>
+<li><p>还有万一拦截之后发生错误，转到登陆页面，在登陆成功会发生嵌套效果，避免这种效果的方法是，在登陆的<code>form</code>标签上加一个<code>target=&quot;_parent&quot;</code></p>
+</li>
+</ul>
+<h2 id="struts2的标签库"><a href="#struts2的标签库" class="headerlink" title="struts2的标签库"></a>struts2的标签库</h2><h3 id="通用的标签库Generi-Tags"><a href="#通用的标签库Generi-Tags" class="headerlink" title="通用的标签库Generi Tags"></a>通用的标签库Generi Tags</h3><ul>
+<li><p>帮助文档中的<code>Tag reference</code><br><img src="/uploads/Struts2/04/b40ea8f8-6502-4901-b5b6-1c1545497ec7.jpg" alt=""></p>
+</li>
+<li><p>传参数：<code>&lt;s:param name=&quot;&quot; value=&quot;&quot;/&gt;</code></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>在遍历List集合的时候，放var里取出来时，可以加<code>#</code>,也可以不加，因为，他会在<code>context</code>中也放一个</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;s:iterator value=&quot;&#123;&apos;a&apos;,&apos;b&apos;,&apos;c&apos;&#125;&quot; var=&quot;i&quot;&gt;</div><div class="line">    &lt;s:property value=&quot;i&quot;/&gt;---&lt;s:property value=&quot;#i&quot;/&gt;</div><div class="line">&lt;/s:iterator&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>遍历一些数，把其中3的倍数变红，每次加10</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;h2&gt;遍历&lt;/h2&gt;</div><div class="line">&lt;s:iterator begin=&quot;10&quot; end=&quot;300&quot; step=&quot;10&quot; var=&quot;i&quot; status=&quot;sta&quot;&gt;</div><div class="line">    &lt;s:if test=&quot;#sta.count % 3 == 0&quot;&gt;</div><div class="line">        &lt;font color=&quot;red&quot;&gt;&lt;s:property value=&quot;i&quot;/&gt;&lt;/font&gt;</div><div class="line">    &lt;/s:if&gt;</div><div class="line">    &lt;s:else&gt;</div><div class="line">        &lt;s:property value=&quot;i&quot;/&gt;</div><div class="line">    &lt;/s:else&gt;</div><div class="line">&lt;/s:iterator&gt;</div></pre></td></tr></table></figure>
+<h3 id="UI标签库-UI-Tags"><a href="#UI标签库-UI-Tags" class="headerlink" title="UI标签库 UI Tags"></a>UI标签库 UI Tags</h3><ul>
+<li>优势：点文字可以获得焦点，文本框会加一些基本的样式，例如换行啊。。。</li>
+</ul>
+<p><img src="/uploads/Struts2/04/d82cc1ee-377b-4977-a377-eae2b6da9804.jpg" alt=""></p>
+<ul>
+<li>会提供一套默认的样式样式 <code>xhtml</code><ul>
+<li>可以不用，在表单上加一个<code>theme=&quot;simple&quot;</code>,或者在常量上改变，这样所有的就都不能用了</li>
+</ul>
+</li>
+</ul>
+<h4 id="UI标签的数据回显："><a href="#UI标签的数据回显：" class="headerlink" title="UI标签的数据回显："></a>UI标签的数据回显：</h4><p>优点：</p>
+<ul>
+<li>将查询到的数据显示到指定文本框</li>
+<li>数据校验或类型转换出错情况下</li>
+</ul>
+<p>数据除了密码都会回显，并且会显示错误信息，密码也要回显添加一个<code>showpassword=true</code></p>
+<p>是在root区存着的。</p>
+<h2 id="Struts2的注解开发"><a href="#Struts2的注解开发" class="headerlink" title="Struts2的注解开发"></a>Struts2的注解开发</h2><ol>
+<li>引包 <code>struts-convention-plugin</code></li>
+<li>写好action之后加<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@ParentPackage(&quot;struts-default&quot;)</div><div class="line">@Namespace(&quot;/&quot;)</div><div class="line">public class HelloAction extends ActionSupport&#123;</div><div class="line">     @Action(value=&quot;访问路劲相当于action中的name&quot;，results=&quot;返回值&quot;)</div><div class="line">     public String execute()&#123;</div><div class="line">        syso();</div><div class="line">        return ...;</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/struts2/" rel="tag">#struts2</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/17/Struts03/" rel="next" title="Struts第三阶段">
+                <i class="fa fa-chevron-left"></i> Struts第三阶段
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/03/Spring第一阶段/" rel="prev" title="Spring第一阶段">
+                Spring第一阶段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/06/25/Struts04/"
+     data-title="Struts第四阶段"
+     data-content=""
+     data-url="http://yoursite.com/2016/06/25/Struts04/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/25/Struts04/"
+           data-title="Struts第四阶段" data-url="http://yoursite.com/2016/06/25/Struts04/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Struts2"><span class="nav-number">1.</span> <span class="nav-text">Struts2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#拦截器的概述"><span class="nav-number">1.1.</span> <span class="nav-text">拦截器的概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是拦截器"><span class="nav-number">1.1.1.</span> <span class="nav-text">什么是拦截器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截器与过滤器的区别："><span class="nav-number">1.1.1.1.</span> <span class="nav-text">拦截器与过滤器的区别：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Struts2的执行流程："><span class="nav-number">1.1.2.</span> <span class="nav-text">Struts2的执行流程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义拦截器"><span class="nav-number">1.1.3.</span> <span class="nav-text">自定义拦截器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例：登陆页面"><span class="nav-number">1.2.</span> <span class="nav-text">案例：登陆页面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#错误信息"><span class="nav-number">1.2.1.</span> <span class="nav-text">错误信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#登陆权限"><span class="nav-number">1.2.2.</span> <span class="nav-text">登陆权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#struts2的标签库"><span class="nav-number">1.3.</span> <span class="nav-text">struts2的标签库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通用的标签库Generi-Tags"><span class="nav-number">1.3.1.</span> <span class="nav-text">通用的标签库Generi Tags</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UI标签库-UI-Tags"><span class="nav-number">1.3.2.</span> <span class="nav-text">UI标签库 UI Tags</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UI标签的数据回显："><span class="nav-number">1.3.2.1.</span> <span class="nav-text">UI标签的数据回显：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Struts2的注解开发"><span class="nav-number">1.4.</span> <span class="nav-text">Struts2的注解开发</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

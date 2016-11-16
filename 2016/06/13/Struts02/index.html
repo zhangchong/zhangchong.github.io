@@ -1,0 +1,949 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="struts2," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="struts2Struts2访问Servlet的API完全解耦和的方式实现Servlet的API的访问
+获取ActionContextActionContext actionContex=ActionContext.getContext();
+
+接受参数：解耦和的方式通过ActionContext中的方法实现：
+
+
+123456789101112Map&amp;lt;String,Object&amp;gt; g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Struts第二阶段">
+<meta property="og:url" content="http://yoursite.com/2016/06/13/Struts02/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="struts2Struts2访问Servlet的API完全解耦和的方式实现Servlet的API的访问
+获取ActionContextActionContext actionContex=ActionContext.getContext();
+
+接受参数：解耦和的方式通过ActionContext中的方法实现：
+
+
+123456789101112Map&amp;lt;String,Object&amp;gt; g">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/02/8814161f-0b48-4e9b-b962-1c422925523b.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/02/69931f38-7e2a-47ad-aacc-35e0d70a0a19.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/02/6d0f53d1-812a-4024-88d9-de6d50a10e5a.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Struts2/02/dddd9695-1416-4c0d-b3f5-1cbacac9c855.jpg">
+<meta property="og:updated_time" content="2016-11-14T12:52:22.190Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Struts第二阶段">
+<meta name="twitter:description" content="struts2Struts2访问Servlet的API完全解耦和的方式实现Servlet的API的访问
+获取ActionContextActionContext actionContex=ActionContext.getContext();
+
+接受参数：解耦和的方式通过ActionContext中的方法实现：
+
+
+123456789101112Map&amp;lt;String,Object&amp;gt; g">
+<meta name="twitter:image" content="http://yoursite.com/uploads/Struts2/02/8814161f-0b48-4e9b-b962-1c422925523b.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/13/Struts02/"/>
+
+
+  <title> Struts第二阶段 | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Struts第二阶段
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-13T20:06:38+08:00" content="2016-06-13">
+              2016-06-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/struts2/" itemprop="url" rel="index">
+                    <span itemprop="name">struts2</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/13/Struts02/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/13/Struts02/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/06/13/Struts02/" class="leancloud_visitors" data-flag-title="Struts第二阶段">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="struts2"><a href="#struts2" class="headerlink" title="struts2"></a>struts2</h1><h2 id="Struts2访问Servlet的API"><a href="#Struts2访问Servlet的API" class="headerlink" title="Struts2访问Servlet的API"></a>Struts2访问Servlet的API</h2><h3 id="完全解耦和的方式实现Servlet的API的访问"><a href="#完全解耦和的方式实现Servlet的API的访问" class="headerlink" title="完全解耦和的方式实现Servlet的API的访问"></a>完全解耦和的方式实现Servlet的API的访问</h3><ul>
+<li><p>获取<strong>ActionContext</strong><br><code>ActionContext actionContex=ActionContext.getContext();</code></p>
+</li>
+<li><p>接受参数：<br>解耦和的方式通过ActionContext中的方法实现：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Map&lt;String,Object&gt; getParamters(); //Object是一个字符串类型的数组</div><div class="line">Map&lt;String,Object&gt; getSession();</div><div class="line">Map&lt;String,Object&gt; getApplication();</div><div class="line">void setSession(Map&lt;String,Object&gt; session);</div><div class="line">void setApplication(Map&lt;String,Object&gt; application);</div><div class="line"></div><div class="line">//向request中存数据</div><div class="line">actionContext.put(String name,Object object);</div><div class="line">//向session中存数据</div><div class="line">actionContext.getSession.put(String name,Object object);</div><div class="line">//向application中存数据(ServletContext对象)</div><div class="line">actionContext.getApplication().put(String name,Object object);</div></pre></td></tr></table></figure>
+<ul>
+<li>post提交不用管中文action会管了,get提交需要设置</li>
+</ul>
+<h3 id="通过实现特定的接口来实现Servlet的API的访问"><a href="#通过实现特定的接口来实现Servlet的API的访问" class="headerlink" title="通过实现特定的接口来实现Servlet的API的访问"></a>通过实现特定的接口来实现Servlet的API的访问</h3><ul>
+<li>让action类去实现<code>ServletRequestAware</code>接口，然后在成员位置定义一个HttpServletRequest变量，下边重写一个setServletRequest方法，让成员的request等于方法中的，可以当作正常的request用。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">public class RequestDemo2Action extends ActionSupport implements ServletRequestAware,ServletContextAware&#123;</div><div class="line"></div><div class="line">    private HttpServletRequest request ;</div><div class="line">    private ServletContext application;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String execute() throws Exception &#123;</div><div class="line">        // 接收参数:需要使用request对象。</div><div class="line">        Map&lt;String, String[]&gt; parameterMap = request.getParameterMap();</div><div class="line">        for (String key : parameterMap.keySet()) &#123;</div><div class="line">            String[] value = parameterMap.get(key);</div><div class="line">            System.out.println(key+&quot;   &quot;+Arrays.toString(value));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // 向request域中存值:</div><div class="line">        request.setAttribute(&quot;reqName&quot;, &quot;r郝天一&quot;);</div><div class="line">        // 向session域中存值：</div><div class="line">        request.getSession().setAttribute(&quot;sessName&quot;, &quot;s郝思聪&quot;);</div><div class="line">        // 向application域中存值：</div><div class="line">        application.setAttribute(&quot;appName&quot;, &quot;a郝冠希&quot;);</div><div class="line">        return SUCCESS;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void setServletRequest(HttpServletRequest request) &#123;</div><div class="line">        this.request = request;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void setServletContext(ServletContext application) &#123;</div><div class="line">        this.application = application;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>如果想用ServletContext对象，则在实现一个ServletContextAwre接口，方式跟上边的一样。</li>
+</ul>
+<h3 id="通过ServletActionContext的静态方法实现Servlet的API的访问"><a href="#通过ServletActionContext的静态方法实现Servlet的API的访问" class="headerlink" title="通过ServletActionContext的静态方法实现Servlet的API的访问"></a>通过<strong>ServletActionContext</strong>的静态方法实现Servlet的API的访问</h3><blockquote>
+<p>struts核心包中的api</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//获取request对象</div><div class="line">HttpServletRequest request = ServletActionContext.getRequest();</div><div class="line">Map(String,String[]) paramterMap=request.getParameterMap();</div><div class="line">//获取ServletContext参数</div><div class="line">ServletContext application=ServletActionContext.getServletContext();</div></pre></td></tr></table></figure>
+<h2 id="Struts2的数据的封装"><a href="#Struts2的数据的封装" class="headerlink" title="Struts2的数据的封装"></a>Struts2的数据的封装</h2><h3 id="Struts2的多例"><a href="#Struts2的多例" class="headerlink" title="Struts2的多例"></a>Struts2的多例</h3><ul>
+<li>因为action是多例的，意思就是每次刷新页面都会重新执行action类<br>多例的话就可以使用成员变量，创建Service的时候，就可以放成全局。</li>
+</ul>
+<h3 id="属性驱动"><a href="#属性驱动" class="headerlink" title="属性驱动"></a>属性驱动</h3><blockquote>
+<p>Struts既有控制层，又有模型层。</p>
+</blockquote>
+<ul>
+<li>提供属性的set方法完成数据的封装<ul>
+<li>在action类中，定义要接受的属性的成员变量，只提供set方法，即可获取属性值</li>
+<li>这种方式应用的不多，因为还需要手动装到对象中。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/uploads/Struts2/02/8814161f-0b48-4e9b-b962-1c422925523b.jpg" alt=""></p>
+<ul>
+<li><p>在页面中提供表达式（OGNL）的方式完成数据封装(直接封装到实体对象中)</p>
+<ul>
+<li><p>在页面中这样写<code>name</code>,前面的user必须跟action中成员方式的对象名一致。<br><img src="/uploads/Struts2/02/69931f38-7e2a-47ad-aacc-35e0d70a0a19.jpg" alt=""></p>
+</li>
+<li><p>在action类中的成员位置加一个实体类对象，并提供get跟set方法。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"> public class User2Action  extends ActionSupport&#123;</div><div class="line">   private User user;</div><div class="line">   // 需要提供get和set方法:</div><div class="line">   public User getUser() &#123;</div><div class="line">       return user;</div><div class="line">   &#125;</div><div class="line">   public void setUser(User user) &#123;</div><div class="line">       this.user = user;</div><div class="line">   &#125;</div><div class="line">   @Override</div><div class="line">   public String execute() throws Exception &#123;</div><div class="line">       System.out.println(user);</div><div class="line">       return NONE;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>注：</p>
+<ul>
+<li>在第二种方法中，必须有get set方法</li>
+<li>因为属性驱动是在拦截器中执行的，他需要把action中的对象实例化，所以要get到，如果不给提供get方法，则，每次封装的时候都会自动创建一个新的实例对象，这样会导致使用这个对象时只会有第一个封装进来的值</li>
+<li>拦截器在strut-default.xml中<br><img src="/uploads/Struts2/02/6d0f53d1-812a-4024-88d9-de6d50a10e5a.jpg" alt="">  </li>
+</ul>
+</li>
+</ul>
+<h3 id="模型驱动"><a href="#模型驱动" class="headerlink" title="模型驱动"></a>模型驱动</h3><p>采用模型驱动的方式来实现(推荐)：</p>
+<ul>
+<li>页面即用普通页面。</li>
+<li>让action来实现一个 ModelDriver/<t>  接口,里面必须手动构建对象。<br>T是要封装的那个实体的类型<br><img src="/uploads/Struts2/02/dddd9695-1416-4c0d-b3f5-1cbacac9c855.jpg" alt=""></t></li>
+</ul>
+<hr>
+<ul>
+<li>OGNL表达式的方式和模型驱动都有使用的。<br>模型驱动通常会使用的方式。有一个缺点，就是只能封装到一个对象中，如果想封装到多个对象，就需要用到OGNL</li>
+</ul>
+<h3 id="Struts2中复杂类型数据的封装"><a href="#Struts2中复杂类型数据的封装" class="headerlink" title="Struts2中复杂类型数据的封装"></a>Struts2中复杂类型数据的封装</h3><h4 id="封装到List集合中"><a href="#封装到List集合中" class="headerlink" title="封装到List集合中"></a>封装到List集合中</h4><p>页面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;h1&gt;批量插入商品&lt;/h1&gt;</div><div class="line">&lt;form action=&quot;$&#123; pageContext.request.contextPath &#125;/product1Action.action&quot; method=&quot;post&quot;&gt;</div><div class="line">    商品名称:&lt;input type=&quot;text&quot; name=&quot;list[0].name&quot;&gt;&lt;br/&gt;</div><div class="line">    商品价格:&lt;input type=&quot;text&quot; name=&quot;list[0].price&quot;&gt;&lt;br/&gt;</div><div class="line">    商品名称:&lt;input type=&quot;text&quot; name=&quot;list[1].name&quot;&gt;&lt;br/&gt;</div><div class="line">    商品价格:&lt;input type=&quot;text&quot; name=&quot;list[1].price&quot;&gt;&lt;br/&gt;</div><div class="line">    商品名称:&lt;input type=&quot;text&quot; name=&quot;list[2].name&quot;&gt;&lt;br/&gt;</div><div class="line">    商品价格:&lt;input type=&quot;text&quot; name=&quot;list[2].price&quot;&gt;&lt;br/&gt;</div><div class="line">    &lt;input type=&quot;submit&quot; value=&quot;批量导入&quot;&gt;</div><div class="line">&lt;/form&gt;</div></pre></td></tr></table></figure>
+<p>Action：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Struts2复杂数据类型的封装：封装到List集合中</div><div class="line"> * @author jt</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class Product1Action extends ActionSupport&#123;</div><div class="line">    private List&lt;Product&gt; list;</div><div class="line">    </div><div class="line">    public List&lt;Product&gt; getList() &#123;</div><div class="line">        return list;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setList(List&lt;Product&gt; list) &#123;</div><div class="line">        this.list = list;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String execute() throws Exception &#123;</div><div class="line">        for (Product product : list) &#123;</div><div class="line">            System.out.println(product);</div><div class="line">        &#125;</div><div class="line">        return NONE;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="封装到Map集合"><a href="#封装到Map集合" class="headerlink" title="封装到Map集合"></a>封装到Map集合</h4><p>页面:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;h1&gt;批量插入商品:封装到Map集合&lt;/h1&gt;</div><div class="line">&lt;form action=&quot;$&#123; pageContext.request.contextPath &#125;/product2Action.action&quot; method=&quot;post&quot;&gt;</div><div class="line">    商品名称:&lt;input type=&quot;text&quot; name=&quot;map[&apos;one&apos;].name&quot;&gt;&lt;br/&gt;</div><div class="line">    商品价格:&lt;input type=&quot;text&quot; name=&quot;map[&apos;one&apos;].price&quot;&gt;&lt;br/&gt;</div><div class="line">    商品名称:&lt;input type=&quot;text&quot; name=&quot;map[&apos;two&apos;].name&quot;&gt;&lt;br/&gt;</div><div class="line">    商品价格:&lt;input type=&quot;text&quot; name=&quot;map[&apos;two&apos;].price&quot;&gt;&lt;br/&gt;</div><div class="line">    商品名称:&lt;input type=&quot;text&quot; name=&quot;map[&apos;three&apos;].name&quot;&gt;&lt;br/&gt;</div><div class="line">    商品价格:&lt;input type=&quot;text&quot; name=&quot;map[&apos;three&apos;].price&quot;&gt;&lt;br/&gt;</div><div class="line">    &lt;input type=&quot;submit&quot; value=&quot;批量导入&quot;&gt;</div><div class="line">&lt;/form&gt;</div></pre></td></tr></table></figure>
+<p>Action:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Struts2的复杂数据的封装：Map集合的封装</div><div class="line"> * @author jt</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class Product2Action extends ActionSupport&#123;</div><div class="line">    private Map&lt;String,Product&gt; map;</div><div class="line">    </div><div class="line">    public Map&lt;String, Product&gt; getMap() &#123;</div><div class="line">        return map;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setMap(Map&lt;String, Product&gt; map) &#123;</div><div class="line">        this.map = map;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String execute() throws Exception &#123;</div><div class="line">        for (String key : map.keySet()) &#123;</div><div class="line">            Product product = map.get(key);</div><div class="line">            System.out.println(key+&quot;   &quot;+product);</div><div class="line">        &#125;</div><div class="line">        return NONE;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Struts中结果页面的配置"><a href="#Struts中结果页面的配置" class="headerlink" title="Struts中结果页面的配置"></a>Struts中结果页面的配置</h3><h4 id="结果页面的分类："><a href="#结果页面的分类：" class="headerlink" title="结果页面的分类："></a>结果页面的分类：</h4><ul>
+<li>全局结果页面<ul>
+<li>可以对所有的action都有效</li>
+</ul>
+</li>
+<li>局部结果页面<ul>
+<li>在 /&lt; action /&gt; 内部配置 /&lt; result /&gt; ,只会对当前的Action有效。</li>
+</ul>
+</li>
+</ul>
+<p>如果有全局页面跟局部页面同时存在的时候，首先要看局部页面。</p>
+<h5 id="全局结果页面的配置"><a href="#全局结果页面的配置" class="headerlink" title="全局结果页面的配置"></a>全局结果页面的配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;package&gt;</div><div class="line">  &lt;global-results&gt;</div><div class="line">    &lt;result name=&quot;success&quot;&gt;地址。。。&lt;/result&gt;</div><div class="line">  &lt;/global-results&gt;</div><div class="line">&lt;/package&gt;</div></pre></td></tr></table></figure>
+<h5 id="局部结果页面的配置"><a href="#局部结果页面的配置" class="headerlink" title="局部结果页面的配置"></a>局部结果页面的配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;package&gt;</div><div class="line">  &lt;action&gt;</div><div class="line">    &lt;result name=&quot;success&quot;&gt;地址。。。&lt;/result&gt;</div><div class="line">  &lt;/action&gt;</div><div class="line">&lt;/package&gt;</div></pre></td></tr></table></figure>
+<h4 id="Struts2结果页面类型的配置"><a href="#Struts2结果页面类型的配置" class="headerlink" title="Struts2结果页面类型的配置"></a>Struts2结果页面类型的配置</h4><ul>
+<li>/&lt; result /&gt; 标签上还有一个属性：<ul>
+<li>name ：逻辑视图名称。</li>
+<li>type ：页面跳转的类型<ul>
+<li>dispather ：默认值，转发，转发到jsp页面</li>
+<li>chain ：转发到一个Action</li>
+<li>redirect ：重定向。重定向到jsp</li>
+<li>redirectAction ：重定向到一个Action，重定向的时候如果不是在一个命名空间中，可以自己加上属性，（在result下面加param标签）</li>
+<li>stream ：文件下载的时候</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="struts2中内置数据类型的转换"><a href="#struts2中内置数据类型的转换" class="headerlink" title="struts2中内置数据类型的转换"></a>struts2中内置数据类型的转换</h3><ul>
+<li><p>会把传过来的特殊数据类型转换为实体中需要的类型，integer，<code>date</code>都能封装。 都是在拦截器执行的。</p>
+</li>
+<li><p>当转换失败时，会到<code>Workflow</code>拦截器，然后查看是否有这个错误，如果有会运行一个input视图中有错误信息，跳转到<code>input</code>的页面中。 例如Integer中添了一个字母。</p>
+<ul>
+<li>可以在配置文件中，设置一个input的跳转页面，当有错误时，会跳转到这个页面</li>
+<li>这个页面中可以加一个标签，显示错误信息</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">   &lt;%@ taglib uri=&quot;/struts-tags&quot; prefix=&quot;s&quot; %&gt;</div><div class="line">   //可以加两个标签，是哪个错误会显示哪个错误</div><div class="line">   &lt;s:actionerror/&gt;</div><div class="line">   &lt;s:fielderror/&gt;</div></pre></td></tr></table></figure>
+<h3 id="注："><a href="#注：" class="headerlink" title="注："></a>注：</h3><ul>
+<li><p>有的时候elipse会编译前一段时间的代码，修改之后不会及时编译最新的，可以把tomcat中的webapps项目中的class文件删除，然后再在elispe中，project/build all手动编译一下。</p>
+</li>
+<li><p>struts2中的带的log4j是2.2版本的，hibernate中是1.几版本的，所以不能把hibernate中的配置文件中copy过来直接用，可以在struts2提供的项目模板中找一个，2.2版本的配置文件是 .xml 的</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/struts2/" rel="tag">#struts2</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/10/Struts01/" rel="next" title="Struts第一阶段">
+                <i class="fa fa-chevron-left"></i> Struts第一阶段
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/17/Struts03/" rel="prev" title="Struts第三阶段">
+                Struts第三阶段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/06/13/Struts02/"
+     data-title="Struts第二阶段"
+     data-content=""
+     data-url="http://yoursite.com/2016/06/13/Struts02/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/13/Struts02/"
+           data-title="Struts第二阶段" data-url="http://yoursite.com/2016/06/13/Struts02/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#struts2"><span class="nav-number">1.</span> <span class="nav-text">struts2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Struts2访问Servlet的API"><span class="nav-number">1.1.</span> <span class="nav-text">Struts2访问Servlet的API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#完全解耦和的方式实现Servlet的API的访问"><span class="nav-number">1.1.1.</span> <span class="nav-text">完全解耦和的方式实现Servlet的API的访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过实现特定的接口来实现Servlet的API的访问"><span class="nav-number">1.1.2.</span> <span class="nav-text">通过实现特定的接口来实现Servlet的API的访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过ServletActionContext的静态方法实现Servlet的API的访问"><span class="nav-number">1.1.3.</span> <span class="nav-text">通过ServletActionContext的静态方法实现Servlet的API的访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Struts2的数据的封装"><span class="nav-number">1.2.</span> <span class="nav-text">Struts2的数据的封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Struts2的多例"><span class="nav-number">1.2.1.</span> <span class="nav-text">Struts2的多例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性驱动"><span class="nav-number">1.2.2.</span> <span class="nav-text">属性驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型驱动"><span class="nav-number">1.2.3.</span> <span class="nav-text">模型驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Struts2中复杂类型数据的封装"><span class="nav-number">1.2.4.</span> <span class="nav-text">Struts2中复杂类型数据的封装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#封装到List集合中"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">封装到List集合中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#封装到Map集合"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">封装到Map集合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Struts中结果页面的配置"><span class="nav-number">1.2.5.</span> <span class="nav-text">Struts中结果页面的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#结果页面的分类："><span class="nav-number">1.2.5.1.</span> <span class="nav-text">结果页面的分类：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#全局结果页面的配置"><span class="nav-number">1.2.5.1.1.</span> <span class="nav-text">全局结果页面的配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#局部结果页面的配置"><span class="nav-number">1.2.5.1.2.</span> <span class="nav-text">局部结果页面的配置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Struts2结果页面类型的配置"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">Struts2结果页面类型的配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#struts2中内置数据类型的转换"><span class="nav-number">1.2.6.</span> <span class="nav-text">struts2中内置数据类型的转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注："><span class="nav-number">1.2.7.</span> <span class="nav-text">注：</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

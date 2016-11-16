@@ -1,0 +1,1075 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="SpringSpring的AOP的注解AOP注解的入门
+创建项目，引入jar包
+创建接口跟实现类
+将类的创建交给Spring
+123&amp;lt;!-- 配置目标类--&amp;gt;        &amp;lt;bean id=&amp;quot;customerDao&amp;quot; class=&amp;quot;com.itheima.aop.demo1.CustomerDaoImpl&amp;quot;&amp;gt;        &amp;lt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring第三阶段">
+<meta property="og:url" content="http://yoursite.com/2016/07/08/Spring第三阶段/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="SpringSpring的AOP的注解AOP注解的入门
+创建项目，引入jar包
+创建接口跟实现类
+将类的创建交给Spring
+123&amp;lt;!-- 配置目标类--&amp;gt;        &amp;lt;bean id=&amp;quot;customerDao&amp;quot; class=&amp;quot;com.itheima.aop.demo1.CustomerDaoImpl&amp;quot;&amp;gt;        &amp;lt;">
+<meta property="og:image" content="http://yoursite.com/uploads/Spring/03/f6d4d0c3-a12a-4180-92bc-2432f079d957.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Spring/03/74842d83-52cf-4660-a8ae-d5c499e0e8a8.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Spring/03/071254a2-91d5-459b-9017-7ac437310176.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Spring/03/e5f13905-f1f6-43d3-9a1f-07ede5359336.png">
+<meta property="og:image" content="http://yoursite.com/uploads/Spring/03/5fdc6a65-8834-49cb-aec0-75cf62a16f9d.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Spring/03/3de2087d-aaa0-4d89-b974-da5ccb3b76a0.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/Spring/03/ddffc3fc-dbe9-4068-bec8-ce9fcc328dd8.png">
+<meta property="og:updated_time" content="2016-11-14T12:52:18.982Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring第三阶段">
+<meta name="twitter:description" content="SpringSpring的AOP的注解AOP注解的入门
+创建项目，引入jar包
+创建接口跟实现类
+将类的创建交给Spring
+123&amp;lt;!-- 配置目标类--&amp;gt;        &amp;lt;bean id=&amp;quot;customerDao&amp;quot; class=&amp;quot;com.itheima.aop.demo1.CustomerDaoImpl&amp;quot;&amp;gt;        &amp;lt;">
+<meta name="twitter:image" content="http://yoursite.com/uploads/Spring/03/f6d4d0c3-a12a-4180-92bc-2432f079d957.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/08/Spring第三阶段/"/>
+
+
+  <title> Spring第三阶段 | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring第三阶段
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-08T11:24:58+08:00" content="2016-07-08">
+              2016-07-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/08/Spring第三阶段/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/08/Spring第三阶段/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/08/Spring第三阶段/" class="leancloud_visitors" data-flag-title="Spring第三阶段">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><h2 id="Spring的AOP的注解"><a href="#Spring的AOP的注解" class="headerlink" title="Spring的AOP的注解"></a>Spring的AOP的注解</h2><h3 id="AOP注解的入门"><a href="#AOP注解的入门" class="headerlink" title="AOP注解的入门"></a>AOP注解的入门</h3><ol>
+<li>创建项目，引入jar包</li>
+<li>创建接口跟实现类</li>
+<li><p>将类的创建交给Spring</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 配置目标类--&gt;</div><div class="line">        &lt;bean id=&quot;customerDao&quot; class=&quot;com.itheima.aop.demo1.CustomerDaoImpl&quot;&gt;</div><div class="line">        &lt;/bean&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>编写切面类</p>
+</li>
+<li>开启AOP的注解 <code>&lt;aop:aspectj-autoproxy /&gt;</code></li>
+<li>切面类的注解开发 <code>@Aspect</code></li>
+<li>在方法上加注解<ul>
+<li>前置增强 <code>@Before(value=&quot;execution(* com.spring...)&quot;)</code></li>
+<li>后置增强,可以添加返回值 <code>@AfterReturning(value=&quot;execution(* com.spring...)&quot;,returning=&quot;obj&quot;)</code></li>
+<li>环绕增 <code>@Around(value=&quot;execution(* com.spring...)&quot;)</code></li>
+<li>异常捕获，可以获得异常信息 <code>@AfterThrowing(value=&quot;execution(* com.spring...)&quot;,throwing=&quot;ex&quot;)</code></li>
+<li>最终增强 <code>@After(value=&quot;execution(* com.spring...)&quot;)</code></li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>可以把切入点注解提取出来，在最后加一个没有内容的方法，然后上面注解加这个，然后，上面的每一个方法上需要切入哪，只需要在value中加一个 <code>类名.方法名</code> 即可。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@Pointcut(value=&quot;execution(* com.spring...)&quot;)</div><div class="line">private void pointCut01()&#123;&#125;</div></pre></td></tr></table></figure>
+<h2 id="Spring的JDBC"><a href="#Spring的JDBC" class="headerlink" title="Spring的JDBC"></a>Spring的JDBC</h2><h3 id="Spring-的JDBC的模板"><a href="#Spring-的JDBC的模板" class="headerlink" title="Spring 的JDBC的模板"></a>Spring 的JDBC的模板</h3><p>Spring是EE开发的一站式框架，一站式框架就有每层的解决方案（包括持久层）。</p>
+<h4 id="Spring的JDBC模板的入门"><a href="#Spring的JDBC模板的入门" class="headerlink" title="Spring的JDBC模板的入门"></a>Spring的JDBC模板的入门</h4><p>spring里面了很多对于持久层的解决方案。(JDBC,hibernate均有)</p>
+<ol>
+<li>创建项目，引入Spring的需要的jar包，还有Spring核心包中的两个包<code>jdbc</code>,<code>tx</code> 还有连接数据库的包 <code>connection</code>，Spring的版本还需要引入<code>AOP</code>的包</li>
+<li>使用JDBC的模板</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//创建连接池</div><div class="line">DriverManagerDataSource dataSource = new DriverManagerDataSource();</div><div class="line">//设置连接数据库的相关的参数</div><div class="line">dataSource.setDriverClassName(&quot;com.mysql.jdbc.Driver&quot;);</div><div class="line">dataSource.setUrl(&quot;jdbc:mysql:///数据库&quot;);</div><div class="line">dataSource.setUsername(&quot; &quot;);</div><div class="line">dataSource.setPassword(&quot; &quot;);</div><div class="line"></div><div class="line">JdbcTemplate jdbctemplate = new JdbcTemplate();</div><div class="line">JdbcTemplate.setDataSource(dataSource);</div><div class="line">jdbctemplate.update(&quot;sql语句&quot;,null,&quot;name&quot;,&quot;password&quot;);</div></pre></td></tr></table></figure>
+<ul>
+<li>这种方法是不好的，因为每次使用的时候还需要创建连接池，所以把连接池交给Spring管理</li>
+</ul>
+<h3 id="把连接池交给Spring管理"><a href="#把连接池交给Spring管理" class="headerlink" title="把连接池交给Spring管理"></a>把连接池交给Spring管理</h3><ul>
+<li>创建xml配置文件，引入beans的约束</li>
+<li>配置内置连接池</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;dataSource&quot; class=&quot;org.springframework.jdbc.datasource.DriverManagerDataSource&quot;&gt;</div><div class="line">  &lt;property name=&quot;driverClassName&quot; value=&quot;&quot; /&gt;</div><div class="line">  &lt;property name=&quot;url&quot; value=&quot;&quot; /&gt;</div><div class="line">  &lt;property name=&quot;username&quot; value=&quot;&quot; /&gt;</div><div class="line">  &lt;property name=&quot;password&quot; value=&quot;&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>把JDBC的模板交给Spring管理</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;jdbcTemplate&quot; class=&quot;jdbcTemplate的路劲&quot; &gt;</div><div class="line">    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div><div class="line">//这里的name必须为dataSource,因为用的是JDBC的模板</div></pre></td></tr></table></figure>
+<ul>
+<li>测试类：</li>
+</ul>
+<p>用JUnit跟Springde整合<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@contextConfiguration(&quot;classpath:applicationContext.xml&quot;)</div><div class="line">public class JdbcTemplateDemo2&#123;</div><div class="line">    @Resource(name=&quot;jdbcTemplate&quot;)</div><div class="line">    private JdbcTemplate jdbcTemplate;</div><div class="line">    </div><div class="line">    @Test</div><div class="line">    public void demo01()&#123;</div><div class="line">         jdbcTemplate.update(&quot;insert into account values (?,?)&quot;，&quot;张三&quot;，100d),;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="引入外界连接池"><a href="#引入外界连接池" class="headerlink" title="引入外界连接池"></a>引入外界连接池</h3><h4 id="dpcp连接池"><a href="#dpcp连接池" class="headerlink" title="dpcp连接池"></a>dpcp连接池</h4><ul>
+<li>导包：依赖包中apache的commons中的dpcp跟pool，用之前的也行，跟这个一样</li>
+<li>配置DBCP连接池</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//配置DBCP的连接池</div><div class="line">&lt;bean id=&quot;dataSource&quot; class=&quot;org.apache.commons.dbcp.BasicDataSource&quot;&gt;</div><div class="line">  &lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql,jdbc.Driver&quot; /&gt;</div><div class="line">  &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql:///数据库&quot; /&gt;</div><div class="line">  &lt;property name=&quot;username&quot; value=&quot;&quot; /&gt;</div><div class="line">  &lt;property name=&quot;password&quot; value=&quot;&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>测试跟默认的一样</li>
+</ul>
+<h4 id="c3p0的连接池"><a href="#c3p0的连接池" class="headerlink" title="c3p0的连接池"></a>c3p0的连接池</h4><ul>
+<li>导包,依赖包中c3p0的包</li>
+<li>配置连接池,注意：配置属性跟之前的不一样</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;dataSource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;</div><div class="line">  &lt;property name=&quot;driverClass&quot; value=&quot;com.mysql,jdbc.Driver&quot; /&gt;</div><div class="line">  &lt;property name=&quot;jdbcUrl&quot; value=&quot;jdbc:mysql:///数据库&quot; /&gt;</div><div class="line">  &lt;property name=&quot;user&quot; value=&quot;&quot; /&gt;</div><div class="line">  &lt;property name=&quot;password&quot; value=&quot;&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+<h3 id="提取属性文件-连接数据库的信息"><a href="#提取属性文件-连接数据库的信息" class="headerlink" title="提取属性文件(连接数据库的信息)"></a>提取属性文件(连接数据库的信息)</h3><p> 即使用配置文件，如果需要把项目交给别人也要改配置文件，所以提取出一个属性文件，改的时候只改属性文件即可</p>
+<ul>
+<li><p>定义属性文件<code>jdbc.properties</code><br><img src="/uploads/Spring/03/f6d4d0c3-a12a-4180-92bc-2432f079d957.jpg" alt=""></p>
+</li>
+<li><p>在Spring中配置文件引入属性文件：</p>
+</li>
+</ul>
+<ol>
+<li>通过<code>&lt;bean&gt;</code>引入<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;bean  class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">    &lt;property name=&quot;location&quot; value=&quot;classpath:jdbc.prorerties&quot;&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在配置配置文件:<br><img src="/uploads/Spring/03/74842d83-52cf-4660-a8ae-d5c499e0e8a8.jpg" alt=""></p>
+<ol>
+<li>但不经常用这个，经常用context标签引入<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;context:property-placeholder location=&quot;classpath:jdbc.prorerties&quot;&gt;</div><div class="line">&lt;!--  配置C3P0连接池 --&gt;</div><div class="line">&lt;bean id=&quot;dataSource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;</div><div class="line">   &lt;property name=&quot;driverClass&quot; value=&quot;$&#123;jdbc.driverClass&#125;&quot; /&gt;</div><div class="line">   &lt;property name=&quot;jdbcUrl&quot; value=&quot;$&#123;jdbc.url&#125;&quot; /&gt;</div><div class="line">   &lt;property name=&quot;user&quot; value=&quot;$&#123;jdbc.user&#125;&quot; /&gt;</div><div class="line">   &lt;property name=&quot;password&quot; value=&quot;$&#123;jdbc.password&#125;&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="JDBC模板进行CURD操作"><a href="#JDBC模板进行CURD操作" class="headerlink" title="JDBC模板进行CURD操作"></a>JDBC模板进行CURD操作</h3><h4 id="增删改"><a href="#增删改" class="headerlink" title="增删改"></a>增删改</h4><ul>
+<li>增删改的方法是通用的：<ul>
+<li>update(sql语句，参数);</li>
+</ul>
+</li>
+</ul>
+<p><img src="/uploads/Spring/03/071254a2-91d5-459b-9017-7ac437310176.jpg" alt=""></p>
+<h4 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h4><ul>
+<li>单个数 : <code>T queryForObject(String sql,Class/&lt;T/&gt; requiredType,Object… args)</code> </li>
+<li>某个对象 ：<code>T queryForObject(String sql,RowMapper/&lt;T/&gt; rowMapper ,Object… args);</code></li>
+<li>List集合 ：<code>List/&lt;T/&gt; query(String sql,RowMapper/&lt;T/&gt; rowMapper,Object… args);</code></li>
+</ul>
+<ul>
+<li><p>查询属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//查询id为1的账号的名称</div><div class="line">String name=jdbcTemplate.queryForObject(sql语句，String.class,Object 参数);</div></pre></td></tr></table></figure>
+</li>
+<li><p>统计个数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Long count=jdbcTemplate.queryForObject(sql语句，Long.class,Object 参数);</div></pre></td></tr></table></figure>
+</li>
+<li><p>查询某个对象</p>
+<ul>
+<li>RowMapper类似于DBUtils中的 ResultSetHandler</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Account account=jdbcTemplate.queryForObject(sql语句，new MyRowMapper(),参数);</div><div class="line"></div><div class="line">//可以创建一个内部类来实现RowMapper&lt;T&gt;</div><div class="line">class MyRowMapper implements RowMapper&lt;User&gt;&#123;</div><div class="line">   @override</div><div class="line">   public Account mapRow(ResultSet rs,int rowNum)&#123;</div><div class="line">       Account account = new Account();</div><div class="line">       account.setId(rs.getInt(&quot;id&quot;));</div><div class="line">       account.setName(rs.getString(&quot;name&quot;));</div><div class="line">       account.setMoney(rs.getDouble(&quot;money&quot;));</div><div class="line">       return account;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>查询多个对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">List&lt;Account&gt; account = query(String sql,new MyRowMapper(),Object... args);</div><div class="line">//当然也需要创建一个RowMapper&lt;T&gt;接口的实现类，跟上边用一个就行</div></pre></td></tr></table></figure>
+<h2 id="Spring的事务"><a href="#Spring的事务" class="headerlink" title="Spring的事务"></a>Spring的事务</h2><h3 id="Spring的事务管理"><a href="#Spring的事务管理" class="headerlink" title="Spring的事务管理"></a>Spring的事务管理</h3><h4 id="事务的回顾"><a href="#事务的回顾" class="headerlink" title="事务的回顾"></a>事务的回顾</h4><ul>
+<li>事务的概念：<ul>
+<li>逻辑上一组操作，组成这组操作的各个逻辑单元，要么一起成功，要么一起失败</li>
+</ul>
+</li>
+<li>事务的特性：<ul>
+<li>原子性</li>
+<li>一致性</li>
+<li>隔离性</li>
+<li>持久性</li>
+</ul>
+</li>
+<li>如果不考虑隔离性引发安全问题<ul>
+<li>读问题<ul>
+<li>脏读</li>
+<li>不可重复读</li>
+<li>虚读</li>
+</ul>
+</li>
+<li>写问题<ul>
+<li>丢失更新</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>解决读问题<ul>
+<li>设置事务隔离级别<ul>
+<li>read uncommitted</li>
+<li>read committed</li>
+<li>repeatable read</li>
+<li>serializable</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Spring的事务管理的API"><a href="#Spring的事务管理的API" class="headerlink" title="Spring的事务管理的API"></a>Spring的事务管理的API</h4><ul>
+<li>PlatformTransactionManager：平台事务管理器（Spring中真正管理事务的对象）<ul>
+<li><code>DataSourceTransactionManager</code> ：使用JDBC操作进行事务管理时候使用</li>
+<li><code>HibernateTransactionManager</code>  ：使用Hibernate框架进行事务管理时候使用</li>
+</ul>
+</li>
+<li>TransactionDefinition  ：事务的定义信息<ul>
+<li>事务的隔离级别</li>
+<li><strong>事务的传播行为</strong></li>
+<li>事务是否只读</li>
+<li>事务超时信息</li>
+</ul>
+</li>
+<li>TransactionStatus ：事务的状态对象<ul>
+<li>是否已经完成</li>
+<li>是否有保存点</li>
+</ul>
+</li>
+<li>三个对象的关系：<ul>
+<li>Spring通过TransactionDefinition对事务进行定义，使用PlatformTransactionManager根据定义信息进行事务的管理，在事务管理过程中产生一些状态，将状态存入到TransactionStatus中。</li>
+</ul>
+</li>
+</ul>
+<h4 id="事务的传播行为的作用和含义"><a href="#事务的传播行为的作用和含义" class="headerlink" title="事务的传播行为的作用和含义"></a>事务的传播行为的作用和含义</h4><ul>
+<li><p>事务传播行为的作用</p>
+<ul>
+<li>事务的传播行为：解决复杂的事务的操作，业务层之间代码的相互调用 propagation<br><img src="/uploads/Spring/03/e5f13905-f1f6-43d3-9a1f-07ede5359336.png" alt=""></li>
+</ul>
+</li>
+<li><p>事务传播行为的取值：记标红的那个即可，主要是第一个<br><img src="/uploads/Spring/03/5fdc6a65-8834-49cb-aec0-75cf62a16f9d.jpg" alt=""><br>根据上两幅图做出的解释：<br><img src="/uploads/Spring/03/3de2087d-aaa0-4d89-b974-da5ccb3b76a0.jpg" alt=""></p>
+</li>
+</ul>
+<h4 id="Spring的事务管理的方式"><a href="#Spring的事务管理的方式" class="headerlink" title="Spring的事务管理的方式"></a>Spring的事务管理的方式</h4><ul>
+<li>编程式事务管理： 手动编写代码实现事务管理</li>
+<li><strong>声明式事务管理</strong>： 通过配置实现事务管理<ul>
+<li>xml的配置方式</li>
+<li>注解方式</li>
+</ul>
+</li>
+</ul>
+<h3 id="Spring的事务管理实现："><a href="#Spring的事务管理实现：" class="headerlink" title="Spring的事务管理实现："></a>Spring的事务管理实现：</h3><h4 id="搭建事务管理的基本环境"><a href="#搭建事务管理的基本环境" class="headerlink" title="搭建事务管理的基本环境"></a>搭建事务管理的基本环境</h4><p>用转账的案例，先写出JDBC模板：</p>
+<ul>
+<li>编写Dao</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class AccountDaoImpl implements AccountDao &#123;</div><div class="line">    </div><div class="line">    private JdbcTemplate jdbcTemplate;</div><div class="line">    </div><div class="line">    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) &#123;</div><div class="line">        this.jdbcTemplate = jdbcTemplate;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void outMoney(String from, Double money) &#123;</div><div class="line">        jdbcTemplate.update(&quot;update account set money = money - ? where name = ?&quot;, money,from);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void inMoney(String to, Double money) &#123;</div><div class="line">        jdbcTemplate.update(&quot;update account set money = money + ? where name = ?&quot;, money,to);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>配置Dao</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 引入外部属性文件：方式二：通过context标签引入 --&gt;</div><div class="line">    &lt;context:property-placeholder location=&quot;classpath:jdbc.properties&quot;/&gt;</div><div class="line">    &lt;!-- 配置C3P0连接池 --&gt;</div><div class="line">    &lt;bean id=&quot;dataSource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;</div><div class="line">        &lt;property name=&quot;driverClass&quot; value=&quot;$&#123;jdbc.driverClass&#125;&quot;/&gt;</div><div class="line">        &lt;property name=&quot;jdbcUrl&quot; value=&quot;$&#123;jdbc.url&#125;&quot;/&gt;</div><div class="line">        &lt;property name=&quot;user&quot; value=&quot;$&#123;jdbc.user&#125;&quot;/&gt;</div><div class="line">        &lt;property name=&quot;password&quot; value=&quot;$&#123;jdbc.password&#125;&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line">    </div><div class="line">    &lt;!-- 将JDBC的模板交给Spring管理 --&gt;</div><div class="line">    &lt;bean id=&quot;jdbcTemplate&quot; class=&quot;org.springframework.jdbc.core.JdbcTemplate&quot;&gt;</div><div class="line">        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line">    </div><div class="line">    &lt;!-- 配置DAO --&gt;</div><div class="line">    &lt;bean id=&quot;accountDao&quot; class=&quot;com.itheima.tx.demo1.AccountDaoImpl&quot;&gt;</div><div class="line">        &lt;property name=&quot;jdbcTemplate&quot; ref=&quot;jdbcTemplate&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>编写Service</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class AccountServiceImpl implements AccountService &#123;</div><div class="line"></div><div class="line">    private AccountDao accountDao;</div><div class="line">    </div><div class="line">    public void setAccountDao(AccountDao accountDao) &#123;</div><div class="line">        this.accountDao = accountDao;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    /**</div><div class="line">     * from：转出账号</div><div class="line">     * to：转入账号</div><div class="line">     * money：转账金额</div><div class="line">     */</div><div class="line">    public void transfer(String from, String to, Double money) &#123;</div><div class="line">        accountDao.outMoney(from, money);</div><div class="line">        accountDao.inMoney(to, money);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>配置Service</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 配置Service --&gt;</div><div class="line">    &lt;bean id=&quot;accountService&quot; class=&quot;com.itheima.tx.demo1.AccountServiceImpl&quot;&gt;</div><div class="line">        &lt;property name=&quot;accountDao&quot; ref=&quot;accountDao&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>编写测试类</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@ContextConfiguration(&quot;classpath:applicationContext2.xml&quot;)</div><div class="line">public class TransactionDemo1 &#123;</div><div class="line">    @Resource(name=&quot;accountService&quot;)</div><div class="line">    private AccountService accountService;</div><div class="line">    </div><div class="line">    @Test</div><div class="line">    public void demo1()&#123;</div><div class="line">        accountService.transfer(&quot;郝强勇&quot;, &quot;郝如花&quot;, 1000d);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="编程式事务管理"><a href="#编程式事务管理" class="headerlink" title="编程式事务管理"></a>编程式事务管理</h4><ul>
+<li>配置事务管理器:  <strong>注</strong>：事务管理器的名称必须是<code>transactionManager</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 配置事务管理器：Spring真正管理事务的类 --&gt;</div><div class="line">    &lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</div><div class="line">        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>配置事务管理模板</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//配置事务管理的模板</div><div class="line">&lt;bean id=&quot;transactionTemplate&quot; class=&quot;org.springframework.transaction.support.TransactionTemplate&quot;&gt;   &lt;property name=&quot;transactionManager&quot; ref=&quot;transactionManager&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>在业务层注入事务管理的模板</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 配置Service --&gt;</div><div class="line">    &lt;bean id=&quot;accountService&quot; class=&quot;com.itheima.tx.demo1.AccountServiceImpl&quot;&gt;</div><div class="line">        &lt;property name=&quot;accountDao&quot; ref=&quot;accountDao&quot;/&gt;</div><div class="line">        &lt;!-- 事务管理模板的注入 --&gt;</div><div class="line">        &lt;property name=&quot;transactionTemplate&quot; ref=&quot;transactionTemplate&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>改写业务层</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">public class AccountServiceImpl implements AccountService &#123;</div><div class="line"></div><div class="line">    private AccountDao accountDao;</div><div class="line">    </div><div class="line">    public void setAccountDao(AccountDao accountDao) &#123;</div><div class="line">        this.accountDao = accountDao;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 提供事务管理模板注入:</div><div class="line">    private TransactionTemplate transactionTemplate;</div><div class="line">    public void setTransactionTemplate(TransactionTemplate transactionTemplate) &#123;</div><div class="line">        this.transactionTemplate = transactionTemplate;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    /**</div><div class="line">     * from：转出账号</div><div class="line">     * to：转入账号</div><div class="line">     * money：转账金额</div><div class="line">     */</div><div class="line">    public void transfer(final String from, final String to, final Double money) &#123;</div><div class="line">        transactionTemplate.execute(new TransactionCallbackWithoutResult() &#123;</div><div class="line">            @Override</div><div class="line">            protected void doInTransactionWithoutResult(TransactionStatus status) &#123;</div><div class="line">                accountDao.outMoney(from, money);</div><div class="line">                int d = 1/ 0;</div><div class="line">                accountDao.inMoney(to, money);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    </div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="声明式事务管理-底层用的就是AOP"><a href="#声明式事务管理-底层用的就是AOP" class="headerlink" title="声明式事务管理(底层用的就是AOP)"></a>声明式事务管理(底层用的就是AOP)</h4><h5 id="XML方式"><a href="#XML方式" class="headerlink" title="XML方式"></a>XML方式</h5><ul>
+<li>引入Aop的jar包</li>
+<li>恢复一下转账的环境</li>
+<li><p>配置事务管理器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 配置事务管理器 --&gt;</div><div class="line">    &lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</div><div class="line">        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置事务的增强（规范）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 配置事务的增强（规范） --&gt;</div><div class="line">    &lt;tx:advice id=&quot;txAdvice&quot; transaction-manager=&quot;transactionManager&quot;&gt;</div><div class="line">        &lt;tx:attributes&gt;</div><div class="line">            &lt;!-- &lt;tx:method name=&quot;save*&quot; propagation=&quot;REQUIRED&quot; /&gt;</div><div class="line">            &lt;tx:method name=&quot;update*&quot; propagation=&quot;REQUIRED&quot; /&gt;</div><div class="line">            &lt;tx:method name=&quot;find*&quot; read-only=&quot;true&quot;/&gt; --&gt;</div><div class="line">            &lt;tx:method name=&quot;transfer&quot; propagation=&quot;REQUIRED&quot;/&gt;</div><div class="line">        &lt;/tx:attributes&gt;</div><div class="line">    &lt;/tx:advice&gt;</div><div class="line"></div><div class="line">//propagaion :传播行为</div><div class="line">isolation :隔离级别</div><div class="line">read-only :是否为只读</div><div class="line">rollback-for :发生哪些异常事务会回滚，默认情况下，任何异常都会回滚</div><div class="line">no-rollback-for :发生哪些异常事务不会回滚</div></pre></td></tr></table></figure>
+</li>
+<li><p>AOP的配置</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> &lt;!-- AOP的配置--&gt;</div><div class="line">    &lt;aop:config&gt;</div><div class="line">      &lt;aop:pointcut expression=&quot;execution(* com.itheima.tx.demo2.AccountServiceImpl.transfer(..))&quot;  id=&quot;pointcut1&quot;/&gt;</div><div class="line">     &lt;aop:advisor advice-ref=&quot;txAdvice&quot; pointcut-ref=&quot;pointcut1&quot;/&gt;</div><div class="line">    &lt;/aop:config&gt;</div></pre></td></tr></table></figure>
+<h5 id="注解方式"><a href="#注解方式" class="headerlink" title="注解方式"></a>注解方式</h5><ul>
+<li>恢复开发环境</li>
+<li>配置事务管理器</li>
+<li>开启注解事务</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot; /&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>在要加注解的类上加一个<code>@Transactional</code><ul>
+<li>要想加属性后边加一个(),按提示写<br><img src="/uploads/Spring/03/ddffc3fc-dbe9-4068-bec8-ce9fcc328dd8.png" alt=""></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag">#Spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/05/Spring第二阶段/" rel="next" title="Spring第二阶段">
+                <i class="fa fa-chevron-left"></i> Spring第二阶段
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/13/Spring第四阶段/" rel="prev" title="Spring第四阶段">
+                Spring第四阶段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/07/08/Spring第三阶段/"
+     data-title="Spring第三阶段"
+     data-content=""
+     data-url="http://yoursite.com/2016/07/08/Spring第三阶段/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/08/Spring第三阶段/"
+           data-title="Spring第三阶段" data-url="http://yoursite.com/2016/07/08/Spring第三阶段/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring"><span class="nav-number">1.</span> <span class="nav-text">Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring的AOP的注解"><span class="nav-number">1.1.</span> <span class="nav-text">Spring的AOP的注解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AOP注解的入门"><span class="nav-number">1.1.1.</span> <span class="nav-text">AOP注解的入门</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring的JDBC"><span class="nav-number">1.2.</span> <span class="nav-text">Spring的JDBC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-的JDBC的模板"><span class="nav-number">1.2.1.</span> <span class="nav-text">Spring 的JDBC的模板</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring的JDBC模板的入门"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Spring的JDBC模板的入门</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#把连接池交给Spring管理"><span class="nav-number">1.2.2.</span> <span class="nav-text">把连接池交给Spring管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入外界连接池"><span class="nav-number">1.2.3.</span> <span class="nav-text">引入外界连接池</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dpcp连接池"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">dpcp连接池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c3p0的连接池"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">c3p0的连接池</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提取属性文件-连接数据库的信息"><span class="nav-number">1.2.4.</span> <span class="nav-text">提取属性文件(连接数据库的信息)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDBC模板进行CURD操作"><span class="nav-number">1.2.5.</span> <span class="nav-text">JDBC模板进行CURD操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#增删改"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">增删改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">查询</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring的事务"><span class="nav-number">1.3.</span> <span class="nav-text">Spring的事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring的事务管理"><span class="nav-number">1.3.1.</span> <span class="nav-text">Spring的事务管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事务的回顾"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">事务的回顾</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring的事务管理的API"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">Spring的事务管理的API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务的传播行为的作用和含义"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">事务的传播行为的作用和含义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring的事务管理的方式"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">Spring的事务管理的方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring的事务管理实现："><span class="nav-number">1.3.2.</span> <span class="nav-text">Spring的事务管理实现：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#搭建事务管理的基本环境"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">搭建事务管理的基本环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编程式事务管理"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">编程式事务管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#声明式事务管理-底层用的就是AOP"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">声明式事务管理(底层用的就是AOP)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#XML方式"><span class="nav-number">1.3.2.3.1.</span> <span class="nav-text">XML方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注解方式"><span class="nav-number">1.3.2.3.2.</span> <span class="nav-text">注解方式</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

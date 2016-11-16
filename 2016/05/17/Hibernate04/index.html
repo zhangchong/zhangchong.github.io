@@ -1,0 +1,964 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hibernate," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Hibernate[TOC]
+1.Hibernate的检索方式Hibernate提供对于对象的查询的方式
+1.1Hibernate中五种查询方式1.1.1OID检索：根据主键查询+ session 中的get 和load方法
+1.1.2对象导航检索：通过一个对象获得到其关联对象。LinkMan linkMan = session.get(LinkMan.class,1L);Customer cus">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hibernate第四阶段">
+<meta property="og:url" content="http://yoursite.com/2016/05/17/Hibernate04/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="Hibernate[TOC]
+1.Hibernate的检索方式Hibernate提供对于对象的查询的方式
+1.1Hibernate中五种查询方式1.1.1OID检索：根据主键查询+ session 中的get 和load方法
+1.1.2对象导航检索：通过一个对象获得到其关联对象。LinkMan linkMan = session.get(LinkMan.class,1L);Customer cus">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/04/1.png">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/04/2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/04/3.png">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/04/4.png">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/04/5.png">
+<meta property="og:image" content="http://yoursite.com/uploads/Hibernate/04/6.png">
+<meta property="og:updated_time" content="2016-11-13T13:25:33.616Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hibernate第四阶段">
+<meta name="twitter:description" content="Hibernate[TOC]
+1.Hibernate的检索方式Hibernate提供对于对象的查询的方式
+1.1Hibernate中五种查询方式1.1.1OID检索：根据主键查询+ session 中的get 和load方法
+1.1.2对象导航检索：通过一个对象获得到其关联对象。LinkMan linkMan = session.get(LinkMan.class,1L);Customer cus">
+<meta name="twitter:image" content="http://yoursite.com/uploads/Hibernate/04/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/17/Hibernate04/"/>
+
+
+  <title> Hibernate第四阶段 | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hibernate第四阶段
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-17T22:52:50+08:00" content="2016-05-17">
+              2016-05-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hibernate/" itemprop="url" rel="index">
+                    <span itemprop="name">Hibernate</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/17/Hibernate04/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/17/Hibernate04/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/17/Hibernate04/" class="leancloud_visitors" data-flag-title="Hibernate第四阶段">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Hibernate"><a href="#Hibernate" class="headerlink" title="Hibernate"></a>Hibernate</h1><p>[TOC]</p>
+<h2 id="1-Hibernate的检索方式"><a href="#1-Hibernate的检索方式" class="headerlink" title="1.Hibernate的检索方式"></a>1.Hibernate的检索方式</h2><p>Hibernate提供对于对象的查询的方式</p>
+<h3 id="1-1Hibernate中五种查询方式"><a href="#1-1Hibernate中五种查询方式" class="headerlink" title="1.1Hibernate中五种查询方式"></a>1.1Hibernate中五种查询方式</h3><h4 id="1-1-1OID检索：根据主键查询"><a href="#1-1-1OID检索：根据主键查询" class="headerlink" title="1.1.1OID检索：根据主键查询"></a>1.1.1OID检索：根据主键查询</h4><pre><code>+ session 中的get 和load方法
+</code></pre><h4 id="1-1-2对象导航检索：通过一个对象获得到其关联对象。"><a href="#1-1-2对象导航检索：通过一个对象获得到其关联对象。" class="headerlink" title="1.1.2对象导航检索：通过一个对象获得到其关联对象。"></a>1.1.2对象导航检索：通过一个对象获得到其关联对象。</h4><p><code>LinkMan linkMan = session.get(LinkMan.class,1L);Customer customer=Linkman.getCustomer();</code></p>
+<h4 id="1-1-3HQL-检索：通过编写一个HQL语句检索"><a href="#1-1-3HQL-检索：通过编写一个HQL语句检索" class="headerlink" title="1.1.3HQL 检索：通过编写一个HQL语句检索"></a>1.1.3HQL 检索：通过编写一个HQL语句检索</h4><h5 id="1-1-3-1HQL的基本的查询，别名查询，排序查询"><a href="#1-1-3-1HQL的基本的查询，别名查询，排序查询" class="headerlink" title="1.1.3.1HQL的基本的查询，别名查询，排序查询"></a>1.1.3.1HQL的基本的查询，别名查询，排序查询</h5><p> 在创建实体类的时候，生成toString的时候，不要把两个实体都生成，要不会互相打印，形成死循环，可以去掉一个set集合</p>
+<ul>
+<li>查询全部<br>//里面不能使用select * .</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Query query = session.createQuery(&quot;from Customer c&quot;);  //给Customer取得别名</div><div class="line">List&lt;Customer&gt; lists=query.list();</div><div class="line"></div><div class="line">//也可以这么写</div><div class="line">List&lt;Customer&gt; list=session.createQuery(&quot;select c from Customer c&quot;).list();</div><div class="line"></div><div class="line">//HQL还支持多肽查询,查询所有Object下的持久化类</div><div class="line">Query query=session.createQuery(&quot;from java.util.Object&quot;);</div><div class="line">List&lt;Object&gt; lists=query.list();</div></pre></td></tr></table></figure>
+<ul>
+<li>排序查询</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//默认asc，可以加desc降序</div><div class="line">List&lt;Customer&gt; list=session.createQuery(&quot;from Customer order by cust_id&quot;).list();</div></pre></td></tr></table></figure>
+<h5 id="1-1-3-2HQL的条件查询"><a href="#1-1-3-2HQL的条件查询" class="headerlink" title="1.1.3.2HQL的条件查询"></a>1.1.3.2HQL的条件查询</h5><ol>
+<li>按位置绑定参数</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Query query = session.createQuery(&quot;from Customer where cust_name=? and cust_id=?&quot;);</div><div class="line">query.setParameter(0,&quot;...&quot;);</div><div class="line">query.setParameter(1,&quot;...&quot;);</div><div class="line">List&lt;Customer&gt; lists=query.list();</div><div class="line">//如果确定一条结果可以用</div><div class="line">Customer customer=(Customer) query.uniqueResult();</div></pre></td></tr></table></figure>
+<ol>
+<li>按名称绑定参数</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Query query = session.createQuery(&quot;from Customer where cust_name=:name and cust_id=:id&quot;);</div><div class="line">query.setParameter(&quot;name&quot;,&quot;...&quot;);</div><div class="line">query.setParameter(&quot;id&quot;,&quot;...&quot;);</div><div class="line">List&lt;Customer&gt; lists=query.list();</div><div class="line">//如果确定一条结果可以用</div><div class="line">Customer customer=(Customer) query.uniqueResult();</div></pre></td></tr></table></figure>
+<h5 id="1-1-3-3HQL的分页查询"><a href="#1-1-3-3HQL的分页查询" class="headerlink" title="1.1.3.3HQL的分页查询"></a>1.1.3.3HQL的分页查询</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Query query = session.createQuery(&quot;from LinkMan&quot;);</div><div class="line">query.setFirstResult(0);</div><div class="line">query.setMAxResults(10);</div><div class="line">List&lt;LinkMan&gt; lists=query.list();</div></pre></td></tr></table></figure>
+<h5 id="1-1-3-4HQL的投影查询"><a href="#1-1-3-4HQL的投影查询" class="headerlink" title="1.1.3.4HQL的投影查询"></a>1.1.3.4HQL的投影查询</h5><ol>
+<li>查询所有的名字</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Query query = session.createQuery(&quot;select cust_name from Customer&quot;);</div><div class="line">List&lt;String&gt; names=query.list();</div></pre></td></tr></table></figure>
+<ol>
+<li>查询所有客户的id和名称</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Query query = session.createQuery(&quot;select cust_id,cust_name from Customer&quot;);</div><div class="line">List&lt;Object[]&gt; lists=query.list();</div><div class="line">for(Object[] objects : list)&#123;</div><div class="line">   System.out.println(Arrays.toString(objects));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>构造查询,现在实体类中写出相应的构造方法<br>//不要忘了加无参构造</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Query query = session.createQuery(&quot;select new Customer(cyst_id,cust_name) from Customer&quot;);</div><div class="line">List&lt;Customer&gt; lists=query.list();</div></pre></td></tr></table></figure>
+<h5 id="1-1-3-5HQL的分组统计查询"><a href="#1-1-3-5HQL的分组统计查询" class="headerlink" title="1.1.3.5HQL的分组统计查询"></a>1.1.3.5HQL的分组统计查询</h5><ol>
+<li>统计个数</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Query query = session.createQuery(&quot;select count(*) from Customer&quot;);</div><div class="line">Long count=query.uniqueResult();</div></pre></td></tr></table></figure>
+<ol>
+<li>按名称分组统计</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Query query = session.createQuery(&quot;select cust_name,count(*) from Customer group by cust_name&quot;);</div><div class="line">List&lt;Object[]&gt; lists=query.list();</div><div class="line">for(Object[] objects : list)&#123;</div><div class="line">   System.out.println(Arrays.toString(objects));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>按姓氏的名称统计个数</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Query query = session.createQuery(&quot;select cust_name,count(*) from Customer where cust_name like ? group by cust_name&quot;);</div><div class="line">query.setParameter(0,&quot;郝%&quot;);</div><div class="line">List&lt;Object[]&gt; lists=query.list();</div><div class="line">for(Object[] objects : list)&#123;</div><div class="line">   System.out.println(Arrays.toString(objects));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="1-1-4QBC-检索：通过Criteria对象进行检索"><a href="#1-1-4QBC-检索：通过Criteria对象进行检索" class="headerlink" title="1.1.4QBC 检索：通过Criteria对象进行检索"></a>1.1.4QBC 检索：通过Criteria对象进行检索</h4><h5 id="1-1-4-1基本查询"><a href="#1-1-4-1基本查询" class="headerlink" title="1.1.4.1基本查询"></a>1.1.4.1基本查询</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Criteria criteria=session.createCriteria(Customer.class);</div><div class="line">List&lt;Customer&gt; list=criteria.list();</div></pre></td></tr></table></figure>
+<h5 id="1-1-4-2排序查询"><a href="#1-1-4-2排序查询" class="headerlink" title="1.1.4.2排序查询"></a>1.1.4.2排序查询</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Criteria criteria=session.createCriteria(Customer.class);</div><div class="line">criteria.addOrder(Order.asc(&quot;cust_id&quot;)); //倒序换为desc即可</div><div class="line">List&lt;Customer&gt; list=criteria.list();</div></pre></td></tr></table></figure>
+<h5 id="1-1-4-3条件查询"><a href="#1-1-4-3条件查询" class="headerlink" title="1.1.4.3条件查询"></a>1.1.4.3条件查询</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Criteria criteria=session.createCriteria(Customer.class);</div></pre></td></tr></table></figure>
+<ul>
+<li>crteria.add(Restrictions.下边的值());</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> == eq</div><div class="line"> &gt; gt great than</div><div class="line"> &gt;= ge great equal</div><div class="line"> &lt; lt less than</div><div class="line"> &lt;= le less equal</div><div class="line"> &lt;&gt; ne not equal</div><div class="line">like 模糊查询</div><div class="line"></div><div class="line">like模糊查询还有一种方式</div><div class="line">//MatchMode.START指的是前面的字在哪个位置</div><div class="line">crteria.add(Restrictions.like(&quot;cust_name&quot;,&quot;郝&quot;，MatchMode.START));</div></pre></td></tr></table></figure>
+<p>//crteria.add(Restrictions.。。  可以写多个，相当于and</p>
+<h5 id="1-1-4-4分页查询"><a href="#1-1-4-4分页查询" class="headerlink" title="1.1.4.4分页查询"></a>1.1.4.4分页查询</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Criteria criteria=session.createCriteria(Customer.class);</div><div class="line">crteria.add(Restrictions.like(&quot;cust_name&quot;,&quot;郝&quot;));</div><div class="line">crteria.setFirstResult(2);</div><div class="line">crteria.setMaxResult(2);</div><div class="line">List&lt;Customer&gt; lists=criteria.list();</div></pre></td></tr></table></figure>
+<h5 id="1-1-4-5统计查询"><a href="#1-1-4-5统计查询" class="headerlink" title="1.1.4.5统计查询"></a>1.1.4.5统计查询</h5><p>setProjection 是单独值，用来设置聚集函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Criteria criteria=session.createCriteria(Customer.class);</div><div class="line">crteria.setProjection(Projections.rowCount());</div><div class="line">Object result=criteria.uniqueResult();</div></pre></td></tr></table></figure>
+<h5 id="1-1-4-6离线查询-DetachedCriteria"><a href="#1-1-4-6离线查询-DetachedCriteria" class="headerlink" title="1.1.4.6离线查询 DetachedCriteria"></a>1.1.4.6离线查询 DetachedCriteria</h5><p>这个对象可以前期脱离session来使用，后期再绑定session。<br>所以可以在web层中封装好一个DetachedCriteria对象，然后传到dao中，在调用getExecutableCriteria(session); 获取一个Criteria对象使用</p>
+<p><img src="/uploads/Hibernate/04/1.png" alt=""></p>
+<h4 id="1-1-5SQL检索-：通过输入SQL语句进行检索"><a href="#1-1-5SQL检索-：通过输入SQL语句进行检索" class="headerlink" title="1.1.5SQL检索 ：通过输入SQL语句进行检索"></a>1.1.5SQL检索 ：通过输入SQL语句进行检索</h4><h3 id="1-2-多表查询"><a href="#1-2-多表查询" class="headerlink" title="1.2 多表查询"></a>1.2 多表查询</h3><h4 id="1-2-1-SQL中连接查询"><a href="#1-2-1-SQL中连接查询" class="headerlink" title="1.2.1 SQL中连接查询"></a>1.2.1 SQL中连接查询</h4><h4 id="1-2-2-HQL中的连接查询"><a href="#1-2-2-HQL中的连接查询" class="headerlink" title="1.2.2 HQL中的连接查询"></a>1.2.2 HQL中的连接查询</h4><p>sql连接<br><img src="/uploads/Hibernate/04/2.png" alt=""></p>
+<ul>
+<li><p>交叉连接</p>
+</li>
+<li><p>内连接</p>
+<ul>
+<li>隐式内连接，显式内连接<br><img src="/uploads/Hibernate/04/3.png" alt=""></li>
+<li>迫切内连接<br><img src="/uploads/Hibernate/04/4.png" alt=""><br><code>fetch</code>可以通知Hibernate，把结果封装成一个<code>customer对象</code>，包括集合<br> 但是有一个问题：封装对象的时候会有重复的对象，所以要去重<br><img src="/uploads/Hibernate/04/5.png" alt=""></li>
+</ul>
+</li>
+<li><p>外连接</p>
+<ul>
+<li>左外连接</li>
+<li>右外连接</li>
+<li>迫切外连接<br>跟内连接一样加一个 <code>fetch</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Hibernate的抓取策略"><a href="#2-Hibernate的抓取策略" class="headerlink" title="2.Hibernate的抓取策略"></a>2.Hibernate的抓取策略</h2><h3 id="2-1Hibernate延迟加载机制"><a href="#2-1Hibernate延迟加载机制" class="headerlink" title="2.1Hibernate延迟加载机制"></a>2.1Hibernate延迟加载机制</h3><p>   延迟加载(懒加载 lazy):指的是，当执行到这行操作的时候，不会马上与数据库进行交互，等到真正使用该对象的属性的时候，才会发送sql语句进行查询。</p>
+<h4 id="2-1-1类级别的延迟加载"><a href="#2-1-1类级别的延迟加载" class="headerlink" title="2.1.1类级别的延迟加载"></a>2.1.1类级别的延迟加载</h4><p>类级别的延迟加载：查询某个类(对象)的时候，这个对象是否采用延迟。<br>主要体现在使用load方法查询某个对象的时候，这个对象是否采用了延迟加载(默认使用延迟加载)</p>
+<ul>
+<li>使类级别的延迟加载失效，跟get的效果一样：<ul>
+<li>在实体类中加final</li>
+<li>在配置文件中的class标签上设置lazy属性为false</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1-2-关联级别的延迟加载"><a href="#2-1-2-关联级别的延迟加载" class="headerlink" title="2.1.2 关联级别的延迟加载"></a>2.1.2 关联级别的延迟加载</h4><p>关联级别的延迟加载：查询某个类以后，查询这个类的关联的对象的时候，关联对象是否采用延迟，默认为true是延迟加载。</p>
+<ul>
+<li>使关联级别的延迟加载失效：<ul>
+<li>在实体类中加final</li>
+<li>在配置文件中的set标签上设置lazy属性为false</li>
+</ul>
+</li>
+</ul>
+<p>lazy上还有一个值 <code>extra</code>，只是在关联级别有，及其懒惰，要什么只查什么。</p>
+<h3 id="2-2Hibernate的抓取策略-关联关系上配置fetch属性"><a href="#2-2Hibernate的抓取策略-关联关系上配置fetch属性" class="headerlink" title="2.2Hibernate的抓取策略(关联关系上配置fetch属性)"></a>2.2Hibernate的抓取策略(关联关系上配置fetch属性)</h3><p>抓取策略：用来查询到一个对象之后抓取其关联对象。</p>
+<h4 id="2-2-1set上的fetch和lazy："><a href="#2-2-1set上的fetch和lazy：" class="headerlink" title="2.2.1set上的fetch和lazy："></a>2.2.1set上的fetch和lazy：</h4><p>fetch控制的SQL语句的格式：<br>lazy控制关联对象是否一致被查询</p>
+<ul>
+<li>set集合上配置fetch属性：<ul>
+<li>select     默认值，普通的select查询语句</li>
+<li>join       会发送一条迫切连接，将关联的信息一起查询出来，所以此时lazy会失效</li>
+<li>subselect  子查询 ，用 in</li>
+</ul>
+</li>
+<li>set集合上配置lazy属性：<ul>
+<li>true       默认值，延迟加载</li>
+<li>false      不使用延迟加载</li>
+<li>extra      及其懒惰</li>
+</ul>
+</li>
+</ul>
+<p><strong>一般情况下</strong>就用默认的，但是如果经常一查多的一方，可以fetch用join</p>
+<h4 id="2-2-2-many-to-one-上的fetch和lazy："><a href="#2-2-2-many-to-one-上的fetch和lazy：" class="headerlink" title="2.2.2 many-to-one 上的fetch和lazy："></a>2.2.2 many-to-one 上的fetch和lazy：</h4><ul>
+<li><p>many-to-one集合上配置fetch属性：</p>
+<ul>
+<li>select     默认值，普通的select查询语句</li>
+<li>join       会发送一条迫切连接，将关联的信息一起查询出来，所以此时lazy会失效</li>
+</ul>
+</li>
+<li><p>many-to-one集合上配置lazy属性：</p>
+<ul>
+<li>proxy       默认值，具体的取值取决于一的一方的类的fetch的值</li>
+<li>false       不使用延迟加载</li>
+<li>no-proxy</li>
+</ul>
+</li>
+</ul>
+<p><strong>一般情况下</strong>就用默认的</p>
+<h3 id="2-3批量抓取"><a href="#2-3批量抓取" class="headerlink" title="2.3批量抓取"></a>2.3批量抓取</h3><ul>
+<li><p><img src="/uploads/Hibernate/04/6.png" alt=""><br>本来是先查所有，在一个一个查查三个        发四条语句</p>
+<p>在set上加一个<code>batch-size=&quot;3&quot;;</code>  一下查三个，共发2条语句</p>
+</li>
+</ul>
+<ul>
+<li>在many-to-one上没有batch-size，需要时要在一的一方的class上配</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hibernate/" rel="tag">#Hibernate</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/15/Hibernate03/" rel="next" title="Hibernate第三阶段">
+                <i class="fa fa-chevron-left"></i> Hibernate第三阶段
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/10/Struts01/" rel="prev" title="Struts第一阶段">
+                Struts第一阶段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/05/17/Hibernate04/"
+     data-title="Hibernate第四阶段"
+     data-content=""
+     data-url="http://yoursite.com/2016/05/17/Hibernate04/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/17/Hibernate04/"
+           data-title="Hibernate第四阶段" data-url="http://yoursite.com/2016/05/17/Hibernate04/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hibernate"><span class="nav-number">1.</span> <span class="nav-text">Hibernate</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Hibernate的检索方式"><span class="nav-number">1.1.</span> <span class="nav-text">1.Hibernate的检索方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1Hibernate中五种查询方式"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1Hibernate中五种查询方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1OID检索：根据主键查询"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1.1OID检索：根据主键查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2对象导航检索：通过一个对象获得到其关联对象。"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.1.2对象导航检索：通过一个对象获得到其关联对象。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-3HQL-检索：通过编写一个HQL语句检索"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.1.3HQL 检索：通过编写一个HQL语句检索</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-3-1HQL的基本的查询，别名查询，排序查询"><span class="nav-number">1.1.1.3.1.</span> <span class="nav-text">1.1.3.1HQL的基本的查询，别名查询，排序查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-3-2HQL的条件查询"><span class="nav-number">1.1.1.3.2.</span> <span class="nav-text">1.1.3.2HQL的条件查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-3-3HQL的分页查询"><span class="nav-number">1.1.1.3.3.</span> <span class="nav-text">1.1.3.3HQL的分页查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-3-4HQL的投影查询"><span class="nav-number">1.1.1.3.4.</span> <span class="nav-text">1.1.3.4HQL的投影查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-3-5HQL的分组统计查询"><span class="nav-number">1.1.1.3.5.</span> <span class="nav-text">1.1.3.5HQL的分组统计查询</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-4QBC-检索：通过Criteria对象进行检索"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">1.1.4QBC 检索：通过Criteria对象进行检索</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-4-1基本查询"><span class="nav-number">1.1.1.4.1.</span> <span class="nav-text">1.1.4.1基本查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-4-2排序查询"><span class="nav-number">1.1.1.4.2.</span> <span class="nav-text">1.1.4.2排序查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-4-3条件查询"><span class="nav-number">1.1.1.4.3.</span> <span class="nav-text">1.1.4.3条件查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-4-4分页查询"><span class="nav-number">1.1.1.4.4.</span> <span class="nav-text">1.1.4.4分页查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-4-5统计查询"><span class="nav-number">1.1.1.4.5.</span> <span class="nav-text">1.1.4.5统计查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-4-6离线查询-DetachedCriteria"><span class="nav-number">1.1.1.4.6.</span> <span class="nav-text">1.1.4.6离线查询 DetachedCriteria</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-5SQL检索-：通过输入SQL语句进行检索"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">1.1.5SQL检索 ：通过输入SQL语句进行检索</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-多表查询"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 多表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-SQL中连接查询"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1.2.1 SQL中连接查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-HQL中的连接查询"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">1.2.2 HQL中的连接查询</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Hibernate的抓取策略"><span class="nav-number">1.2.</span> <span class="nav-text">2.Hibernate的抓取策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1Hibernate延迟加载机制"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1Hibernate延迟加载机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1类级别的延迟加载"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">2.1.1类级别的延迟加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-关联级别的延迟加载"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">2.1.2 关联级别的延迟加载</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2Hibernate的抓取策略-关联关系上配置fetch属性"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2Hibernate的抓取策略(关联关系上配置fetch属性)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1set上的fetch和lazy："><span class="nav-number">1.2.2.1.</span> <span class="nav-text">2.2.1set上的fetch和lazy：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-many-to-one-上的fetch和lazy："><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2.2.2 many-to-one 上的fetch和lazy：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3批量抓取"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3批量抓取</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
