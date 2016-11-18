@@ -1,0 +1,1123 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="xml," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="XML和反射技术XML技术什么是XML，作用是什么可扩展标记语言（Extensible Markup Language ），XML是一种数据格式，类似  HTML，是使用标签进行内容描述的技术，与HTML不  同的是，XML的标签和属性   都是根据业务需求自定义的。
+
+XML在企业开发中主要有两种应用场景：
+
+XML可以作为数据交换的载体，也就是说使用XML格式进行数据的传输目前有一门数据交换的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xml">
+<meta property="og:url" content="https://markzc.github.io/2016/06/18/xml/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="XML和反射技术XML技术什么是XML，作用是什么可扩展标记语言（Extensible Markup Language ），XML是一种数据格式，类似  HTML，是使用标签进行内容描述的技术，与HTML不  同的是，XML的标签和属性   都是根据业务需求自定义的。
+
+XML在企业开发中主要有两种应用场景：
+
+XML可以作为数据交换的载体，也就是说使用XML格式进行数据的传输目前有一门数据交换的">
+<meta property="og:image" content="https://markzc.github.io/uploads/xml/1.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/xml/2.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/xml/3.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/xml/4.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/xml/5.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/xml/6.png">
+<meta property="og:updated_time" content="2016-11-18T15:20:36.639Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="xml">
+<meta name="twitter:description" content="XML和反射技术XML技术什么是XML，作用是什么可扩展标记语言（Extensible Markup Language ），XML是一种数据格式，类似  HTML，是使用标签进行内容描述的技术，与HTML不  同的是，XML的标签和属性   都是根据业务需求自定义的。
+
+XML在企业开发中主要有两种应用场景：
+
+XML可以作为数据交换的载体，也就是说使用XML格式进行数据的传输目前有一门数据交换的">
+<meta name="twitter:image" content="https://markzc.github.io/uploads/xml/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://markzc.github.io/2016/06/18/xml/"/>
+
+
+  <title> xml | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                xml
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-18T23:00:36+08:00" content="2016-06-18">
+              2016-06-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">javaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/18/xml/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/18/xml/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/06/18/xml/" class="leancloud_visitors" data-flag-title="xml">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="XML和反射技术"><a href="#XML和反射技术" class="headerlink" title="XML和反射技术"></a>XML和反射技术</h1><h2 id="XML技术"><a href="#XML技术" class="headerlink" title="XML技术"></a>XML技术</h2><h3 id="什么是XML，作用是什么"><a href="#什么是XML，作用是什么" class="headerlink" title="什么是XML，作用是什么"></a>什么是XML，作用是什么</h3><p>可扩展标记语言（Extensible Markup Language ），XML是一种数据格式，类似  HTML，是使用标签进行内容描述的技术，与HTML不  同的是，XML的标签和属性   都是根据业务需求自定义的。</p>
+<ul>
+<li><p>XML在企业开发中主要有两种应用场景：</p>
+<ul>
+<li><p>XML可以作为数据交换的载体，也就是说使用XML格式进行数据的传输<br>目前有一门数据交换的语言慢慢替代xml —- json</p>
+</li>
+<li><p>XML可以作为配置文件的载体，例如后续我们学习的servlet、struts2、hibernate      的配置都是通过XML进行配置的（常使用的）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="如何去写一个XML（重点）"><a href="#如何去写一个XML（重点）" class="headerlink" title="如何去写一个XML（重点）"></a>如何去写一个XML（重点）</h3><ul>
+<li>XML的编写要比HTML简单，根据实际的业务场景自行编写有意义的标签和属性，    例如创建一个以.xml为后缀名的文件，编写描述一个网上商城的商品信息的xml</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;store&gt;</div><div class="line">    &lt;product category=&quot;手机数码&quot;&gt;</div><div class="line">        &lt;pid&gt;100&lt;/pid&gt;</div><div class="line">        &lt;pname&gt;华为手机&lt;/pname&gt;</div><div class="line">        &lt;price&gt;3000&lt;/price&gt;</div><div class="line">    &lt;/product&gt;</div><div class="line">    &lt;product category=&quot;电脑办公&quot;&gt;</div><div class="line">        &lt;pid&gt;200&lt;/pid&gt;</div><div class="line">        &lt;pname&gt;三星笔记本&lt;/pname&gt;</div><div class="line">        &lt;price&gt;5000&lt;/price&gt;</div><div class="line">    &lt;/product&gt;</div><div class="line">    &lt;product category=&quot;大型家电&quot;&gt;</div><div class="line">        &lt;pid&gt;300&lt;/pid&gt;</div><div class="line">        &lt;pname&gt;海尔洗衣机&lt;/pname&gt;</div><div class="line">        &lt;price&gt;4000&lt;/price&gt;</div><div class="line">    &lt;/product&gt;</div><div class="line">&lt;/store&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>xml编写时也要符合一定的规则：<ol>
+<li>xml文件的后缀名是.xml</li>
+<li>xml有且只有一个根标签</li>
+<li>xml的标签是尖括号包裹关键字成对出现的，有开始标签有结束标签，关键字是自     定义的，xml也可以有空标签/自关闭标签</li>
+<li>xml允许有属性，属性也是根据需要自定义的，属性格式：属性=“属性值”，多     个属性之间使用空格隔开</li>
+<li>xml是区分大小写的 —– html不区分大小写</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li>xml的组成：<ol>
+<li>文档声明：&lt;?xml version=”1.0” encoding=”UTF-8”?&gt;</li>
+<li>根标签，例如：<store></store></li>
+<li>其他标签，例如：<pname></pname></li>
+<li>属性，例如：category=”电脑办公”</li>
+<li>文本，例如：三星笔记本</li>
+<li>注释，例如：<!--这是一个注释--></li>
+<li>CDATA区：<br>CDATA区可以保证数据的原文输出<br>例如：&lt;![CDATA[原文显示的内容]]&gt;</li>
+</ol>
+</li>
+</ul>
+<h3 id="如何去约束一个XML（了解）"><a href="#如何去约束一个XML（了解）" class="headerlink" title="如何去约束一个XML（了解）"></a>如何去约束一个XML（了解）</h3><blockquote>
+<p>提到约束一个XML，必须要理解为什么对XML要进行约束？</p>
+</blockquote>
+<p>因为XML的标签都是自定义的，xml在作为框架配置时不能很好的规范开发者书写， 所以要使用约束告知开发者怎样去配置一个xml</p>
+<ul>
+<li>XML的约束有两种：<ul>
+<li>DTD约束</li>
+<li>Schema约束</li>
+</ul>
+</li>
+</ul>
+<h4 id="DTD约束"><a href="#DTD约束" class="headerlink" title="DTD约束"></a>DTD约束</h4><ol>
+<li>例如：我们要约束上述编写的store.xml,相应 的DTD约束如下</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;!ELEMENT store (product+)&gt;</div><div class="line">&lt;!ELEMENT product (pid,pname,price)&gt;</div><div class="line">&lt;!ELEMENT pid (#PCDATA)&gt;</div><div class="line">&lt;!ELEMENT pname (#PCDATA)&gt;</div><div class="line">&lt;!ELEMENT price (#PCDATA)&gt;</div><div class="line">&lt;!ATTLIST product category CDATA #REQUIRED&gt;</div></pre></td></tr></table></figure>
+<ol>
+<li>dtd的语法摘要：<ul>
+<li>使用ELEMENT描述元素</li>
+<li>括号() 代表标签体的内容</li>
+<li>子标签—标签名称 子标签有多少个？</li>
+<li>通过符号描述：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">+：代表一个或多个 至少有一个</div><div class="line">*：代表0个或的多个  有没有都行</div><div class="line">?：代表0个或一个</div></pre></td></tr></table></figure>
+<ul>
+<li>子标签的顺序：<ul>
+<li>使用逗号, </li>
+<li>或 |  任意选择一个</li>
+<li>文本—-<code>#PCDATA</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>使用ATTLIST描述某个元素身上的属性<br>属于哪个标签  属性名称  属性的类型  该属性的是否必须<ul>
+<li>该属性的是否必须：<pre><code>+ `#REQUIRED` 代表概述户型必须
++ `#IMPLIED` 代表属性随意 写也行不写也行
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p> 引入约束</p>
+</blockquote>
+<ul>
+<li><p>在xml中引入本地的DTD文件：<code>&lt;!DOCTYPE store SYSTEM &quot;store.dtd&quot;&gt;</code></p>
+<ul>
+<li>其中：<code>SYSTEM</code>代表本地dtd文件</li>
+</ul>
+</li>
+<li><p>在xml中引入互联网上的DTD文件：<br> <code>&lt;!DOCTYPE store PUBLIC &quot;//UNKNOWN/&quot; &quot;unknown.dtd&quot;&gt;</code><br> 其中：PUBLIC代表互联网上的DTD</p>
+<pre><code>+ //UNKNOWN/：此位置代表为引入的DTD取一个名称，随意取
++ unknown.dtd：此位置代表引入的DTD的路径，一般是互联网路径
+</code></pre></li>
+</ul>
+<h4 id="Schema约束"><a href="#Schema约束" class="headerlink" title="Schema约束"></a>Schema约束</h4><p>例如：我们要约束上述编写的<code>store.xml</code>,相应 的Schema约束如下</p>
+<ul>
+<li>Schema中分为简单元素和复杂元素<ul>
+<li>简单元素：标签仅仅包含文本标签体的元素 </li>
+<li>复杂元素：标签包括子标签或属性的元素</li>
+</ul>
+</li>
+</ul>
+<p><img src="/uploads/xml/1.png" alt=""></p>
+<p>Schema约束是怎样引入到XML中的？</p>
+<p><img src="/uploads/xml/2.png" alt=""></p>
+<p>例如：<br>     web工程的核心配置文件web.xml<br><img src="/uploads/xml/3.png" alt=""></p>
+<p>   spring的核心配置文件applicationContext.xml<br><img src="/uploads/xml/4.png" alt=""></p>
+<h3 id="如何去解析一个XML（了解）"><a href="#如何去解析一个XML（了解）" class="headerlink" title="如何去解析一个XML（了解）"></a>如何去解析一个XML（了解）</h3><blockquote>
+<p>XML的解析就是将有用的信息从XML文档中解析出来，例如上述的store.xml，怎    样通过API将store.xml中的属性值和文本解析出来。</p>
+</blockquote>
+<ol>
+<li>常用的解析方式<ul>
+<li>DOM解析：将文档整体加载到内存形成一个DOM树在解析，支持文档的增删改查  和文档的回写。</li>
+<li>SAX解析：读取一行解析一行，只支持文档的查询，也不支持文档的回写。</li>
+<li>PULL解析：类似SAX解析，Android的常用解析技术。</li>
+</ul>
+</li>
+<li><p>常用的解析技术</p>
+<ul>
+<li>JAXP：SUN公司的官方解析技术，支持DOM解析和SAX解析</li>
+<li>JSOUP：一种解析HTML的特定解析的开发包</li>
+<li>JDOM：开源组织的DOM方式的解析技术</li>
+<li>DOM4J：JDOM的分离版，开源，Hibernate底层的XML解析技术</li>
+</ul>
+</li>
+<li><p>DOM4J解析技术</p>
+<ul>
+<li>DOM4J是第三方开源的解析技术，首先要下载dom4j.jar</li>
+<li>将其中的jar包导入工程</li>
+</ul>
+</li>
+</ol>
+<p>解析XML的步骤：<br>   <img src="/uploads/xml/5.png" alt=""></p>
+<p>在dom4j的lib目录下有一个jaxen-1.1-beta-6.jar，导入这个jar包可以进行XPath的解析。<br>  <img src="/uploads/xml/6.png" alt=""></p>
+<h3 id="XML的实际应用场景（理解）"><a href="#XML的实际应用场景（理解）" class="headerlink" title="XML的实际应用场景（理解）"></a>XML的实际应用场景（理解）</h3><p>   实际开发中，我们一般会使用各种各样的框架的进行企业开发，而这些框架一般都会    将某些公共的功能写好了，我们需要做的只需要按照框架提供的约束进行框架的配置   就可以了，当我们使用XML配置好框架后，在运行时，框架底层会解析我们配置XML 文档获取有用的信息，从而根据我们的需求实现某些功能。</p>
+<p>   所以，实际开发中我们很少会自己编写XML约束和解析XML</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/xml/" rel="tag">#xml</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/17/Struts03/" rel="next" title="Struts第三阶段">
+                <i class="fa fa-chevron-left"></i> Struts第三阶段
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/25/Struts04/" rel="prev" title="Struts第四阶段">
+                Struts第四阶段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/06/18/xml/"
+     data-title="xml"
+     data-content=""
+     data-url="https://markzc.github.io/2016/06/18/xml/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/18/xml/"
+           data-title="xml" data-url="https://markzc.github.io/2016/06/18/xml/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/markzc" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3490969043" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/john_zc" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XML和反射技术"><span class="nav-number">1.</span> <span class="nav-text">XML和反射技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#XML技术"><span class="nav-number">1.1.</span> <span class="nav-text">XML技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是XML，作用是什么"><span class="nav-number">1.1.1.</span> <span class="nav-text">什么是XML，作用是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何去写一个XML（重点）"><span class="nav-number">1.1.2.</span> <span class="nav-text">如何去写一个XML（重点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何去约束一个XML（了解）"><span class="nav-number">1.1.3.</span> <span class="nav-text">如何去约束一个XML（了解）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DTD约束"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">DTD约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Schema约束"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">Schema约束</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何去解析一个XML（了解）"><span class="nav-number">1.1.4.</span> <span class="nav-text">如何去解析一个XML（了解）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XML的实际应用场景（理解）"><span class="nav-number">1.1.5.</span> <span class="nav-text">XML的实际应用场景（理解）</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
