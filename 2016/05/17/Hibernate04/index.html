@@ -84,31 +84,28 @@
 
 
 
-<meta name="description" content="Hibernate[TOC]
-1.Hibernate的检索方式Hibernate提供对于对象的查询的方式
+<meta name="description" content="Hibernate1.Hibernate的检索方式Hibernate提供对于对象的查询的方式
 1.1Hibernate中五种查询方式1.1.1OID检索：根据主键查询+ session 中的get 和load方法
-1.1.2对象导航检索：通过一个对象获得到其关联对象。LinkMan linkMan = session.get(LinkMan.class,1L);Customer cus">
+1.1.2对象导航检索：通过一个对象获得到其关联对象。LinkMan linkMan = session.get(LinkMan.class,1L);Customer customer=">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hibernate第四阶段">
 <meta property="og:url" content="https://markzc.github.io/2016/05/17/Hibernate04/index.html">
 <meta property="og:site_name" content="张冲'blog">
-<meta property="og:description" content="Hibernate[TOC]
-1.Hibernate的检索方式Hibernate提供对于对象的查询的方式
+<meta property="og:description" content="Hibernate1.Hibernate的检索方式Hibernate提供对于对象的查询的方式
 1.1Hibernate中五种查询方式1.1.1OID检索：根据主键查询+ session 中的get 和load方法
-1.1.2对象导航检索：通过一个对象获得到其关联对象。LinkMan linkMan = session.get(LinkMan.class,1L);Customer cus">
+1.1.2对象导航检索：通过一个对象获得到其关联对象。LinkMan linkMan = session.get(LinkMan.class,1L);Customer customer=">
 <meta property="og:image" content="https://markzc.github.io/uploads/Hibernate/04/1.png">
 <meta property="og:image" content="https://markzc.github.io/uploads/Hibernate/04/2.png">
 <meta property="og:image" content="https://markzc.github.io/uploads/Hibernate/04/3.png">
 <meta property="og:image" content="https://markzc.github.io/uploads/Hibernate/04/4.png">
 <meta property="og:image" content="https://markzc.github.io/uploads/Hibernate/04/5.png">
 <meta property="og:image" content="https://markzc.github.io/uploads/Hibernate/04/6.png">
-<meta property="og:updated_time" content="2016-11-18T15:20:09.881Z">
+<meta property="og:updated_time" content="2016-11-19T02:54:14.600Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hibernate第四阶段">
-<meta name="twitter:description" content="Hibernate[TOC]
-1.Hibernate的检索方式Hibernate提供对于对象的查询的方式
+<meta name="twitter:description" content="Hibernate1.Hibernate的检索方式Hibernate提供对于对象的查询的方式
 1.1Hibernate中五种查询方式1.1.1OID检索：根据主键查询+ session 中的get 和load方法
-1.1.2对象导航检索：通过一个对象获得到其关联对象。LinkMan linkMan = session.get(LinkMan.class,1L);Customer cus">
+1.1.2对象导航检索：通过一个对象获得到其关联对象。LinkMan linkMan = session.get(LinkMan.class,1L);Customer customer=">
 <meta name="twitter:image" content="https://markzc.github.io/uploads/Hibernate/04/1.png">
 
 
@@ -361,8 +358,7 @@
       
 
       
-        <h1 id="Hibernate"><a href="#Hibernate" class="headerlink" title="Hibernate"></a>Hibernate</h1><p>[TOC]</p>
-<h2 id="1-Hibernate的检索方式"><a href="#1-Hibernate的检索方式" class="headerlink" title="1.Hibernate的检索方式"></a>1.Hibernate的检索方式</h2><p>Hibernate提供对于对象的查询的方式</p>
+        <h1 id="Hibernate"><a href="#Hibernate" class="headerlink" title="Hibernate"></a>Hibernate</h1><h2 id="1-Hibernate的检索方式"><a href="#1-Hibernate的检索方式" class="headerlink" title="1.Hibernate的检索方式"></a>1.Hibernate的检索方式</h2><p>Hibernate提供对于对象的查询的方式</p>
 <h3 id="1-1Hibernate中五种查询方式"><a href="#1-1Hibernate中五种查询方式" class="headerlink" title="1.1Hibernate中五种查询方式"></a>1.1Hibernate中五种查询方式</h3><h4 id="1-1-1OID检索：根据主键查询"><a href="#1-1-1OID检索：根据主键查询" class="headerlink" title="1.1.1OID检索：根据主键查询"></a>1.1.1OID检索：根据主键查询</h4><pre><code>+ session 中的get 和load方法
 </code></pre><h4 id="1-1-2对象导航检索：通过一个对象获得到其关联对象。"><a href="#1-1-2对象导航检索：通过一个对象获得到其关联对象。" class="headerlink" title="1.1.2对象导航检索：通过一个对象获得到其关联对象。"></a>1.1.2对象导航检索：通过一个对象获得到其关联对象。</h4><p><code>LinkMan linkMan = session.get(LinkMan.class,1L);Customer customer=Linkman.getCustomer();</code></p>
 <h4 id="1-1-3HQL-检索：通过编写一个HQL语句检索"><a href="#1-1-3HQL-检索：通过编写一个HQL语句检索" class="headerlink" title="1.1.3HQL 检索：通过编写一个HQL语句检索"></a>1.1.3HQL 检索：通过编写一个HQL语句检索</h4><h5 id="1-1-3-1HQL的基本的查询，别名查询，排序查询"><a href="#1-1-3-1HQL的基本的查询，别名查询，排序查询" class="headerlink" title="1.1.3.1HQL的基本的查询，别名查询，排序查询"></a>1.1.3.1HQL的基本的查询，别名查询，排序查询</h5><p> 在创建实体类的时候，生成toString的时候，不要把两个实体都生成，要不会互相打印，形成死循环，可以去掉一个set集合</p>
@@ -1114,6 +1110,21 @@
 
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 
