@@ -1,0 +1,1231 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="oracle," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="OracleOracle 介绍
+Oracle 的安装
+因为Oracle很娇气，一旦安装失败很难完全卸载干净，所以最好用虚拟机挂载xp镜像
+
+
+固定虚拟机的ip地址,先自动获取ip然后查看ip记住，在手动固定一下，防止下次启动虚拟机的时候因为网络配置原因导致Oracle不可用
+虚拟机上的网络适配器改为 nat ，意思是能上网，要想局域网共享服务就要设置为桥接模式
+拷贝安装包，解压缩，安装oracle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oracle第一阶段">
+<meta property="og:url" content="https://markzc.github.io/2016/10/23/oracle01/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="OracleOracle 介绍
+Oracle 的安装
+因为Oracle很娇气，一旦安装失败很难完全卸载干净，所以最好用虚拟机挂载xp镜像
+
+
+固定虚拟机的ip地址,先自动获取ip然后查看ip记住，在手动固定一下，防止下次启动虚拟机的时候因为网络配置原因导致Oracle不可用
+虚拟机上的网络适配器改为 nat ，意思是能上网，要想局域网共享服务就要设置为桥接模式
+拷贝安装包，解压缩，安装oracle">
+<meta property="og:image" content="https://markzc.github.io/uploads/oracle/a0502134-018a-4253-a1d8-a041d50ecb62.jpg">
+<meta property="og:image" content="https://markzc.github.io/index_files/b0256eac-edbd-4eba-9245-76a08652c185.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/oracle/94ea2be2-ac77-4024-a5a1-d23e9df48d72.jpg">
+<meta property="og:updated_time" content="2016-11-23T15:37:02.580Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="oracle第一阶段">
+<meta name="twitter:description" content="OracleOracle 介绍
+Oracle 的安装
+因为Oracle很娇气，一旦安装失败很难完全卸载干净，所以最好用虚拟机挂载xp镜像
+
+
+固定虚拟机的ip地址,先自动获取ip然后查看ip记住，在手动固定一下，防止下次启动虚拟机的时候因为网络配置原因导致Oracle不可用
+虚拟机上的网络适配器改为 nat ，意思是能上网，要想局域网共享服务就要设置为桥接模式
+拷贝安装包，解压缩，安装oracle">
+<meta name="twitter:image" content="https://markzc.github.io/uploads/oracle/a0502134-018a-4253-a1d8-a041d50ecb62.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://markzc.github.io/2016/10/23/oracle01/"/>
+
+
+  <title> oracle第一阶段 | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                oracle第一阶段
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-23T23:33:58+08:00" content="2016-10-23">
+              2016-10-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/oracle/" itemprop="url" rel="index">
+                    <span itemprop="name">oracle</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/23/oracle01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/23/oracle01/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/23/oracle01/" class="leancloud_visitors" data-flag-title="oracle第一阶段">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Oracle"><a href="#Oracle" class="headerlink" title="Oracle"></a>Oracle</h1><h2 id="Oracle-介绍"><a href="#Oracle-介绍" class="headerlink" title="Oracle 介绍"></a>Oracle 介绍</h2><p><img src="/uploads/oracle/a0502134-018a-4253-a1d8-a041d50ecb62.jpg" alt=""></p>
+<h2 id="Oracle-的安装"><a href="#Oracle-的安装" class="headerlink" title="Oracle 的安装"></a>Oracle 的安装</h2><blockquote>
+<p>因为Oracle很娇气，一旦安装失败很难完全卸载干净，所以最好用虚拟机挂载xp镜像</p>
+</blockquote>
+<ol>
+<li>固定虚拟机的ip地址,先自动获取ip然后查看ip记住，在手动固定一下，防止下次启动虚拟机的时候因为网络配置原因导致Oracle不可用</li>
+<li>虚拟机上的<code>网络适配器</code>改为 nat ，意思是能上网，要想局域网共享服务就要设置为桥接模式</li>
+<li>拷贝安装包，解压缩，安装oracle，确定右边，口令管理中找到scott，解锁scott用户，默认密码是<code>tigger</code><ul>
+<li>scott 是Oracle是最老的一批开发者，为了纪念他所以保留了这些用户</li>
+<li>如果安装的时候没设置也可以在通过sql语句来解锁<code>alter user scott account unlock;  alter user scott identified by tiger;</code></li>
+</ul>
+</li>
+<li>Oracle需要修改两个ip地址的文件：<code>C:\oracle\product\10.2.0\db_1\NETWORK\ADMIN</code> 中的<code>listene</code>r跟<code>tnsnames</code>中的ip改为虚拟机的ip</li>
+<li>关闭虚拟机的防火墙</li>
+<li>现在在虚拟机dos窗口中用 <code>sqlplus 用户名/密码</code>的方式来查看是否能进数据库</li>
+</ol>
+<h2 id="远程连接数据库"><a href="#远程连接数据库" class="headerlink" title="远程连接数据库"></a>远程连接数据库</h2><h3 id="本地安装plsql-developer"><a href="#本地安装plsql-developer" class="headerlink" title="本地安装plsql developer"></a>本地安装plsql developer</h3><p>在虚拟机本地安装，PLSQL Developer 不用配置即可直接通过用户名密码登陆</p>
+<h3 id="远程连接"><a href="#远程连接" class="headerlink" title="远程连接"></a>远程连接</h3><ol>
+<li>安装plsql dev <ul>
+<li>注意安装目录不能有中文跟空格</li>
+</ul>
+</li>
+<li>解压缩拷贝到本地instantclient_12_1，拷贝上面安装后改的配置文件tnsnames.ora到本地<ul>
+<li>其实<code>instantclient_12_1</code>才是真正的Oracle客户端，在虚拟机上因为本地安装了Oracle所以就不用再次安了，但是在远程中需要它</li>
+</ul>
+</li>
+<li>登陆plsql 破解一下<ul>
+<li>直接运行 <code>keygen</code> 即可获得对应得破解信息</li>
+</ul>
+</li>
+<li>第一次登陆plsql时，不要输入账号密码，直接进入，在<code>tools ---&gt; preference</code> 中配置 <code>instantclient_12_1</code> 对应的路劲后应用，确定<br><img src="index_files/b0256eac-edbd-4eba-9245-76a08652c185.jpg" alt=""></li>
+<li>配置系统环境变量，名字<code>TNS_ADMIN</code> 路径是<code>tnsnames.ora</code>的所在路径</li>
+<li>然后再次重启pplsql输入system账户跟密码就可以进去了</li>
+<li>如果在安装的时候解锁了scott用户，就可以用输入scott账号跟密码进去，如果没解锁，可以通过sql语句解锁，上边有</li>
+</ol>
+<blockquote>
+<p>如果不行的话，可以在虚拟机中重启listener跟service服务试试</p>
+</blockquote>
+<h2 id="Oracle的sql语句"><a href="#Oracle的sql语句" class="headerlink" title="Oracle的sql语句"></a>Oracle的sql语句</h2><h3 id="中文乱码问题"><a href="#中文乱码问题" class="headerlink" title="中文乱码问题"></a>中文乱码问题</h3><ol>
+<li>查看服务器编码<br><code>select userenv(&#39;language&#39;)from dual;</code><br>我实际查到的结果为:<code>AMERICAN_AMERICA.ZHS16GBK</code></li>
+<li>执行语句 <code>select * from V$NLS_PARAMETERS</code><br>查看第一行中<code>PARAMETER</code>项中为<code>NLS_LANGUAGE</code>对应的VALUE项中是否和第一步得到的值一样，如果不是，则需要配置环境变量</li>
+<li>设置环境变量<ul>
+<li>新建变量名为<code>NLS_LANG</code>,变量值 ：第一步查到的值，我的是<code>AMERICAN_AMERICA.ZHS16GBK</code></li>
+</ul>
+</li>
+<li>重新启动plsql，插入数据正常</li>
+</ol>
+<h3 id="sql语句"><a href="#sql语句" class="headerlink" title="sql语句"></a>sql语句</h3><p><img src="/uploads/oracle/94ea2be2-ac77-4024-a5a1-d23e9df48d72.jpg" alt=""></p>
+<blockquote>
+<p>注：</p>
+</blockquote>
+<ol>
+<li>sql语句中，单引号可能不行，要双引号</li>
+<li>要提示按 F6</li>
+<li><code>dual</code> 虚表，没有任何意义，只是为了补全Oracle查询语法</li>
+<li>Orcale中要想访问<code>scrott</code>里的表，需要登录<code>scrott</code>用户或者 <code>system</code>用户中查询表用<code>from scrott.emp</code></li>
+<li>Oracle的查询内容区分大小写，关键字不区分</li>
+<li>转成日期类型的 to_date(‘1981-1-1’,’yyyy-MM-dd’)</li>
+<li>转义 <code>&#39;%/_%&#39; escape &#39;/&#39;</code>,用什么转义用escape</li>
+</ol>
+<hr>
+<ol>
+<li>SQL优化的原则：尽量使用列名</li>
+<li>SQL中的null : 包含null的表达式都为null,null永远!=null</li>
+<li>null值最大</li>
+<li>null值：如果集合中含有null，不能使用not in；但可以使用in</li>
+<li>between and 1: 含有边界  2. 小值在前 大值在后</li>
+<li>order by作用于后面所有的列，desc只作用于离他最近的列<br><code>select * from emp  order by deptno ,sal desc</code></li>
+<li>希望：对于某些不成立的记录，任然希望包含在最后的结果中<br>左外连接：当<code>where e.deptno=d.deptno</code>不成立的时候，等号左边的表任然被包含<br>  写法：<code>where e.deptno=d.deptno(+)</code><br>右外连接：当where e.deptno=d.deptno不成立的时候，等号右边的表任然被包含<br>  写法：<code>where e.deptno(+)=d.deptno</code></li>
+<li>自连接：通过表的别名，将同一张表视为多张表，自连接不适合操作大表</li>
+</ol>
+<h4 id="基本查询"><a href="#基本查询" class="headerlink" title="基本查询"></a>基本查询</h4><ul>
+<li>1.查询出所有emp中的信息，并用中文进行字段重命名<br><code>select * from scott.emp</code><br><code>select empno &quot;编号&quot;,ename &quot;姓名&quot;,job &quot;工作&quot; from scott.emp</code></li>
+<li>2.查询emp表中员工的job信息，并去除重复信息<br><code>select distinct(job) from scott.emp</code></li>
+<li>3.查询emp表中员工的全年的工资总和(sal总和)<br><code>select sum(sal) from scott.emp</code></li>
+<li>4.查询emp表中员工的全年收入总和(sal+comm的总和)<br><code>select sum(sal)+sum(comm) from scott.emp</code></li>
+<li>5.查询emp表中员工编号，姓名（输出格式如下：编号:xxx，姓名：xxx）<ul>
+<li>Concat拼接方式,可以多层嵌套<br><code>select concat(concat(&#39;编号:&#39;,empno),concat(&#39;,姓名:&#39;,ename)) from scott.emp</code></li>
+<li>Oracle的||方式,就是java里的+号<br><code>select &#39;编号：&#39;||empno||&#39;，姓名：&#39;||ename from scott.emp</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h4><ul>
+<li>1.查询工资大于1500的员工<br><code>select ename,sal from scott.emp where sal&gt;1500</code></li>
+<li>2.查询工资大于1500并且有奖金的雇员<br><code>select ename,sal,comm from scott.emp where sal&gt;1500 and comm is not null</code></li>
+<li>3.查询工资大于1500或者有奖金的雇员<br><code>select ename,sal,comm from scott.emp where sal&gt;1500 or comm is not null</code></li>
+<li>4.查询工资大于1500并且没有奖金的雇员<br><code>select ename,sal,comm from scott.emp where sal&gt;1500 and comm is null</code></li>
+<li>5.查询员工姓名为smith的员工,注意大小写<br><code>select empno,ename from scott.emp where ename=&#39;SMITH&#39;</code></li>
+</ul>
+<h4 id="范围查询"><a href="#范围查询" class="headerlink" title="范围查询"></a>范围查询</h4><ul>
+<li>1.查询工资大于1500但小于3000的全部雇员<ul>
+<li>/&gt;=,&lt;=方式<br><code>select ename from scott.emp where sal&gt;=1500 and sal&lt;=3000</code></li>
+<li>between and方式<br><code>select ename from scott.emp where sal between 1500 and 3000</code></li>
+</ul>
+</li>
+<li>2.查询1981-1-1到1981-12-31号入职的雇员（between and）<br><code>select ename from scott.emp where hiredate between to_date(&#39;1981-01-01&#39;,&#39;yyyy-MM-dd&#39;) and to_date(&#39;1981-12-31&#39;,&#39;yyyy-MM-dd&#39;);</code></li>
+<li>3.查询员工编号是7369,7654,7566的员工<ul>
+<li>OR方式<br><code>select empno,ename from scott.emp where empno=&#39;7369&#39; or empno=&#39;7654&#39; or empno=&#39;7566&#39;</code></li>
+<li>IN方式<br><code>select empno,ename from scott.emp where empno in(7369,7654,7566)</code></li>
+</ul>
+</li>
+<li>4.查询雇员姓名是’SMITH’,’ALLEN’,’WARD’的雇员信息  (IN方式)<br><code>select empno,ename from scott.emp where ename in(&#39;SMITH&#39;,&#39;ALLEN&#39;,&#39;WARD&#39;)</code></li>
+</ul>
+<h4 id="模糊查询like"><a href="#模糊查询like" class="headerlink" title="模糊查询like"></a>模糊查询like</h4><ul>
+<li>1.查询所有雇员姓名中第二个字符有‘M’的雇员<br><code>select ename from scott.emp where ename like &#39;_M%&#39;</code></li>
+<li>2.查询名字中带有‘M’的雇员<br><code>select ename from scott.emp where ename like &#39;%M%&#39;</code></li>
+<li>3.查询雇员编号不是7369的雇员信息<ul>
+<li>&lt;&gt;方式<br><code>select ename from scott.emp where empno &lt;&gt; 7369</code></li>
+<li>!=方式<br><code>select ename from scott.emp where empno != 7369</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="排序-order-by"><a href="#排序-order-by" class="headerlink" title="排序 order by"></a>排序 order by</h4><p>nvl(字段名，0) 如果字段为null把null改为0</p>
+<p>排序的时候，让null在最后边  <code>desc nulls last</code></p>
+<ul>
+<li><p>1.查询雇员的工资进行降序排序<br><code>select ename,sal from scott.emp order by sal desc</code></p>
+</li>
+<li><p>2.查询雇员的奖金并做降序排序（关于nulls first/nulls last）<br><code>select ename,nvl(comm,0) from scott.emp order by nvl(comm,0) desc</code></p>
+</li>
+<li>3.查询雇员的工资做降序排列并且其中奖金部分是升序排序<br><code>select ename,sal,nvl(comm,0) from scott.emp order by sal desc,nvl(comm,0) asc</code></li>
+</ul>
+<h4 id="单行函数"><a href="#单行函数" class="headerlink" title="单行函数"></a>单行函数</h4><p>伪表，虚表：dual  没有任何的实际意义，只是为了补全Oracle查询语法</p>
+<ul>
+<li>字符函数<br> 1.将’smith’转换成大写–关键字:upper<br> <code>select upper(&#39;smith&#39;) from dual</code><br> 2.将’SMITH’转换成小写–关键字:lower<br> <code>select lower(&#39;SMITH&#39;) from dual</code><br> 3.将’smith’首字母大写–关键字:initcap<br> <code>select initcap(&#39;smith&#39;) from dual</code><br> 4.将’helloworld’截取字符串成’hello’ 关键字substr,<strong>Orcale 默认是从1开始的，但是0也可以</strong><br> <code>select substr(&#39;helloworld&#39;,0,5) from dual</code><br> <code>select substr(&#39;helloworld&#39;,1,5) from dual</code><br> 5.获取’hello’的字符串长度–关键字length<br> <code>select length(&#39;hello&#39;) from dual</code><br> 6.将’hello’中的l用x进行替换–关键字replace<br> <code>select replace(&#39;hello&#39;,&#39;l&#39;,&#39;x&#39;) from dual</code></li>
+<li>数值函数<br> 1.将15.66进行四舍五入（从-2到2）–关键字round</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">select round(15.66) from dual    //16</div><div class="line">select round(15.66,-2) from dual //0  小数点左边第二位进</div><div class="line">select round(15.66,-1) from dual //20 小数点左边第一位进</div><div class="line">select round(15.66,0) from dual  //16</div><div class="line">select round(15.66,1) from dual  //15.7 保留一位小数</div><div class="line">select round(15.66,2) from dual  //15.66 保留两位小数</div></pre></td></tr></table></figure>
+<p>   2.将15.66进行截断（从-2到2）–关键字trunc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">select trunc(15.66) from dual    //15从小数点截取</div><div class="line">select trunc(15.66,-2) from dual //0</div><div class="line">select trunc(15.66,-1) from dual //10</div><div class="line">select trunc(15.66,0) from dual  //15</div><div class="line">select trunc(15.66,1) from dual  //15.6</div><div class="line">select trunc(15.66,2) from dual  //15.66</div></pre></td></tr></table></figure>
+<p>   3.对15/3进行求余数–关键字mod<br>     <code>select mod(15,3) from dual</code></p>
+<h4 id="日期函数"><a href="#日期函数" class="headerlink" title="日期函数"></a>日期函数</h4><ul>
+<li>1.查询系统时间–关键字sysdate<br><code>select sysdate from dual</code></li>
+<li>2.查询雇员进入公司的周数<br><code>select ename,trunc((sysdate-hiredate)/7) as &quot;周&quot; from scott.emp</code></li>
+<li>3.查询雇员进入公司的月数–关键字months_between<br><code>select round(months_between(sysdate,hiredate)) from scott.emp</code></li>
+<li>4.求出三个月后的日期–关键字add_months<br><code>select add_months(sysdate,3) from dual</code></li>
+</ul>
+<h4 id="转化函数："><a href="#转化函数：" class="headerlink" title="转化函数："></a>转化函数：</h4><ul>
+<li><ol>
+<li>将系统日期显示为yyyy-mm-dd hh:mi:ss.  <strong>注意分钟是mi</strong><br><code>select to_char(sysdate,&#39;yyyy-mm-dd hh:mi:ss&#39;) from dual;</code></li>
+</ol>
+</li>
+<li><ol>
+<li>去掉补0,就是有的单位数会前面有个0<br><code>select to_char(sysdate,&#39;fmyyyy-mm-dd hh:mi:ss&#39;) from dual;</code></li>
+</ol>
+</li>
+<li><ol>
+<li>显示成24小时制<br><code>select to_char(sysdate,&#39;yyyy-mm-dd hh24:mi:ss&#39;) from dual;</code></li>
+</ol>
+</li>
+<li><ol>
+<li>显示成年月日<br><code>select to_char(sysdate,&#39;yyyy&#39;)||&#39;年&#39; from dual；</code></li>
+</ol>
+</li>
+<li><ol>
+<li>将字符串1981-1-1转换成日期函数<br><code>select to_date(&#39;1981-1-1&#39;,&#39;yyyy-mm-dd&#39;) from dual;</code></li>
+</ol>
+</li>
+</ul>
+<h4 id="通用函数"><a href="#通用函数" class="headerlink" title="通用函数"></a>通用函数</h4><ul>
+<li><ol>
+<li>空值的处理函数，有null置为0<br> <code>select nvl(comm,0) from scott.emp;</code></li>
+</ol>
+</li>
+<li><ol>
+<li>nvl2(判断值，非空返回值，空返回值)<br> <code>select nvl2(null,&#39;非空&#39;,&#39;空&#39;)</code> from dual;</li>
+</ol>
+</li>
+</ul>
+<h4 id="条件表达式"><a href="#条件表达式" class="headerlink" title="条件表达式"></a>条件表达式</h4><ul>
+<li>1.查询员工的job内容并转成中文显示<ul>
+<li>decode方式 ：在这里，要区分字段的大小写<br><code>select ename,decode(job,&#39;CLERK&#39;,&#39;柜员&#39;,&#39;SALESMAN&#39;,&#39;销售&#39;，&#39;其他&#39;) from scott.emp</code>  //最后那个其他表示没有写出的，要不会转成null</li>
+<li>case when then end 方式<br><code>select ename , case job when &#39;CLERK&#39; then &#39;柜员&#39; when &#39;SALESMAN&#39; then &#39;销售&#39; else &#39;其他&#39; end from scott.emp</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="多行-聚合-函数"><a href="#多行-聚合-函数" class="headerlink" title="多行(聚合)函数"></a>多行(聚合)函数</h4><p>  查询的时候最好查哪个在count中放哪个字段，查询所有最好用主键</p>
+<ul>
+<li>1.查询所有员工记录数–关键字count<br><code>select count(*) from scott.emp</code></li>
+<li>2.查询佣金的总数–（如何查询某个字段的总数量）<br><code>select sum(sal) from scott.emp</code></li>
+<li>3.查询最低工资–关键字min<br><code>select min(sal) from scott.emp</code></li>
+<li>4.查询最高工资–关键字max<br><code>select max(sal) from scott.emp</code></li>
+<li>5.查询平均工资–关键字avg<br><code>select avg(sal) from scott.emp</code></li>
+<li>6.查询20号部门的员工工资总和<br><code>select deptno,sum(sal) from scott.emp group by deptno having deptno=20</code></li>
+</ul>
+<h4 id="分组函数-group-by后边有什莫select后边就必须有什么"><a href="#分组函数-group-by后边有什莫select后边就必须有什么" class="headerlink" title="分组函数 (group by后边有什莫select后边就必须有什么)"></a>分组函数 (group by后边有什莫select后边就必须有什么)</h4><ul>
+<li>1.查询部门编号及人数–分组查询关键字group by<br><code>select deptno,count(*) &quot;人数&quot; from scott.emp group by deptno</code></li>
+<li>2.查询每个部门编号及平均工资<br><code>select deptno,round(avg(sal)) from scott.emp group by deptno</code></li>
+<li>3.查询部门名称，部门编号，平均工资<br><code>select dname,s.deptno,round(avg(sal)) from scott.emp s, scott.dept d where s.deptno=d.deptno group by s.deptno,dname</code></li>
+<li>4.查询出部门人数大于5人的部门<br><code>select deptno,count(*) from scott.emp group by deptno having count(*)&gt;5</code></li>
+<li>5.查询部门编号，部门名称，平均工资且平均工资大于2000<br><code>select s.deptno,dname,round(avg(sal)) from scott.emp s,scott.dept d where s.deptno=d.deptno group by s.deptno,dname having round(avg(sal))&gt;2000</code></li>
+</ul>
+<h4 id="多表关联查询"><a href="#多表关联查询" class="headerlink" title="多表关联查询"></a>多表关联查询</h4><ul>
+<li>查询员工编号,员工姓名,员工部门编号,员工部门名称,员工部门地址,中文显示员工工资等级,及领导编号,领导姓名,领导部门编号,领导部门名称,中文显示领导工资等级（可分为以下几个逻辑）</li>
+</ul>
+<ol>
+<li>查询员工编号,员工姓名,领导编号,领导姓名<br><code>select s1.empno,s1.ename,s2.empno,s2.ename from scott.emp s1,scott.emp s2 where s1.mgr=s2.empno</code></li>
+<li>查询员工编号,员工姓名,员工部门编号,员工部门名称,员工部门地址,领导编号,领导姓名,领导部门编号,领导部门名称</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">select s1.empno,s1.ename,s1.deptno,d1.dname,d1.loc,s2.empno,s2.ename,s2.deptno,d2.dname,d2.loc </div><div class="line">from scott.emp s1,scott.emp s2,scott.dept d1,scott.dept d2 </div><div class="line">where s1.mgr=s2.empno and s1.deptno=d1.deptno and s2.deptno=d2.deptno</div></pre></td></tr></table></figure>
+<ol>
+<li>查询员工编号,员工姓名,员工部门编号,员工部门名称,员工部门地址,员工工资等级,领导编号,领导姓名,领导部门编号,领导部门名称,领导工资等级</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">select s1.empno,s1.ename,s1.deptno,d1.dname,d1.loc,g1.grade,s2.empno,s2.ename,s2.deptno,d2.dname,d2.loc,g2.grade </div><div class="line">from scott.emp s1,scott.emp s2,scott.dept d1,scott.dept d2,scott.salgrade g1,scott.salgrade g2 </div><div class="line">where s1.mgr=s2.empno and s1.deptno=d1.deptno and s2.deptno=d2.deptno </div><div class="line">and s1.sal between g1.losal and g1.hisal and s2.sal between g2.losal and g2.hisal</div></pre></td></tr></table></figure>
+<ol>
+<li>询员工编号,员工姓名,员工部门编号,员工部门名称,员工部门地址,中文显示员工工资等级,领导编号,领导姓名,领导部门编号,领导部门名称,中文显示领导工资等级</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">select s1.empno,s1.ename,s1.deptno,d1.dname,d1.loc,decode(g1.grade,1,&apos;一级&apos;,2,&apos;二级&apos;,3,&apos;三级&apos;,4,&apos;四级&apos;),s2.empno,s2.ename,s2.deptno,d2.dname,d2.loc,decode(g2.grade,1,&apos;一级&apos;,2,&apos;二级&apos;,3,&apos;三级&apos;,4,&apos;四级&apos;)</div><div class="line">from scott.emp s1,scott.emp s2,scott.dept d1,scott.dept d2,scott.salgrade g1,scott.salgrade g2 </div><div class="line">where s1.mgr=s2.empno and s1.deptno=d1.deptno and s2.deptno=d2.deptno </div><div class="line">and s1.sal between g1.losal and g1.hisal and s2.sal between g2.losal and g2.hisal</div></pre></td></tr></table></figure>
+<h4 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h4><p>因为内连接有的时候，查不到没有关联的数据，所以用到了外连接</p>
+<ul>
+<li><p>1.查询员工编号，姓名，领导编号，领导姓名，包括没领导的</p>
+<ul>
+<li>left join on方式<br><code>select s1.empno,s1.ename,s2.empno,s2.ename from scott.emp s1 left join scott.emp s2  on s1.mgr=s2.empno</code></li>
+<li>Orcl的(+)方式<br><code>select s1.empno,s1.ename,s2.empno,s2.ename from scott.emp s1,scott.emp s2 where s1.mgr=s2.empno(+)</code></li>
+</ul>
+</li>
+<li><p>2.查询出所有部门信息(包括没员工的部门)及部门下的员工信息</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">select d.deptno,dname,loc,empno,ename,sal,comm from scott.dept d left join scott.emp s on d.deptno=s.deptno</div><div class="line"></div><div class="line">select d.deptno,dname,loc,empno,ename,sal,comm from scott.dept d , scott.emp s where d.deptno=s.deptno(+)</div></pre></td></tr></table></figure>
+<p>多表关联查询的时候，如果逻辑不清楚可以考虑画图</p>
+<p>抽屉</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/oracle/" rel="tag">#oracle</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/18/sublime/" rel="next" title="sublime">
+                <i class="fa fa-chevron-left"></i> sublime
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/23/easyUI/" rel="prev" title="easyUI">
+                easyUI <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/10/23/oracle01/"
+     data-title="oracle第一阶段"
+     data-content=""
+     data-url="https://markzc.github.io/2016/10/23/oracle01/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/23/oracle01/"
+           data-title="oracle第一阶段" data-url="https://markzc.github.io/2016/10/23/oracle01/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/markzc" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3490969043" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/john_zc" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle"><span class="nav-number">1.</span> <span class="nav-text">Oracle</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Oracle-介绍"><span class="nav-number">1.1.</span> <span class="nav-text">Oracle 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Oracle-的安装"><span class="nav-number">1.2.</span> <span class="nav-text">Oracle 的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程连接数据库"><span class="nav-number">1.3.</span> <span class="nav-text">远程连接数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#本地安装plsql-developer"><span class="nav-number">1.3.1.</span> <span class="nav-text">本地安装plsql developer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#远程连接"><span class="nav-number">1.3.2.</span> <span class="nav-text">远程连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Oracle的sql语句"><span class="nav-number">1.4.</span> <span class="nav-text">Oracle的sql语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中文乱码问题"><span class="nav-number">1.4.1.</span> <span class="nav-text">中文乱码问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sql语句"><span class="nav-number">1.4.2.</span> <span class="nav-text">sql语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本查询"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">基本查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件查询"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">条件查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#范围查询"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">范围查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模糊查询like"><span class="nav-number">1.4.2.4.</span> <span class="nav-text">模糊查询like</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排序-order-by"><span class="nav-number">1.4.2.5.</span> <span class="nav-text">排序 order by</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单行函数"><span class="nav-number">1.4.2.6.</span> <span class="nav-text">单行函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日期函数"><span class="nav-number">1.4.2.7.</span> <span class="nav-text">日期函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#转化函数："><span class="nav-number">1.4.2.8.</span> <span class="nav-text">转化函数：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通用函数"><span class="nav-number">1.4.2.9.</span> <span class="nav-text">通用函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件表达式"><span class="nav-number">1.4.2.10.</span> <span class="nav-text">条件表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多行-聚合-函数"><span class="nav-number">1.4.2.11.</span> <span class="nav-text">多行(聚合)函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分组函数-group-by后边有什莫select后边就必须有什么"><span class="nav-number">1.4.2.12.</span> <span class="nav-text">分组函数 (group by后边有什莫select后边就必须有什么)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多表关联查询"><span class="nav-number">1.4.2.13.</span> <span class="nav-text">多表关联查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外连接"><span class="nav-number">1.4.2.14.</span> <span class="nav-text">外连接</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
