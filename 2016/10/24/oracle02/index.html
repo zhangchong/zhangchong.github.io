@@ -1,0 +1,1235 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="oracle," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Oracle 第二阶段查询子查询
+1.查询比雇员7654工资高，同时从事和7788的工作一样的员工select ename,job,sal from emp where sal&amp;gt;(select sal from emp where empno=7654) and job=(select job from emp where empno=7788)
+2.查询每个部门最低工资及最低工资的部门名称">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oracle02">
+<meta property="og:url" content="https://markzc.github.io/2016/10/24/oracle02/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="Oracle 第二阶段查询子查询
+1.查询比雇员7654工资高，同时从事和7788的工作一样的员工select ename,job,sal from emp where sal&amp;gt;(select sal from emp where empno=7654) and job=(select job from emp where empno=7788)
+2.查询每个部门最低工资及最低工资的部门名称">
+<meta property="og:image" content="https://markzc.github.io/uploads/oracle/02/e3e212f0-5b5d-4de3-92d9-a344faa0891b.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/oracle/02/14ded678-8cd4-4b04-a01f-25bb024fd5d8.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/oracle/02/adf897c0-5c80-458c-ae74-2982f1adcb5a.png">
+<meta property="og:updated_time" content="2016-11-24T15:13:19.918Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="oracle02">
+<meta name="twitter:description" content="Oracle 第二阶段查询子查询
+1.查询比雇员7654工资高，同时从事和7788的工作一样的员工select ename,job,sal from emp where sal&amp;gt;(select sal from emp where empno=7654) and job=(select job from emp where empno=7788)
+2.查询每个部门最低工资及最低工资的部门名称">
+<meta name="twitter:image" content="https://markzc.github.io/uploads/oracle/02/e3e212f0-5b5d-4de3-92d9-a344faa0891b.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://markzc.github.io/2016/10/24/oracle02/"/>
+
+
+  <title> oracle02 | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                oracle02
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-24T23:08:24+08:00" content="2016-10-24">
+              2016-10-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/oracle/" itemprop="url" rel="index">
+                    <span itemprop="name">oracle</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/24/oracle02/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/24/oracle02/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/24/oracle02/" class="leancloud_visitors" data-flag-title="oracle02">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Oracle-第二阶段"><a href="#Oracle-第二阶段" class="headerlink" title="Oracle 第二阶段"></a>Oracle 第二阶段</h1><h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><h3 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h3><ul>
+<li>1.查询比雇员7654工资高，同时从事和7788的工作一样的员工<br><code>select ename,job,sal from emp where sal&gt;(select sal from emp where empno=7654) and job=(select job from emp where empno=7788)</code></li>
+<li><p>2.查询每个部门最低工资及最低工资的部门名称和雇员名称<br><code>select d.deptno,dname,empno,ename,sal from (select deptno,min(sal) minsal from emp group by deptno) mindept,emp e,dept d where mindept.deptno=e.deptno and mindept.deptno=d.deptno and mindept.minsal=e.sal</code></p>
+</li>
+<li><p>3.找到员工表中薪水大于本部门平均工资的所有员工<br><code>select ename,sal from (select deptno,avg(sal) avgsal from emp group by deptno) s,emp where s.deptno=emp.deptno and emp.sal&gt;s.avgsal</code></p>
+</li>
+<li>5.统计每年入职的员工个数<br><code>select to_char(hiredate,&#39;yyyy&#39;),count(*) from emp group by to_char(hiredate,&#39;yyyy&#39;)</code></li>
+</ul>
+<h3 id="行列转换："><a href="#行列转换：" class="headerlink" title="行列转换："></a>行列转换：</h3><p>本来是这样的：<br><img src="/uploads/oracle/02/e3e212f0-5b5d-4de3-92d9-a344faa0891b.png" alt=""><br>要变成这样：<br><img src="/uploads/oracle/02/14ded678-8cd4-4b04-a01f-25bb024fd5d8.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">select sum(e.hcount),</div><div class="line">sum(decode(e.hdate,&apos;1980&apos;,e.hcount)) &quot;1980&quot;,</div><div class="line">sum(decode(e.hdate,&apos;1981&apos;,e.hcount)) &quot;1981&quot;,</div><div class="line">sum(decode(e.hdate,&apos;1982&apos;,e.hcount)) &quot;1982&quot;,</div><div class="line">sum(decode(e.hdate,&apos;1987&apos;,e.hcount)) &quot;1987&quot;</div><div class="line">from </div><div class="line">(select to_char(hiredate,&apos;yyyy&apos;) hdate,count(*) hcount from emp group by to_char(hiredate,&apos;yyyy&apos;)) e</div></pre></td></tr></table></figure>
+<blockquote>
+<p>因为转换之后因为,前面有查询总和已经用了一个聚合函数sum用到了group by的元素，所以后边不能跟普通的字段，必须转成聚合函数，所以加一个sum加avg等其他的聚合函数也行</p>
+</blockquote>
+<h3 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h3><ul>
+<li>0.找到员工表中工资最高的前三名<br><code>select rownum ,s.* from (select * from emp order by sal ) s where rownum &lt;= 3</code><blockquote>
+<p>有一个虚列叫做rownum，每一个表都有一个虚列，虚表都是按顺序排序从1开始，排序可以让表排序后的表作为一个新表然后再取前几个</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p>1.查询员工表，将员工工资进行降序查询，并进行分页取出第一页，一页三条记录<br><code>select rownum ,s.* from (select * from emp order by sal ) s where rownum &lt;= 3</code></p>
+</li>
+<li><ol>
+<li>查询员工表，将员工工资进行降序查询，并进行分页取出第二页，一页三条记录</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>rownum是只能查询出小于它的大的不能查询出来，rownum&gt;3,就不行了所以用到了嵌套，让rownum成为一个真实的列</p>
+</blockquote>
+<p><code>select * from (select * from rownum r,e.* from (select * from emp order by sal desc) e) e1 where e1.r&gt;3 and e1.r&lt;6</code></p>
+<blockquote>
+<p>所以可以提取一个分页公式</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">select * from (select * from rownum r,e.* from (select * from 表 order by sal desc) e) e1 </div><div class="line">where e1.r&gt;pagesize*(pageno-1) and e1.r&lt;pagesize*(pageno);</div></pre></td></tr></table></figure>
+<h3 id="集合运算（了解）"><a href="#集合运算（了解）" class="headerlink" title="集合运算（了解）"></a>集合运算（了解）</h3><ul>
+<li>1.查询工资大于1200并且job是SALESMAN(intersect)交集<br><code>select * from emp where sal&gt;1200 intersect select * from emp where job=&#39;SALESMAN&#39;</code></li>
+<li>2.查询工资大于1200或者job是SALESMAN(union)并集<br><code>select * from emp where sal&gt;1200 union select * from emp where job=&#39;SALESMAN&#39;</code></li>
+<li>3.求工资大约1200和job是SALESMAN的差集(minus)差集<br><code>select * from emp where sal&gt;1200 minus select * from emp where job=&#39;SALESMAN&#39;</code></li>
+</ul>
+<h2 id="DDL-Data-Definition-Language-语句管理表"><a href="#DDL-Data-Definition-Language-语句管理表" class="headerlink" title="DDL(Data Definition Language)语句管理表"></a>DDL(Data Definition Language)语句管理表</h2><p>/<em><br>create tablespace 表空间名称<br>datafile 数据文件路径<br>size 100m<br>autoextend on<br>next 10m;
+</em>/</p>
+<blockquote>
+<p> 确定当前用户有dba权限</p>
+</blockquote>
+<ul>
+<li>1.创建itcast001表空间<br><code>create tablespace itcase001
+datafile &#39;c:/itcast.dbf&#39;
+size 100m
+autoextend on
+next 10m</code></li>
+<li>2.创建itcastuser用户<br><code>create user zc identified by zc
+default tablespace itcase001</code></li>
+<li>3.为itcastuser用户赋予dba权限<br><code>grant dba to zc</code></li>
+</ul>
+<h2 id="Oracle数据类型"><a href="#Oracle数据类型" class="headerlink" title="Oracle数据类型"></a>Oracle数据类型</h2><ul>
+<li>字符类型<pre><code>char:固定长度类型
+varchar2:可变长度类型，可保存1333多个汉字(varchar快被淘汰了)
+</code></pre></li>
+<li>数值类型<pre><code>number(3):999   3位
+number(3,2):9.99  3位保留两位小数
+</code></pre></li>
+<li>日期类型<pre><code>date:mysql中日月年,oracle中精确到时分秒,相当于MySQL中的datetime
+timestamp:精确到秒的后9位
+</code></pre></li>
+<li>大数据类型<pre><code>long:大数据字符类型,2G
+Clob:存放字符类型,4G
+Blob:存放二进制类型,4G
+</code></pre>*/</li>
+</ul>
+<h2 id="DML创建表"><a href="#DML创建表" class="headerlink" title="DML创建表"></a>DML创建表</h2><ul>
+<li>0.创建person表，字段为pid，pname</li>
+</ul>
+<p><code>create table person(
+   pid number(10),
+   pname varchar2(50)
+)</code></p>
+<h3 id="Oracle表中的增删改查"><a href="#Oracle表中的增删改查" class="headerlink" title="Oracle表中的增删改查"></a>Oracle表中的增删改查</h3><blockquote>
+<p>Oracle中的事务需要手动commit提交</p>
+<p>Oracle是默认不提交事务的，需要手动提交，不提交的话查也能查到</p>
+</blockquote>
+<ul>
+<li>1.为person表新增一条数据<br><code>insert into person values(1,&#39;张三&#39;);
+commit;</code></li>
+<li>2.修改person表中的一条数据<br><code>update person set pname=&#39;李四&#39; where pid=&#39;1&#39;;
+commit;</code></li>
+<li>3.删除person表中的一条数据<br><code>delete from person where pid=1;commit;</code></li>
+</ul>
+<blockquote>
+<p><code>select * from person fro update;</code>这样可以把表的数据的内容查出来，并且可以修改内容，记得提交事务</p>
+</blockquote>
+<h3 id="修改表列的属性"><a href="#修改表列的属性" class="headerlink" title="修改表列的属性"></a>修改表列的属性</h3><ul>
+<li>1.给person表增加sex性别列，类型为number(1)<br>alter table person add sex number(1);</li>
+<li>2.修改person表列sex类型为char(1)<br>alter table person modify sex char(1); 修改的时候里面不能有值</li>
+<li>3.修改person表sex列为gender<br>alter table person rename column sex to gender;</li>
+<li>4.删除person表的gender列<br>alter table person drop column gender;</li>
+<li>5.删除person表中所有数据<br>delete from person where 1=1;</li>
+<li>6.摧毁person表（truncate table 表名）<ul>
+<li>直接摧毁表结构后重构表，比delete要很快，但是没法按照条件删除<br><code>truncate table person;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h3><ul>
+<li><p>1.创建person表，pid为主键，pname，gender(主键约束primary key)</p>
+<ul>
+<li>primary key方式<br><code>create table person(
+  pid number(10) primary key,
+  pname varchar2(50)
+) 这样会自动生成一个主键的名称</code></li>
+<li>constraint 主键名 primary key(字段),方式<br><code>create table person(
+  pid number(10),
+  pname varchar2(50),
+  constraint pk_pid primary key(pid)
+)  会生成一个给出的主键名</code></li>
+</ul>
+</li>
+<li><p>2.创建person表，pname非空，gender(非空约束not null)<br>`create table person(</p>
+<pre><code>pid number(10),
+pname varchar2(50) not null,
+constraint pk_pid primary key(pid)
+</code></pre><p>)`</p>
+</li>
+<li>3.创建person表，pid，pname是唯一，(唯一约束unique)<br>`create table person(<pre><code>pid number(10),
+pname varchar2(50) unique,
+constraint pk_pid primary key(pid)
+</code></pre>)`</li>
+<li>4.创建person表，pid，gender—检查约束check(列名 in (值)) gender只能为1或2<br>`create table person(<pre><code>pid number(10),
+gender number(1) check(gender in (0,1)),
+constraint pk_pid primary key(pid)
+</code></pre>)`</li>
+</ul>
+<h3 id="外键约束"><a href="#外键约束" class="headerlink" title="外键约束"></a>外键约束</h3><p>/<em><br>constraint fk_order_orderid foreign key(外键) references 对应的表(对应的主键)
+</em>/ </p>
+<ul>
+<li>1.创建orders表,字段为order_id(主键),total_price<br>create table orders(<pre><code>order_id number(10) primary key,
+total_price number(5,2)
+</code></pre>)</li>
+<li>2.创建order_detail表,字段为detail_id(主键),order_id(外键),item_name<br>create table order_detail (<pre><code>detail_id number(10) primary key,
+order_id number(10),
+item_name varchar2(50)
+constraint fk_order_id foreign key(order_id) references orders(order_id)
+</code></pre>)<br>–3.为orders表和order_detail表插入数据</li>
+</ul>
+<p>–4.删除orders表和order_detail表中的数据</p>
+<p>– 强制删除<br>drop table orders cascade constraint;<br>– 级联删除<br>create table order_detail (<br>       detail_id number(10) primary key,<br>       order_id number(10),<br>       item_name varchar2(50)<br>       constraint fk_order_id foreign key(order_id) references orders(order_id) on delete cascade<br>)</p>
+<h3 id="Oracle事务（了解）"><a href="#Oracle事务（了解）" class="headerlink" title="Oracle事务（了解）"></a>Oracle事务（了解）</h3><ul>
+<li>设置savepoint 回滚点，再次修改数据后用rollback to 回滚点，回滚数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select * from person</div><div class="line">update person set pname=&apos;zhangsan&apos; where pid=&apos;1&apos;;</div><div class="line">savepoint p1;</div><div class="line">update person set pname=&apos;lisi&apos; where pid=&apos;1&apos;;</div><div class="line">rollback to p1;</div></pre></td></tr></table></figure>
+<ul>
+<li>不可重复读(Oracle默认Read Committed),幻读(MySQL默认Repeatable Read)</li>
+</ul>
+<ol>
+<li>脏读（Read Uncommitted）<br>  情景：A事物读取了B事物修改，但未提交的数据<br>  问题：若B回滚了事物，A就读到了错误数据。</li>
+<li>不可重复读（Read Uncommitted）<br> 情景：A事物查询数据，B修改了数据，A又查询数据<br> 问题：A事物前后两次数据不一样</li>
+<li>幻读（Repeatable Read）<br> 情景：A事物查询数据，B事物插入数据，A又查询数据<br> 问题：A事物感觉出现了幻觉，多了些数据</li>
+<li>串行（Serializable）：这种隔离级别将事物放在一个队列中，每个事物开始之后，别的事物被挂起。同一个时间点只能有一个事物能操作数据库对象。这种隔离级别对于数据的完整性是最高的，但是同时大大降低了系统的可并发性。</li>
+</ol>
+<h2 id="管理其他数据库对象"><a href="#管理其他数据库对象" class="headerlink" title="管理其他数据库对象"></a>管理其他数据库对象</h2><h3 id="exists-not-exists"><a href="#exists-not-exists" class="headerlink" title="exists / not exists"></a>exists / not exists</h3><blockquote>
+<p>select … where exists(查询语句)<br>exists：当查询结果不为null，返回true<br>当查询结果为null，返回false</p>
+</blockquote>
+<ul>
+<li><p>0.例：查询出所有信息<br><code>select * from emp where exists (select * from emp where ename=&quot;SMITH&quot;)</code><br>意思是()里面相当于true所以会显示所有的信息</p>
+</li>
+<li><p>1.查询出有员工的部门<br><code>select * from dept where exists (select * from emp where dept.deptno=emp.deptno)</code></p>
+<p> 在这里里面的那条语句不能再加一个 <code>from dept</code> ,因为加载的时候要加载外边的那个dept，如果里边加上了就是加载的里边的那个</p>
+</li>
+</ul>
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><blockquote>
+<p>视图：就是一张虚拟表，本身不存放数据，数据来源于原始表<br>创建<code>create [or replace] view 视图名 as sql查询语句</code>；</p>
+</blockquote>
+<ul>
+<li>1.创建视图<br><code>create or replace view view_emp as select empno,ename,job,hirdate from scott.emp;</code></li>
+<li>2.查询视图<br><code>select * from view_emp</code></li>
+<li>3.修改视图中7369的名字为’smith’<br><code>update view_emp set ename=&#39;smith&#39; where empno=7369</code></li>
+<li>4.删除视图<br><code>drop view view_emp;</code></li>
+<li>5.创建只读视图（关键字 with read only）<br><code>create or replace view view_emp as select empno,ename,job,hirdate from scott.emp with read only;</code></li>
+</ul>
+<hr>
+<p>视图就是一个虚表不存数据，修改视图中的数据实际上就是修改表中的数据<br>在当前用户下创建视图，就能够更改视图，但是如果在别的用户下对当前用户的表来创建视图就不能修改删除了，如果想修改就需要真正的DBA权限去赋予权限了</p>
+<ul>
+<li>创建视图权限，一般网上找都是说的这句，但光有这句话是不行的<br>grant create view to itcastuser;</li>
+<li>授予查询权限<br>grant select any table to itcastuser;</li>
+<li>授予权限<br>grant select any dictionary to itcastuser;</li>
+</ul>
+<h3 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h3><p>序列：类似于MySql的自动增长</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">create sequence seq_test </div><div class="line">start with 5      从5开始，第一次也要用nextval</div><div class="line">increment by 2    每次增长两个</div><div class="line">maxvalue  20      最大值20</div><div class="line">cycle             循环，到了20会从1开始循环</div><div class="line">cache 5           缓存生成5个</div></pre></td></tr></table></figure>
+<ul>
+<li>1.创建序列<br><code>create sequence emp_seq;</code></li>
+<li>2.如何查询序列（currval,nextval）<br><strong>第一次的时候必须用nextval因为，第一次还没生成，不能取当前值，序列一旦增长就不能回去了</strong><br><code>select emp_seq.currval from dual  当前的值
+select emp_seq.nextval from dual  下一个值</code></li>
+<li>3.删除序列<br><code>drop sequence emp_seq</code></li>
+<li>4.为person表插入数据，用序列为id赋值<br><code>insert into person values (emp_seq.nextval,&#39;11&#39;,1)</code><br> <code>commit;</code></li>
+</ul>
+<blockquote>
+<p>序列跟表没有关系，就是一个数，因为Oracle中没有自动增长机制，所以可以用它做自动增长</p>
+</blockquote>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><blockquote>
+<p>目的是提高检索速度<br>语法：<code>create index 索引名称 on 表名(列名);</code></p>
+</blockquote>
+<ul>
+<li><p>原则：</p>
+<ul>
+<li>大数据表才创建索引，</li>
+<li>为经常用到的列创建索引，</li>
+<li>索引的层数不要超过4层，也就是on 表名(列名1,列名2)这里的列名不要超过4个</li>
+</ul>
+</li>
+<li><p>多列索引：<br><code>create index person_index on person(pname，gender)</code> 后面可以加，多几个字段<br>但是这样不好，因为创建索引多了就慢了</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>创建索引<br><code>create index person_index on person(pname)</code></li>
+</ul>
+<p>-<code>删除索引</code>drop index person;`</p>
+<ul>
+<li>创建100万条的数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">select sys_guid() from dual; --随机生成UDID</div><div class="line">declare</div><div class="line">   myname varchar2(50);</div><div class="line">begin</div><div class="line">   for i in 1..1000000 loop</div><div class="line">    select sys_guid() into myname from dual;</div><div class="line">    insert into person values(seq_person.nextval,myname,1);</div><div class="line">   end loop;</div><div class="line">   commit;</div><div class="line">end;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>创建数据之后根据pname查询一条数据会有点慢，用了索引就快了<br> 以后面试的时候记住数据库优化有索引这回事</p>
+</blockquote>
+<p>什么时候创建搜索引？<br><img src="/uploads/oracle/02/adf897c0-5c80-458c-ae74-2982f1adcb5a.png" alt=""></p>
+<h3 id="同义词（了解）"><a href="#同义词（了解）" class="headerlink" title="同义词（了解）"></a>同义词（了解）</h3><blockquote>
+<p>为表创建别名</p>
+</blockquote>
+<ul>
+<li>同义词和视图的区别：不需要dba权限就可以创建同义词</li>
+<li>视图可以隐藏列，同义词不可以去掉列只是整张表的复制</li>
+<li>作用：缩短对象的名称方便访问</li>
+</ul>
+<hr>
+<ul>
+<li>可以取两个别名，改一个就都变了<ul>
+<li>创建 <code>create public synonym 同义词名 for 目标表名</code><br><code>create public synonym sysno_emp for scott.emp;</code></li>
+<li>删除 <code>drop public synonym 同义词名</code></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/oracle/" rel="tag">#oracle</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/23/oracle01/" rel="next" title="oracle第一阶段">
+                <i class="fa fa-chevron-left"></i> oracle第一阶段
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/01/oracle总结/" rel="prev" title="oracle总结">
+                oracle总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/10/24/oracle02/"
+     data-title="oracle02"
+     data-content=""
+     data-url="https://markzc.github.io/2016/10/24/oracle02/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/24/oracle02/"
+           data-title="oracle02" data-url="https://markzc.github.io/2016/10/24/oracle02/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/markzc" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3490969043" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/john_zc" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-第二阶段"><span class="nav-number">1.</span> <span class="nav-text">Oracle 第二阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查询"><span class="nav-number">1.1.</span> <span class="nav-text">查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子查询"><span class="nav-number">1.1.1.</span> <span class="nav-text">子查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行列转换："><span class="nav-number">1.1.2.</span> <span class="nav-text">行列转换：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分页查询"><span class="nav-number">1.1.3.</span> <span class="nav-text">分页查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集合运算（了解）"><span class="nav-number">1.1.4.</span> <span class="nav-text">集合运算（了解）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDL-Data-Definition-Language-语句管理表"><span class="nav-number">1.2.</span> <span class="nav-text">DDL(Data Definition Language)语句管理表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Oracle数据类型"><span class="nav-number">1.3.</span> <span class="nav-text">Oracle数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DML创建表"><span class="nav-number">1.4.</span> <span class="nav-text">DML创建表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Oracle表中的增删改查"><span class="nav-number">1.4.1.</span> <span class="nav-text">Oracle表中的增删改查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改表列的属性"><span class="nav-number">1.4.2.</span> <span class="nav-text">修改表列的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#约束"><span class="nav-number">1.4.3.</span> <span class="nav-text">约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外键约束"><span class="nav-number">1.4.4.</span> <span class="nav-text">外键约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Oracle事务（了解）"><span class="nav-number">1.4.5.</span> <span class="nav-text">Oracle事务（了解）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理其他数据库对象"><span class="nav-number">1.5.</span> <span class="nav-text">管理其他数据库对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exists-not-exists"><span class="nav-number">1.5.1.</span> <span class="nav-text">exists / not exists</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视图"><span class="nav-number">1.5.2.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序列"><span class="nav-number">1.5.3.</span> <span class="nav-text">序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引"><span class="nav-number">1.5.4.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同义词（了解）"><span class="nav-number">1.5.5.</span> <span class="nav-text">同义词（了解）</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
