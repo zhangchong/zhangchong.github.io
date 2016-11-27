@@ -1,0 +1,1184 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="maven," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Maven第一阶段Maven 的好处maven： 专家，内行
+
+最直观的效果(项目的大小小很多):
+传统项目
+Maven 项目
+
+
+
+分析出maven优点是如何实现的
+依赖管理
+就是对jar包管理的过程
+分析jar包查找的过程：
+在项目与maven的仓库之间有索引，所以速度也不会变慢
+
+
+项目的一键构建什么是构建：
+
+找到编译好的项目目录下运行 mvn tomcat：run，就会自动转成war放到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="maven01">
+<meta property="og:url" content="https://markzc.github.io/2016/11/27/maven01/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="Maven第一阶段Maven 的好处maven： 专家，内行
+
+最直观的效果(项目的大小小很多):
+传统项目
+Maven 项目
+
+
+
+分析出maven优点是如何实现的
+依赖管理
+就是对jar包管理的过程
+分析jar包查找的过程：
+在项目与maven的仓库之间有索引，所以速度也不会变慢
+
+
+项目的一键构建什么是构建：
+
+找到编译好的项目目录下运行 mvn tomcat：run，就会自动转成war放到">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/f3186e21-e9d9-4c40-9998-d647e387ba54.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/6b1801d9-e5b7-4140-924f-690554950c98.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/b2cb76b8-cc29-4f96-a714-eb1591bed0b4.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/27d69564-aa02-469b-b329-1a5a292e556e.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/9d823efb-801e-48da-9e3e-6e683c9a4e56.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/1948542d-068f-456d-8186-df20c86765aa.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/36365324-d625-43a5-acb5-295cf39f9d27.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/162b144a-ed36-490e-ab71-700c699ddbfd.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/df6ecbe0-fa46-4855-ba24-eb043aa301e9.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/ca7b8fb8-de4f-4d9c-815e-6435a45d9582.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/f865a918-0052-4e1f-88fa-ce5767560dc6.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/cf81b8e8-0509-4789-adc5-4751efec231a.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/1748ca32-1b65-4027-806b-81705de060b3.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/ec987ad5-6682-4c29-a234-c17fc69a54d5.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/c5e96629-f913-4378-b3d2-790633447075.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/974b5092-8866-447b-9646-17103367bfd4.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/b8f350d1-3518-424c-87ec-dca6e2435d92.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/394d37f4-1954-477b-aa2e-7e4dffc066ad.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/afa41abb-9fb6-44cd-8e85-fe58805150b1.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/11ee873b-0e15-4483-9b86-ccc38c6aca18.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/8701dcc8-d824-4b68-ab7c-ebab910f2db4.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/8e5bb06e-0e11-48f4-b406-1615f1154102.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/18f34f51-03ac-43b9-b9cd-f0020bf7883b.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/01/2d770d2e-e18b-4d5a-94cb-550acd3c87ed.png">
+<meta property="og:updated_time" content="2016-11-27T15:36:29.299Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="maven01">
+<meta name="twitter:description" content="Maven第一阶段Maven 的好处maven： 专家，内行
+
+最直观的效果(项目的大小小很多):
+传统项目
+Maven 项目
+
+
+
+分析出maven优点是如何实现的
+依赖管理
+就是对jar包管理的过程
+分析jar包查找的过程：
+在项目与maven的仓库之间有索引，所以速度也不会变慢
+
+
+项目的一键构建什么是构建：
+
+找到编译好的项目目录下运行 mvn tomcat：run，就会自动转成war放到">
+<meta name="twitter:image" content="https://markzc.github.io/uploads/maven/01/f3186e21-e9d9-4c40-9998-d647e387ba54.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://markzc.github.io/2016/11/27/maven01/"/>
+
+
+  <title> maven01 | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                maven01
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-27T23:31:46+08:00" content="2016-11-27">
+              2016-11-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代码之外的技能/" itemprop="url" rel="index">
+                    <span itemprop="name">代码之外的技能</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/27/maven01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/27/maven01/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/27/maven01/" class="leancloud_visitors" data-flag-title="maven01">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Maven第一阶段"><a href="#Maven第一阶段" class="headerlink" title="Maven第一阶段"></a>Maven第一阶段</h1><h2 id="Maven-的好处"><a href="#Maven-的好处" class="headerlink" title="Maven 的好处"></a>Maven 的好处</h2><p>maven： 专家，内行</p>
+<ul>
+<li>最直观的效果(项目的大小小很多):<ul>
+<li>传统项目<br><img src="/uploads/maven/01/f3186e21-e9d9-4c40-9998-d647e387ba54.png" alt=""></li>
+<li>Maven 项目<br><img src="/uploads/maven/01/6b1801d9-e5b7-4140-924f-690554950c98.png" alt=""></li>
+</ul>
+</li>
+</ul>
+<h2 id="分析出maven优点是如何实现的"><a href="#分析出maven优点是如何实现的" class="headerlink" title="分析出maven优点是如何实现的"></a>分析出maven优点是如何实现的</h2><ol>
+<li>依赖管理<ul>
+<li>就是对jar包管理的过程</li>
+<li>分析jar包查找的过程：<br><img src="/uploads/maven/01/b2cb76b8-cc29-4f96-a714-eb1591bed0b4.jpg" alt=""></li>
+<li>在项目与maven的仓库之间有索引，所以速度也不会变慢</li>
+</ul>
+</li>
+<li><p>项目的一键构建<br>什么是构建：<br><img src="/uploads/maven/01/27d69564-aa02-469b-b329-1a5a292e556e.jpg" alt=""></p>
+<ul>
+<li>找到编译好的项目目录下运行 <code>mvn tomcat：run</code>，就会自动转成war放到apach下并打开服务器，然后还有提示输入的网址</li>
+</ul>
+</li>
+</ol>
+<h2 id="Maven的安装"><a href="#Maven的安装" class="headerlink" title="Maven的安装"></a>Maven的安装</h2><blockquote>
+<p>下载之后直接解压即可</p>
+</blockquote>
+<p>对应的目录结构：<br><img src="/uploads/maven/01/9d823efb-801e-48da-9e3e-6e683c9a4e56.jpg" alt=""></p>
+<h2 id="Maven的配置及仓库的位置"><a href="#Maven的配置及仓库的位置" class="headerlink" title="Maven的配置及仓库的位置"></a>Maven的配置及仓库的位置</h2><h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><ul>
+<li>电脑上需安装环境，安装JDK1.7 +版本  （将配置环境变量path ）</li>
+<li><p>配置<code>MAVEN_HOME</code> ，变量值就是你的安装 的路径（bin目录之前一级目录）,然后将 <code>%MAVEN_HOME%/bin</code> 加入环境变量path</p>
+<p>配置完之后可以用 <code>mvn -version</code> 或简写为 <code>mvn -v</code> 来查看版本信息3.3.9来确定是否安装成功。</p>
+</li>
+</ul>
+<h3 id="仓库的配置"><a href="#仓库的配置" class="headerlink" title="仓库的配置"></a>仓库的配置</h3><p>  但是使用<code>mvn tomcat：run</code> ，还是不能使用，因为在默认情况下会通过 <code>pom.xml</code> 这个配置文件先在本地仓库中找，找不到再去远程仓库，找不到再去中央仓库.</p>
+<ul>
+<li><p>仓库的分类<br><img src="/uploads/maven/01/1948542d-068f-456d-8186-df20c86765aa.jpg" alt=""></p>
+<ol>
+<li>本地仓库<br>自己电脑上的仓库</li>
+<li>远程仓库：<br>公司内部的服务器上</li>
+<li>中央仓库<code>apache</code>服务器上呢：有些收费的jar包没有例如：Oracle<br><a href="http://repo1.maven.org/maven2" target="_blank" rel="external">http://repo1.maven.org/maven2</a></li>
+</ol>
+</li>
+<li><p>配置maven的查找本地仓库的路劲：</p>
+<ul>
+<li>找到maven的安装目录下的conf下的settings.xml打开</li>
+<li>配置<code>&lt;localRepository&gt;本地仓库的地址&lt;/localRepository&gt;</code><br><img src="/uploads/maven/01/36365324-d625-43a5-acb5-295cf39f9d27.png" alt=""></li>
+</ul>
+</li>
+</ul>
+<h2 id="maven工程的标准目录结构"><a href="#maven工程的标准目录结构" class="headerlink" title="maven工程的标准目录结构"></a>maven工程的标准目录结构</h2><p>既符合maven目录规范，又符合web项目规范<br><img src="/uploads/maven/01/162b144a-ed36-490e-ab71-700c699ddbfd.png" alt=""><br>Maven的目录结构的规范：<br><img src="/uploads/maven/01/df6ecbe0-fa46-4855-ba24-eb043aa301e9.png" alt=""></p>
+<h2 id="Maven-命令"><a href="#Maven-命令" class="headerlink" title="Maven 命令"></a>Maven 命令</h2><p>使用dos窗口，进入到有pom.xml的目录即可。</p>
+<ol>
+<li>mvn compile 编译<ul>
+<li>compile是maven工程的编译命令，作用是将src/main/java下的文件编译为class文件输出到target目录下。</li>
+</ul>
+</li>
+<li>mvn test 单元测试，先编译在运行单元测试类<ul>
+<li>test是maven工程的测试命令， <code>mvn test</code> ,会执行<code>src/test/java</code> 下的单元测试类。</li>
+</ul>
+</li>
+<li>mvn clean 清除编译<ul>
+<li>clean是maven工程的清除命令，执行clean会删除target目录及内容。</li>
+</ul>
+</li>
+<li>mvn package：java项目导jar包，web项目导war包<ul>
+<li>package是maven工程的打包命令，对于java工程执行package打包成jar包，对于web工程打包成war包。</li>
+</ul>
+</li>
+<li>mvn install(install 第二次执行的时候，不会删除没有修改的内容，只会修改更改过的内容)<ul>
+<li>install是maven工程的安装命令，执行install将maven打成jar包或war包发布到本地仓库。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>当后面的命令执行时，前面的操作过程也都会自动执行，</li>
+</ul>
+<p><img src="/uploads/maven/01/ca7b8fb8-de4f-4d9c-815e-6435a45d9582.jpg" alt=""></p>
+<h2 id="Eclipse中使用maven"><a href="#Eclipse中使用maven" class="headerlink" title="Eclipse中使用maven"></a>Eclipse中使用maven</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ol>
+<li><p>高版本的eclipse中内置maven的插件，在windows中的属性中找到maven属性配置Installations中路劲改为自己的maven的路劲<br><img src="/uploads/maven/01/f865a918-0052-4e1f-88fa-ce5767560dc6.jpg" alt=""><br>点击add<br><img src="/uploads/maven/01/cf81b8e8-0509-4789-adc5-4751efec231a.jpg" alt=""></p>
+<p>２.　在eclipse中配置仓库的位置<br><img src="/uploads/maven/01/1748ca32-1b65-4027-806b-81705de060b3.jpg" alt=""><br>　３.　构建索引<br>　｀Window—show view ——other———-maven Repositories｀<br>　４．　重构索引<br>　<img src="/uploads/maven/01/ec987ad5-6682-4c29-a234-c17fc69a54d5.jpg" alt=""></p>
+</li>
+</ol>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>１.　在eclipse中创建一个maven工程<br>  <img src="/uploads/maven/01/c5e96629-f913-4378-b3d2-790633447075.png" alt=""><br>２.　选择maven project<br>　<img src="/uploads/maven/01/974b5092-8866-447b-9646-17103367bfd4.jpg" alt=""><br>３.　点next进入下面的界面<br>　<img src="/uploads/maven/01/b8f350d1-3518-424c-87ec-dca6e2435d92.png" alt=""><br>４.　可以看到一个helloworld工程，但报错(添加下面的内容就OK了)<br>　　（有的时候web的目录结构不会自动生成，所以需要在<code>webapp</code>下加一个<code>WEB_INF/web.xml</code>）<br>  　<img src="/uploads/maven/01/394d37f4-1954-477b-aa2e-7e4dffc066ad.jpg" alt=""><br>５.　src/java/main创建了一个Servlet，但报错<br>　　<img src="/uploads/maven/01/afa41abb-9fb6-44cd-8e85-fe58805150b1.jpg" alt=""><br>６.　要解决问题，就是要将servlet-api-xxx.jar包放进来，作为maven工程应当添加servlet的坐标，从而导入它的jar<br>　　直接打开helloworld工程的pom.xml文件，再添加坐标<br>   <img src="/uploads/maven/01/11ee873b-0e15-4483-9b86-ccc38c6aca18.jpg" alt=""><br>７.　添加后自动生成的结果如下：<br>　　<img src="/uploads/maven/01/8701dcc8-d824-4b68-ab7c-ebab910f2db4.jpg" alt=""></p>
+<ul>
+<li>一般web项目需要 <code>servlet-api 2.5</code>跟 <code>jsp-api:2.0</code><br>８.　添加包的坐标时，还可以指定这个jar包将来的作用范围<br>　　<img src="/uploads/maven/01/8e5bb06e-0e11-48f4-b406-1615f1154102.jpg" alt=""><br>　<img src="/uploads/maven/01/18f34f51-03ac-43b9-b9cd-f0020bf7883b.jpg" alt=""></li>
+</ul>
+<hr>
+<ul>
+<li>jar包冲突</li>
+</ul>
+<p>通过命令运行的tomcat是仓库中的插件，跟以前的tomcat没关系<br>因为刚才自己引入了servlet跟jsp的jar包但是，tomcat中自己已经内置了这两个jar包了所以会发生冲突<br>所以需要插入jar包的时候选择一下作用范围：<code>provided</code></p>
+<hr>
+<p>   <img src="/uploads/maven/01/2d770d2e-e18b-4d5a-94cb-550acd3c87ed.png" alt=""><br>９.　调整jdk,在pom.xml文件中添加如下配置：</p>
+<ul>
+<li><p>运行时，jdk版本低于1.7的时候也会报错，把下面的代码配置到pom.xml中即可调整版本到1.7</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;build&gt;</div><div class="line">    &lt;plugins&gt;</div><div class="line">        &lt;plugin&gt;</div><div class="line">            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</div><div class="line">            &lt;configuration&gt;</div><div class="line">                &lt;source&gt;1.7&lt;/source&gt;</div><div class="line">                &lt;target&gt;1.7&lt;/target&gt;</div><div class="line">                &lt;encoding&gt;UTF-8&lt;/encoding&gt;</div><div class="line">            &lt;/configuration&gt;</div><div class="line">        &lt;/plugin&gt;</div><div class="line">    &lt;/plugins&gt;</div><div class="line">&lt;/build&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>有的时候改了jdk版本也会报错，重新删除刷一遍，不行再多来几遍。</p>
+</li>
+</ul>
+<h3 id="注意的一些问题"><a href="#注意的一些问题" class="headerlink" title="注意的一些问题"></a>注意的一些问题</h3><ul>
+<li>maven有错误的时候可以右键<code>maven--&gt;update project</code>,然后有的时候就不会报错了</li>
+<li>有的时候也会报错，剪贴然后重新粘贴保存一下</li>
+</ul>
+<hr>
+<ul>
+<li><p>到服务器上运行有两种方式：</p>
+<ul>
+<li>运行maven仓库中的Tomcat插件，右键项目然后找到<code>run as ---&gt; 里面有好多maven的命名</code>，也可以有<code>maven build...</code>自己敲命令，运行在在服务器上就是<code>tomcat:run</code></li>
+<li>也能像以前web中那样，先把项目加入服务器中在运行</li>
+</ul>
+</li>
+<li><p>仓库中的插件默认运行的Tomcat6的版本，下面是切换版本的方法：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">Tomcat6:</div><div class="line">&lt;plugin&gt;</div><div class="line">      &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;tomcat-maven-plugin&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;1.1&lt;/version&gt;</div><div class="line">      &lt;configuration&gt;</div><div class="line">          &lt;path&gt;/wp&lt;/path&gt;</div><div class="line">           &lt;port&gt;8080&lt;/port&gt;</div><div class="line">           &lt;uriEncoding&gt;UTF-8&lt;/uriEncoding&gt;</div><div class="line">           &lt;url&gt;http://localhost:8080/manager/html&lt;/url&gt;</div><div class="line">           &lt;server&gt;tomcat6&lt;/server&gt;</div><div class="line">       &lt;/configuration&gt;</div><div class="line"> &lt;/plugin&gt;</div><div class="line"></div><div class="line">Tomcat7:</div><div class="line"> &lt;plugin&gt;</div><div class="line">    &lt;groupId&gt;org.apache.tomcat.maven&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;tomcat7-maven-plugin&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;2.1&lt;/version&gt;</div><div class="line">    &lt;configuration&gt;</div><div class="line">        &lt;port&gt;9090&lt;/port&gt;</div><div class="line">        &lt;path&gt;/mgr&lt;/path&gt;</div><div class="line">        &lt;uriEncoding&gt;UTF-8&lt;/uriEncoding&gt;</div><div class="line">        &lt;server&gt;tomcat7&lt;/server&gt;</div><div class="line">    &lt;/configuration&gt;</div><div class="line">&lt;/plugin&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>简要说明一下：<ol>
+<li>path  是访问应用的路径</li>
+<li>port 是tomcat 的端口号</li>
+<li>uriEncoding  URL按UTF-8进行编码，这样就解决了中文参数乱码。</li>
+<li>Server 指定tomcat名称。</li>
+</ol>
+</li>
+<li>运行：<code>右键-----&gt; run as -----&gt;maven build..:tomcat:run</code><ul>
+<li>Tomcat的版本就要改为<code>tomcat7:run</code></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/maven/" rel="tag">#maven</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/23/easyUI/" rel="next" title="easyUI">
+                <i class="fa fa-chevron-left"></i> easyUI
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/27/maven01/"
+     data-title="maven01"
+     data-content=""
+     data-url="https://markzc.github.io/2016/11/27/maven01/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/27/maven01/"
+           data-title="maven01" data-url="https://markzc.github.io/2016/11/27/maven01/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/markzc" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3490969043" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/john_zc" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Maven第一阶段"><span class="nav-number">1.</span> <span class="nav-text">Maven第一阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven-的好处"><span class="nav-number">1.1.</span> <span class="nav-text">Maven 的好处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析出maven优点是如何实现的"><span class="nav-number">1.2.</span> <span class="nav-text">分析出maven优点是如何实现的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven的安装"><span class="nav-number">1.3.</span> <span class="nav-text">Maven的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven的配置及仓库的位置"><span class="nav-number">1.4.</span> <span class="nav-text">Maven的配置及仓库的位置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置环境变量"><span class="nav-number">1.4.1.</span> <span class="nav-text">配置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#仓库的配置"><span class="nav-number">1.4.2.</span> <span class="nav-text">仓库的配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maven工程的标准目录结构"><span class="nav-number">1.5.</span> <span class="nav-text">maven工程的标准目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven-命令"><span class="nav-number">1.6.</span> <span class="nav-text">Maven 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Eclipse中使用maven"><span class="nav-number">1.7.</span> <span class="nav-text">Eclipse中使用maven</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">1.7.1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">1.7.2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意的一些问题"><span class="nav-number">1.7.3.</span> <span class="nav-text">注意的一些问题</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

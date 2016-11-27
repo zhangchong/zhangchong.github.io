@@ -109,7 +109,10 @@ Oracle 的安装
 <meta property="og:image" content="https://markzc.github.io/uploads/oracle/ed225607-22e2-4dff-a52d-08930b175948.png">
 <meta property="og:image" content="https://markzc.github.io/uploads/oracle/f311208f-b7ae-4901-9e32-7ff9d669fcab.png">
 <meta property="og:image" content="https://markzc.github.io/uploads/oracle/94ea2be2-ac77-4024-a5a1-d23e9df48d72.jpg">
-<meta property="og:updated_time" content="2016-11-24T15:43:07.588Z">
+<meta property="og:image" content="https://markzc.github.io/uploads/oracle/c4c109e7-243f-443c-aefb-ea1465dfc0cb.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/oracle/c5bbfb0f-f69d-425a-99c2-6eedc1e440b9.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/oracle/0d5990a3-7dfe-4268-a742-64832cbe8d63.png">
+<meta property="og:updated_time" content="2016-11-27T03:37:49.701Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="oracle第一阶段">
 <meta name="twitter:description" content="OracleOracle 介绍
@@ -593,8 +596,19 @@ Oracle 的安装
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">select d.deptno,dname,loc,empno,ename,sal,comm from scott.dept d left join scott.emp s on d.deptno=s.deptno</div><div class="line"></div><div class="line">select d.deptno,dname,loc,empno,ename,sal,comm from scott.dept d , scott.emp s where d.deptno=s.deptno(+)</div></pre></td></tr></table></figure>
+<ul>
+<li><p>3.案例【1.3】查询学员成绩列表，显示学员姓名，考试分数，如果该学员没有考试记录也要列出姓名，不能用<code>join on</code><br>成绩表：<br><img src="/uploads/oracle/c4c109e7-243f-443c-aefb-ea1465dfc0cb.png" alt=""><br>学生表：<br><img src="/uploads/oracle/c5bbfb0f-f69d-425a-99c2-6eedc1e440b9.png" alt=""><br>课程表：<br><img src="/uploads/oracle/0d5990a3-7dfe-4268-a742-64832cbe8d63.png" alt=""></p>
+<ul>
+<li><p>(+)方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select s.id,s.name &quot;学生姓名&quot;,tc.name &quot;课程名称&quot;, m.score &quot;考试分数&quot; from T_MARK m,T_STUDENT s ,T_COURSE tc where s.id=m.studentid(+) and m.courseid=tc.id(+)</div></pre></td></tr></table></figure>
+</li>
+<li><p>嵌套方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select sid,&quot;学生姓名&quot;,tc.name,&quot;考试分数&quot; from (select s.id sid,s.name &quot;学生姓名&quot;,m.courseid mcourseid, m.score &quot;考试分数&quot; from T_STUDENT s ,T_MARK m where s.id=m.studentid(+)) st,T_COURSE tc where st.mcourseid=tc.id(+) order by sid</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
 <p>多表关联查询的时候，如果逻辑不清楚可以考虑画图</p>
-<p>抽屉</p>
 
       
     </div>
@@ -732,7 +746,7 @@ Oracle 的安装
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -749,7 +763,7 @@ Oracle 的安装
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
