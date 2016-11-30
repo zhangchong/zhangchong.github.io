@@ -1,0 +1,1215 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="maven," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Maven
+Maven的拆分与聚合
+一个完整的早期开发好的crm项目，现在要使用maven工程对它进行拆分，这时候就可以将dao拆解出来形成表现独立的工程，同样service,action也都这样拆分
+
+
+
+工程拆分之后，将来还要聚合（聚合就是将拆分的工程进一步组合在一起，又形成一个完整的项目）
+为了达到聚合的目标，所以今天会引入
+父工程（maven project）
+子模块(maven modu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="maven第二阶段">
+<meta property="og:url" content="https://markzc.github.io/2016/11/30/maven02/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="Maven
+Maven的拆分与聚合
+一个完整的早期开发好的crm项目，现在要使用maven工程对它进行拆分，这时候就可以将dao拆解出来形成表现独立的工程，同样service,action也都这样拆分
+
+
+
+工程拆分之后，将来还要聚合（聚合就是将拆分的工程进一步组合在一起，又形成一个完整的项目）
+为了达到聚合的目标，所以今天会引入
+父工程（maven project）
+子模块(maven modu">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/a375ff44-3708-4608-99f6-b4c99fbe3934.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/17f7fd37-8dc2-46ee-97fa-be902c98b70e.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/c5940d55-3593-41e7-91fd-6788b74af870.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/fb241263-7095-4da9-b0b7-97a12671cc93.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/fb604c1b-1891-4c99-949a-3b436732335c.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/d9b9a696-57f2-4cca-9e16-cbc0ecfbf3b3.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/9d36e5e3-d284-47a2-9b66-8f2f0ecd192e.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/62f788cb-eab7-44fd-8f58-206a28d1cdb0.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/8ba7048c-947f-4acb-bc3f-c064a836eded.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/090ac850-c28c-4364-b1bd-7eba35225f28.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/bda373da-21dc-4761-95dd-d2862ca83ebf.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/cd30426a-0cd7-4c76-ad4f-d80f15875c84.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/aa537659-7454-4c2e-9d2c-21a3fa9c3ef4.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/f5f9d855-6acf-4977-b35f-f20780664ae6.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/2e4dfb17-cdd1-4800-8716-b6845d298345.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/f404ca3c-7da6-45ba-985d-ec93a899221c.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/bda4698d-3995-4ae4-a94b-496ce3054f9c.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/d17b70b2-12a5-4c5c-bc6f-e2737a941d5e.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/b0c5f0aa-0c3b-4d2b-95db-fffc86d0f04a.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/6b20d754-3a16-4ae3-9feb-f97b8aaf6809.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/e48a4e65-7409-4656-a705-5a12100378b4.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/38ca46d0-3a4b-4dc6-bc48-11ec5fa0bca1.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/6eac4b99-cb1c-41e3-9242-fd2fedbbd948.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/1e6820c2-087a-45bd-986b-ae960ee15e7e.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/290a2a11-6f16-4043-be68-1002a6f131b6.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/b0bc874f-99dc-44de-ba08-d4017ad2e2ed.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/d2c7fdd6-be0a-4845-8c78-94365016eabb.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/b02fb7fd-a75e-451c-ab88-2e9dd7ad86aa.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/maven/02/79576b1d-07d8-494a-a3e4-7c27f5e0f760.jpg">
+<meta property="og:updated_time" content="2016-11-30T02:33:07.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="maven第二阶段">
+<meta name="twitter:description" content="Maven
+Maven的拆分与聚合
+一个完整的早期开发好的crm项目，现在要使用maven工程对它进行拆分，这时候就可以将dao拆解出来形成表现独立的工程，同样service,action也都这样拆分
+
+
+
+工程拆分之后，将来还要聚合（聚合就是将拆分的工程进一步组合在一起，又形成一个完整的项目）
+为了达到聚合的目标，所以今天会引入
+父工程（maven project）
+子模块(maven modu">
+<meta name="twitter:image" content="https://markzc.github.io/uploads/maven/02/a375ff44-3708-4608-99f6-b4c99fbe3934.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://markzc.github.io/2016/11/30/maven02/"/>
+
+
+  <title> maven第二阶段 | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                maven第二阶段
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-30T10:30:27+08:00" content="2016-11-30">
+              2016-11-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代码之外的技能/" itemprop="url" rel="index">
+                    <span itemprop="name">代码之外的技能</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/30/maven02/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/30/maven02/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/30/maven02/" class="leancloud_visitors" data-flag-title="maven第二阶段">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h1><p><img src="/uploads/maven/02/a375ff44-3708-4608-99f6-b4c99fbe3934.jpg" alt=""></p>
+<h2 id="Maven的拆分与聚合"><a href="#Maven的拆分与聚合" class="headerlink" title="Maven的拆分与聚合"></a>Maven的拆分与聚合</h2><blockquote>
+<p>一个完整的早期开发好的crm项目，现在要使用maven工程对它进行拆分，这时候就可以将dao拆解出来形成表现独立的工程，同样service,action也都这样拆分</p>
+</blockquote>
+<p><img src="/uploads/maven/02/17f7fd37-8dc2-46ee-97fa-be902c98b70e.png" alt=""></p>
+<ul>
+<li>工程拆分之后，将来还要聚合（聚合就是将拆分的工程进一步组合在一起，又形成一个完整的项目）</li>
+<li>为了达到聚合的目标，所以今天会引入<ul>
+<li>父工程（maven project）</li>
+<li>子模块(maven module)  dao  ,service, web</li>
+</ul>
+</li>
+</ul>
+<p><img src="/uploads/maven/02/c5940d55-3593-41e7-91fd-6788b74af870.jpg" alt=""></p>
+<hr>
+<p>开发步骤：</p>
+<ol>
+<li>创建一个maven父工程<br><img src="/uploads/maven/02/fb241263-7095-4da9-b0b7-97a12671cc93.jpg" alt=""><br><img src="/uploads/maven/02/fb604c1b-1891-4c99-949a-3b436732335c.png" alt=""><br>创建后的父工程如下：<br><img src="/uploads/maven/02/d9b9a696-57f2-4cca-9e16-cbc0ecfbf3b3.png" alt=""><br>从它的目录结构可以看出，父工程本身不写代码，它里面有一个pom.xml文件，这个文件可以将多个子模块中通用的jar所对应的坐标，集中在父工程中配置，将来的子模块就可以不需要在pom.xml中配置通用jar的坐标了</li>
+<li>创建这个父工程的子工程<br><img src="/uploads/maven/02/9d36e5e3-d284-47a2-9b66-8f2f0ecd192e.jpg" alt=""><br>点击next,进入下图：<br><img src="/uploads/maven/02/62f788cb-eab7-44fd-8f58-206a28d1cdb0.jpg" alt=""><br>点击next：<br><img src="/uploads/maven/02/8ba7048c-947f-4acb-bc3f-c064a836eded.png" alt=""></li>
+<li>再次查看父工程的pom.xml工程<br><img src="/uploads/maven/02/090ac850-c28c-4364-b1bd-7eba35225f28.jpg" alt=""></li>
+<li>查看子模块的pom.xml,发现多了一个parent结点<br><img src="/uploads/maven/02/bda373da-21dc-4761-95dd-d2862ca83ebf.png" alt=""><br>并且内部所包含的结点，其实就是父工程的坐标<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">坐标=groupId+artifactId+version</div><div class="line">        组织名   项目名       版本</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="冲突问题的解决"><a href="#冲突问题的解决" class="headerlink" title="冲突问题的解决"></a>冲突问题的解决</h2><h3 id="通过添加-lt-exclusion-gt-标签来解决冲突"><a href="#通过添加-lt-exclusion-gt-标签来解决冲突" class="headerlink" title="通过添加&lt;exclusion&gt;标签来解决冲突"></a>通过添加<code>&lt;exclusion&gt;</code>标签来解决冲突</h3><ul>
+<li>在父工程中引入了struts-core,hibernate-core，就发现jar包是有冲突的<ul>
+<li>Javassist存在版本上冲突问题，一个高版本一个低版本</li>
+</ul>
+</li>
+<li><p>解决：去除struts2中的javassist，就要在struts依赖中右键</p>
+<p> <img src="/uploads/maven/02/cd30426a-0cd7-4c76-ad4f-d80f15875c84.png" alt=""><br> 进入下图<br> <img src="/uploads/maven/02/aa537659-7454-4c2e-9d2c-21a3fa9c3ef4.jpg" alt=""><br> 会在工程中添加：<br> <img src="/uploads/maven/02/f5f9d855-6acf-4977-b35f-f20780664ae6.png" alt=""></p>
+</li>
+</ul>
+<h3 id="依赖调解原则"><a href="#依赖调解原则" class="headerlink" title="依赖调解原则"></a>依赖调解原则</h3><p>maven自动按照下边的原则调解：</p>
+<ol>
+<li>第一声明者优先原则<br>  在pom文件定义依赖，先声明的依赖为准<br>  <code>struts-spring-plugins</code>和<code>spring-context</code>中都有<code>spring-beans</code>，前者是4.2.4版本比较高。<ul>
+<li>测试：<br>如果将<code>struts-spring-plugins</code>放在<code>spring-context</code>前面，系统将导入<code>spring-beans-4.2.4</code>。</li>
+<li>分析：<br>由于<code>spring-context</code>在前边以<code>spring-context</code>依赖的<code>spring-beans-4.2.4</code>为准，所以最终<code>spring-beans-4.2.4</code>添加到了工程中。</li>
+</ul>
+</li>
+<li>路径近者优先原则<br>   还是以上面为例子：如果手动引入一个<code>spring-beans</code>,则会导入手动引入的这个，因为这个不需要依赖其他的jar包而存在，找到的时候路劲最短。</li>
+</ol>
+<h3 id="使用版本锁定实现冲突解决"><a href="#使用版本锁定实现冲突解决" class="headerlink" title="使用版本锁定实现冲突解决"></a>使用版本锁定实现冲突解决</h3><ul>
+<li>首先父工程中pom.xml文件中添加<code>&lt;dependencyManagement&gt;</code><br><img src="/uploads/maven/02/2e4dfb17-cdd1-4800-8716-b6845d298345.png" alt=""></li>
+<li>在父工程中锁定，他本身并不引入坐标，他会规定他所依赖的项目要引这个坐标时，会在锁定的版本前面有一个小锁，开发的时候就要选择锁定的那个版本。</li>
+<li>锁定之后父项目并没有引入这个坐标，这是锁定了而已</li>
+<li>然后哪个项目需要在引入<br><img src="/uploads/maven/02/f404ca3c-7da6-45ba-985d-ec93a899221c.png" alt=""></li>
+</ul>
+<hr>
+<ul>
+<li>在使用坐标时，对于同一个框架，引入多次时，它的版本信息就会多次出现，所以</li>
+<li>可以借用常量的思想，将这些版本号提取出来，在需要用到的时候，直接写版本的常量名称就可以了。<br><img src="/uploads/maven/02/bda4698d-3995-4ae4-a94b-496ce3054f9c.jpg" alt=""></li>
+<li>引上面的常量<br><img src="/uploads/maven/02/d17b70b2-12a5-4c5c-bc6f-e2737a941d5e.png" alt=""></li>
+</ul>
+<h2 id="依赖关系"><a href="#依赖关系" class="headerlink" title="依赖关系"></a>依赖关系</h2><p>依赖具有传递性，但不是无限传递的，传递的规则如下：<br><img src="/uploads/maven/02/b0c5f0aa-0c3b-4d2b-95db-fffc86d0f04a.png" alt=""><br>解决方法：<br>如果在依赖传递过程中，导致jar包丢失，我们的做法很简单，就是再导入一次坐标</p>
+<ul>
+<li><p>依赖具有传递性： action依赖于service，如果在service中引入dao，那么在action中引入service的时候会把dao引入进来</p>
+</li>
+<li><p>如果想把引入的jar包所依赖的jar包全部干掉就再上面解决冲突中的代码中<code>&lt;artifactId&gt;*&lt;/artifactId&gt; &lt;groupId&gt;*&lt;/groupId&gt;</code>加*即可</p>
+</li>
+</ul>
+<h2 id="继续开发添加service跟dao"><a href="#继续开发添加service跟dao" class="headerlink" title="继续开发添加service跟dao"></a>继续开发添加service跟dao</h2><ol>
+<li>创建一个maven module项目<br>创建结束后，父工程中结构如下：<br><img src="/uploads/maven/02/6b20d754-3a16-4ae3-9feb-f97b8aaf6809.png" alt=""><br>父工程的pom.xml文件如下：<br><img src="/uploads/maven/02/e48a4e65-7409-4656-a705-5a12100378b4.png" alt=""></li>
+<li>在service的pom.xml文件中引入dao的jar包<br><img src="/uploads/maven/02/38ca46d0-3a4b-4dc6-bc48-11ec5fa0bca1.jpg" alt=""></li>
+<li>Web层的子模块创建：web层的packing就不是jar了<br><img src="/uploads/maven/02/6eac4b99-cb1c-41e3-9242-fd2fedbbd948.png" alt=""><br>web是要依赖service<br><img src="/uploads/maven/02/1e6820c2-087a-45bd-986b-ae960ee15e7e.jpg" alt=""></li>
+</ol>
+<hr>
+<p>配置文件的添加：</p>
+<ul>
+<li>整合applicationContext的时侯，因为每层要用到的配置不一样，所以可以把它分为三个配置文件最后在通过<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;import resource=&quot;classpath:spring/applicationContext-dao.xml&quot;/&gt;</div><div class="line">&lt;import resource=&quot;classpath:spring/applicationContext-service.xml&quot;/&gt;</div><div class="line">&lt;import resource=&quot;classpath:spring/applicationContext-action.xml&quot;/&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这种方式把三个配置文件整合到一起，放到web层下。</p>
+<ul>
+<li>hibernate中的配置如下(有一些改进的地方)：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;!DOCTYPE hibernate-configuration PUBLIC</div><div class="line">    &quot;-//Hibernate/Hibernate Configuration DTD 3.0//EN&quot;</div><div class="line">    &quot;http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;</div><div class="line"></div><div class="line">&lt;hibernate-configuration&gt;</div><div class="line"></div><div class="line">    &lt;session-factory&gt;</div><div class="line">        &lt;property name=&quot;dialect&quot;&gt;</div><div class="line">            org.hibernate.dialect.MySQLDialect</div><div class="line">        &lt;/property&gt;</div><div class="line"></div><div class="line">        &lt;property name=&quot;show_sql&quot;&gt;true&lt;/property&gt;</div><div class="line">        &lt;property name=&quot;format_sql&quot;&gt;false&lt;/property&gt;</div><div class="line">        &lt;!-- 自动建表以前是update但是不规范 --&gt;</div><div class="line">        &lt;property name=&quot;hbm2ddl.auto&quot;&gt;none&lt;/property&gt;</div><div class="line">        &lt;!-- 懒加载，配合web.xml中配置的 openSessionInViewFilter --&gt;</div><div class="line">        &lt;property name=&quot;hibernate.enable_lazy_load_no_trans&quot;&gt;true&lt;/property&gt;</div><div class="line">        &lt;!--校验模式  JPA  java persistent api--&gt;</div><div class="line">        &lt;property name=&quot;javax.persistence.validation.mode&quot;&gt;none&lt;/property&gt;</div><div class="line"></div><div class="line">        &lt;mapping resource=&quot;cn/itcast/domain/Customer.hbm.xml&quot;/&gt;</div><div class="line">    &lt;/session-factory&gt;</div><div class="line">&lt;/hibernate-configuration&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>还需要注意，hibernate的映射文件要建好对应的包结构<br><code>\src\main\resources\cn\itcast\domain</code></li>
+</ul>
+<ul>
+<li>PO类(实体类的七个规范)：</li>
+</ul>
+<ol>
+<li>是一个共有类</li>
+<li>提供私有的属性</li>
+<li>提供共有的getter与setter</li>
+<li>实现java.io.Serializable</li>
+<li>提供一个无参的构造方法</li>
+<li>不要使用final修饰</li>
+<li>如果是基本数据类型，要使用它的包装类</li>
+</ol>
+<h2 id="私服搭建"><a href="#私服搭建" class="headerlink" title="私服搭建"></a>私服搭建</h2><h3 id="下载nexus并安装"><a href="#下载nexus并安装" class="headerlink" title="下载nexus并安装"></a>下载nexus并安装</h3><ol>
+<li>下载<ul>
+<li>Nexus 是Maven仓库管理器，通过nexus可以搭建maven仓库，同时nexus还提供强大的仓库管理功能，构件搜索功能等。</li>
+<li>下载Nexus， 下载地址：         <code>http://www.sonatype.org/nexus/archived/</code></li>
+</ul>
+</li>
+<li>安装并运行：<ul>
+<li>解压进入到指定的目录：<code>nexu-2.12.0.01-bundle\nexus-2.12.0.-01\bin</code></li>
+<li>执行<code>nexus.bat install</code></li>
+<li>安装成功就会在服务中新增一个<code>nexus</code>服务</li>
+</ul>
+</li>
+</ol>
+<h3 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h3><p>进入到bin目录下执行：<code>nexus.bat uninstall</code></p>
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><ul>
+<li>启动：<ul>
+<li>方法一：直接进入到bin目录中执行<code>nexus.bat start</code></li>
+<li>方法二：直接进入到服务列表中启动</li>
+</ul>
+</li>
+</ul>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ul>
+<li>查看nexus的配置文件<code>conf/nexus.properties</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># Jetty section</div><div class="line">application-port=8081      # nexus的访问端口配置</div><div class="line">application-host=0.0.0.0     # nexus主机监听配置(不用修改)</div><div class="line">nexus-webapp=$&#123;bundleBasedir&#125;/nexus     # nexus工程目录</div><div class="line">nexus-webapp-context-path=/nexus     # nexus的web访问路径</div><div class="line"></div><div class="line"># Nexus section</div><div class="line">nexus-work=$&#123;bundleBasedir&#125;/../sonatype-work/nexus   # nexus仓库目录</div><div class="line">runtime=$&#123;bundleBasedir&#125;/nexus/WEB-INF  # nexus运行程序目录</div></pre></td></tr></table></figure>
+<ul>
+<li><p>访问： <code>http://localhost:8081/nexus/</code><br><img src="/uploads/maven/02/290a2a11-6f16-4043-be68-1002a6f131b6.png" alt=""></p>
+</li>
+<li><p>登陆成功之后会有四种仓库类型：<br><img src="/uploads/maven/02/b0bc874f-99dc-44de-ba08-d4017ad2e2ed.png" alt=""></p>
+<ol>
+<li>hosted，宿主仓库，部署自己的jar到这个类型的仓库，包括releases和snapshot两部分，Releases公司内部发布版本仓库、 Snapshots 公司内部测试版本仓库</li>
+<li>proxy，代理仓库，用于代理远程的公共仓库，如maven中央仓库，用户连接私服，私服自动去中央仓库下载jar包或者插件。 </li>
+<li>group，仓库组，用来合并多个hosted/proxy仓库，通常我们配置自己的maven连接仓库组。</li>
+<li>virtual(虚拟)：兼容Maven1 版本的jar或者插件 </li>
+</ol>
+<p><code>nexus</code>仓库默认在目录中：<br><img src="/uploads/maven/02/d2c7fdd6-be0a-4845-8c78-94365016eabb.png" alt=""></p>
+</li>
+</ul>
+<hr>
+<p>仓库的介绍：</p>
+<ul>
+<li>central：代理仓库，代理中央仓库    </li>
+<li>apache-snapshots：代理仓库<br>存储snapshots构件，代理地址<code>https://repository.apache.org/snapshots/</code></li>
+<li>central-m1：virtual类型仓库，兼容Maven1 版本的jar或者插件</li>
+<li>releases：本地仓库，存储releases构件。</li>
+<li>snapshots：本地仓库，存储snapshots构件。</li>
+<li>third party：第三方仓库</li>
+<li>public：仓库组</li>
+</ul>
+<p>七个仓库对应着本地服务器的<code>nexus-2.12.0-01-bundle/sonatype-work/nexus/storage</code></p>
+<h3 id="测试-上传到私服"><a href="#测试-上传到私服" class="headerlink" title="测试,上传到私服"></a>测试,上传到私服</h3><p>使用install会把项目打包放到本地仓库中</p>
+<ul>
+<li><p>要想打包发到本地仓库跟私服你中就要执行以下步骤：</p>
+<ol>
+<li><p>需要在客户端即部署dao工程的电脑上配置<code>maven</code>环境，并修改<code>maven目录/conf/settings.xml</code> 文件，配置连接私服的用户和密码 。<br>此用户名和密码用于私服校验，因为私服需要知道上传的账号和密码 是否和私服中的账号和密码一致。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;server&gt;</div><div class="line">  &lt;id&gt;releases&lt;/id&gt;</div><div class="line">  &lt;username&gt;admin&lt;/username&gt;</div><div class="line">  &lt;password&gt;admin123&lt;/password&gt;</div><div class="line">&lt;/server&gt;</div><div class="line">&lt;server&gt;</div><div class="line">  &lt;id&gt;snapshots&lt;/id&gt;</div><div class="line">  &lt;username&gt;admin&lt;/username&gt;</div><div class="line">  &lt;password&gt;admin123&lt;/password&gt;</div><div class="line">&lt;/server&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在pom.xml中加入一段配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> &lt;distributionManagement&gt;</div><div class="line">    &lt;repository&gt;</div><div class="line">      &lt;id&gt;releases&lt;/id&gt; </div><div class="line">      &lt;url&gt;http://localhost:8081/nexus/content/repositories/releases/&lt;/url&gt;</div><div class="line">    &lt;/repository&gt;</div><div class="line">    &lt;snapshotRepository&gt;</div><div class="line">      &lt;id&gt;snapshots&lt;/id&gt;</div><div class="line">      &lt;url&gt;http://localhost:8081/nexus/content/repositories/snapshots/&lt;/url&gt;</div><div class="line">    &lt;/snapshotRepository&gt;</div><div class="line">  &lt;/distributionManagement&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>意思为：配置私服仓库的地址，本公司的自己的jar包会上传到私服的宿主仓库，根据工程的版本号决定上传到哪个宿主仓库，如果版本为release则上传到私服的release仓库，如果版本为snapshot则上传到私服的snapshot仓库</p>
+</li>
+<li><p>现在就可以用<code>deploy</code>命令上传到私服中的<code>snapshots</code></p>
+</li>
+</ul>
+<h3 id="从私服上下载jar包"><a href="#从私服上下载jar包" class="headerlink" title="从私服上下载jar包"></a>从私服上下载jar包</h3><h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><p>  没有配置nexus之前，如果本地仓库没有，去中央仓库下载，通常在企业中会在局域网内部署一台私服服务器，有了私服本地项目首先去本地仓库找jar，如果没有找到则连接私服从私服下载jar包，如果私服没有jar包私服同时作为代理服务器从中央仓库下载jar包，这样做的好处是一方面由私服对公司项目的依赖jar包统一管理，一方面提高下载速度，项目连接私服下载jar包的速度要比项目连接中央仓库的速度快的多。</p>
+<h4 id="在setting-xml中配置仓库"><a href="#在setting-xml中配置仓库" class="headerlink" title="在setting.xml中配置仓库"></a>在setting.xml中配置仓库</h4><p>当然得先保证：本地仓库中跟项目中没有需要的jar包，这里显示dao</p>
+<ul>
+<li><p>把下面的配置文件放到maven的setting配置文件的<code>profile</code>结点中,意思是告诉maven本地找不到去哪个私服找（注意如果是在别人的私服中找记得改ip）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&lt;profile&gt;</div><div class="line">&lt;!--profile的id--&gt;</div><div class="line"> &lt;id&gt;dev&lt;/id&gt;</div><div class="line">  &lt;repositories&gt;</div><div class="line">    &lt;repository&gt;</div><div class="line">  &lt;!--仓库id，repositories可以配置多个仓库，保证id不重复--&gt;</div><div class="line">      &lt;id&gt;nexus&lt;/id&gt;</div><div class="line">  &lt;!--仓库地址，即nexus仓库组的地址--&gt;</div><div class="line">      &lt;url&gt;http://localhost:8081/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">  &lt;!--是否下载releases构件--&gt;</div><div class="line">      &lt;releases&gt;</div><div class="line">        &lt;enabled&gt;true&lt;/enabled&gt;</div><div class="line">      &lt;/releases&gt;</div><div class="line">  &lt;!--是否下载snapshots构件--&gt;</div><div class="line">      &lt;snapshots&gt;</div><div class="line">        &lt;enabled&gt;true&lt;/enabled&gt;</div><div class="line">      &lt;/snapshots&gt;</div><div class="line">    &lt;/repository&gt;</div><div class="line">  &lt;/repositories&gt;</div><div class="line"> &lt;pluginRepositories&gt;</div><div class="line">    &lt;!-- 插件仓库，maven的运行依赖插件，也需要从私服下载插件 --&gt;</div><div class="line">      &lt;pluginRepository&gt;</div><div class="line">        &lt;!-- 插件仓库的id不允许重复，如果重复后边配置会覆盖前边 --&gt;</div><div class="line">          &lt;id&gt;public&lt;/id&gt;</div><div class="line">          &lt;name&gt;Public Repositories&lt;/name&gt;</div><div class="line">          &lt;url&gt;http://localhost:8081/nexus/content/groups/public/&lt;/url&gt;  </div><div class="line">      &lt;/pluginRepository&gt;  </div><div class="line">  &lt;/pluginRepositories&gt;  </div><div class="line">&lt;/profile&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>找的时候会到public公共仓库中去找，因为，公共仓库中包含下面几个仓库，会依次寻找：<br><img src="/uploads/maven/02/b02fb7fd-a75e-451c-ab88-2e9dd7ad86aa.jpg" alt=""></p>
+</li>
+<li><p>为了使得这些配置生效需要在配置一下在<code>profile</code>结点下边配置一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">  &lt;activeProfiles&gt;</div><div class="line">    &lt;activeProfile&gt;dev&lt;/activeProfile&gt;</div><div class="line">  &lt;/activeProfiles&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>现在在项目中把dao关掉，会报错，在update一下，就会去本地找，找不到再去私服中找，然后找到了先下载到本地仓库中然后就能够使用了就不会报错了</p>
+</li>
+</ul>
+<h3 id="管理仓库组"><a href="#管理仓库组" class="headerlink" title="管理仓库组"></a>管理仓库组</h3><ul>
+<li><p>nexus中包括很多仓库，hosted中存放的是企业自己发布的jar包及第三方公司的jar包，proxy中存放的是中央仓库的jar，为了方便从私服下载jar包可以将多个仓库组成一个仓库组，每个工程需要连接私服的仓库组下载jar包。</p>
+</li>
+<li><p>打开nexus配置仓库组，如下图：<br><img src="/uploads/maven/02/79576b1d-07d8-494a-a3e4-7c27f5e0f760.jpg" alt=""><br>上图中仓库组包括了本地仓库、代理仓库等。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/maven/" rel="tag">#maven</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/27/maven01/" rel="next" title="maven第一阶段">
+                <i class="fa fa-chevron-left"></i> maven第一阶段
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/30/maven02/"
+     data-title="maven第二阶段"
+     data-content=""
+     data-url="https://markzc.github.io/2016/11/30/maven02/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/30/maven02/"
+           data-title="maven第二阶段" data-url="https://markzc.github.io/2016/11/30/maven02/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/markzc" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3490969043" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/john_zc" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Maven"><span class="nav-number">1.</span> <span class="nav-text">Maven</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven的拆分与聚合"><span class="nav-number">1.1.</span> <span class="nav-text">Maven的拆分与聚合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#冲突问题的解决"><span class="nav-number">1.2.</span> <span class="nav-text">冲突问题的解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过添加-lt-exclusion-gt-标签来解决冲突"><span class="nav-number">1.2.1.</span> <span class="nav-text">通过添加<exclusion>标签来解决冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖调解原则"><span class="nav-number">1.2.2.</span> <span class="nav-text">依赖调解原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用版本锁定实现冲突解决"><span class="nav-number">1.2.3.</span> <span class="nav-text">使用版本锁定实现冲突解决</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖关系"><span class="nav-number">1.3.</span> <span class="nav-text">依赖关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继续开发添加service跟dao"><span class="nav-number">1.4.</span> <span class="nav-text">继续开发添加service跟dao</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#私服搭建"><span class="nav-number">1.5.</span> <span class="nav-text">私服搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载nexus并安装"><span class="nav-number">1.5.1.</span> <span class="nav-text">下载nexus并安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卸载"><span class="nav-number">1.5.2.</span> <span class="nav-text">卸载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动"><span class="nav-number">1.5.3.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">1.5.4.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试-上传到私服"><span class="nav-number">1.5.5.</span> <span class="nav-text">测试,上传到私服</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从私服上下载jar包"><span class="nav-number">1.5.6.</span> <span class="nav-text">从私服上下载jar包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#需求"><span class="nav-number">1.5.6.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在setting-xml中配置仓库"><span class="nav-number">1.5.6.2.</span> <span class="nav-text">在setting.xml中配置仓库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管理仓库组"><span class="nav-number">1.5.7.</span> <span class="nav-text">管理仓库组</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

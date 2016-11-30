@@ -112,7 +112,7 @@ docs ：Struts2 里面的帮助文档
 lib  ：Struts2的提供的开发的ja">
 <meta property="og:image" content="https://markzc.github.io/uploads/Struts2/01/ea699e92-9b6e-4355-b3e7-638eb49a16b2.jpg">
 <meta property="og:image" content="https://markzc.github.io/uploads/Struts2/01/1d7bc130-8656-419f-af1a-7df299e7522c.png">
-<meta property="og:updated_time" content="2016-11-19T02:55:19.190Z">
+<meta property="og:updated_time" content="2016-11-30T02:29:27.238Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Struts第一阶段">
 <meta name="twitter:description" content="strust2入门与介绍什么是Struts2是基于MVC设计模式的WEB层框架
@@ -465,6 +465,8 @@ lib  ：Struts2的提供的开发的ja">
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  // &lt;filter&gt;中加一个</div><div class="line">  &lt;init-param&gt;</div><div class="line">     &lt;param-name&gt;struts.actioin.extension&lt;/param-name&gt;</div><div class="line">     &lt;param-value&gt;action&lt;/param-value&gt;</div><div class="line">  &lt;/init-param&gt;</div></pre></td></tr></table></figure>
 <p>这里的struts.actioin.extension常量，表示访问的时候，路径的后缀名要加什么，默认是<code>action, ,</code>表示action跟空</p>
+<hr>
+<p>改配置文件不用重启服务器<br>  <code>&lt;constant name=&quot;struts.devMode&quot; value=&quot;true&quot; /&gt;</code></p>
 <h4 id="Struts2分模块开发的配置"><a href="#Struts2分模块开发的配置" class="headerlink" title="Struts2分模块开发的配置"></a>Struts2分模块开发的配置</h4><p>在struts2.xml 配置文件中用<code>&lt;include file=&quot;要包含的子配置文件&quot;/&gt;</code></p>
 <h3 id="Action的编写"><a href="#Action的编写" class="headerlink" title="Action的编写"></a>Action的编写</h3><h4 id="Action本身是一个POJO的类"><a href="#Action本身是一个POJO的类" class="headerlink" title="Action本身是一个POJO的类"></a>Action本身是一个POJO的类</h4><p>POJO(plain ordinary java object)的类,简单的java类：没有继承任何类。</p>
 <h4 id="Action实现一个Action的接口"><a href="#Action实现一个Action的接口" class="headerlink" title="Action实现一个Action的接口"></a>Action实现一个Action的接口</h4><p>在action的接口中，提供了个常量（逻辑视图名称）</p>
@@ -623,7 +625,7 @@ lib  ：Struts2的提供的开发的ja">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
