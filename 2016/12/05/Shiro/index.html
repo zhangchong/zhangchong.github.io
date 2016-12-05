@@ -1,0 +1,1153 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Shiro," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="shiroShiro安全框架什么是Shiro
+它是一个安全框架，用于解决系统的认证和授权问题，同时提供了会话管理，数据加密机制。
+
+
+传统登陆方式
+
+Shiro登陆方式
+
+
+Shiro的内部组织结构
+可以用在javaEE环境。Shiro可以帮助我们完成：认证，授权，加密，会话管理，与Web集成，缓存等。
+
+
+
+primary Concerns 主要的功能：
+Authentication 认证
+Au">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shiro">
+<meta property="og:url" content="https://markzc.github.io/2016/12/05/Shiro/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="shiroShiro安全框架什么是Shiro
+它是一个安全框架，用于解决系统的认证和授权问题，同时提供了会话管理，数据加密机制。
+
+
+传统登陆方式
+
+Shiro登陆方式
+
+
+Shiro的内部组织结构
+可以用在javaEE环境。Shiro可以帮助我们完成：认证，授权，加密，会话管理，与Web集成，缓存等。
+
+
+
+primary Concerns 主要的功能：
+Authentication 认证
+Au">
+<meta property="og:image" content="https://markzc.github.io/uploads/Shiro/eef4d6e7-6ed1-4205-ac26-b8b4fee667e1.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/Shiro/f8f78c14-2b03-41e4-9f0f-6d404b4366d8.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/Shiro/fc8fb293-060e-413b-96a1-95d9732fb853.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/Shiro/c3f8b0be-8238-494b-a99a-c317c68a5f9b.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/Shiro/16b34fc6-78dc-4186-8a1b-42f0f6bf9841.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/Shiro/b4fd2a92-fa15-4c27-bcdc-375546e68a75.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/Shiro/93c46dde-9534-4801-9114-c0e6cae8494e.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/Shiro/49c5f6f7-b4cf-4f0f-87b5-7cbf423489ce.png">
+<meta property="og:updated_time" content="2016-12-05T15:02:22.646Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shiro">
+<meta name="twitter:description" content="shiroShiro安全框架什么是Shiro
+它是一个安全框架，用于解决系统的认证和授权问题，同时提供了会话管理，数据加密机制。
+
+
+传统登陆方式
+
+Shiro登陆方式
+
+
+Shiro的内部组织结构
+可以用在javaEE环境。Shiro可以帮助我们完成：认证，授权，加密，会话管理，与Web集成，缓存等。
+
+
+
+primary Concerns 主要的功能：
+Authentication 认证
+Au">
+<meta name="twitter:image" content="https://markzc.github.io/uploads/Shiro/eef4d6e7-6ed1-4205-ac26-b8b4fee667e1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://markzc.github.io/2016/12/05/Shiro/"/>
+
+
+  <title> Shiro | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Shiro
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-05T22:49:02+08:00" content="2016-12-05">
+              2016-12-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/小插件/" itemprop="url" rel="index">
+                    <span itemprop="name">小插件</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/05/Shiro/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/05/Shiro/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/05/Shiro/" class="leancloud_visitors" data-flag-title="Shiro">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="shiro"><a href="#shiro" class="headerlink" title="shiro"></a>shiro</h1><h2 id="Shiro安全框架"><a href="#Shiro安全框架" class="headerlink" title="Shiro安全框架"></a>Shiro安全框架</h2><h3 id="什么是Shiro"><a href="#什么是Shiro" class="headerlink" title="什么是Shiro"></a>什么是Shiro</h3><blockquote>
+<p>它是一个安全框架，用于解决系统的认证和授权问题，同时提供了会话管理，数据加密机制。</p>
+</blockquote>
+<ul>
+<li><p>传统登陆方式<br><img src="/uploads/Shiro/eef4d6e7-6ed1-4205-ac26-b8b4fee667e1.jpg" alt=""></p>
+</li>
+<li><p>Shiro登陆方式<br><img src="/uploads/Shiro/f8f78c14-2b03-41e4-9f0f-6d404b4366d8.jpg" alt=""></p>
+</li>
+</ul>
+<h3 id="Shiro的内部组织结构"><a href="#Shiro的内部组织结构" class="headerlink" title="Shiro的内部组织结构"></a>Shiro的内部组织结构</h3><blockquote>
+<p>可以用在javaEE环境。Shiro可以帮助我们完成：认证，授权，加密，会话管理，与Web集成，缓存等。</p>
+</blockquote>
+<p><img src="/uploads/Shiro/fc8fb293-060e-413b-96a1-95d9732fb853.jpg" alt=""></p>
+<ul>
+<li>primary Concerns 主要的功能：<ul>
+<li>Authentication 认证</li>
+<li>Authorization  授权</li>
+<li>Session Management 会话管理</li>
+<li>Cryptography  加密</li>
+</ul>
+</li>
+</ul>
+<h3 id="应用程序如何使用Shiro框架"><a href="#应用程序如何使用Shiro框架" class="headerlink" title="应用程序如何使用Shiro框架"></a>应用程序如何使用Shiro框架</h3><p><img src="/uploads/Shiro/c3f8b0be-8238-494b-a99a-c317c68a5f9b.jpg" alt=""></p>
+<p>Shiro SecurityManager:安全管理,最核心的控制器<br>Realm域 :程序员提供的安全数据</p>
+<ul>
+<li>可以看出，程序员只关注两部分：<ol>
+<li>如何获取Subject.</li>
+<li>如何定义一个符合规定的Realm域（密码比较器的定义也是程序员干的）</li>
+</ol>
+</li>
+</ul>
+<hr>
+<ul>
+<li>Shiro使用时要配置相关过滤器(anon,authc,authcBasic,perms,port,rest,roles,ssl,user,logout)<ul>
+<li>Shiro中有十个拦截器，但可以只配置一个代理的就行，以一当十<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//shiro的filter必须在struts2的filter之前，否则action无法创建</div><div class="line">&lt;filter&gt;</div><div class="line">   &lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</div><div class="line">   //这里的名字在spring中还会用到</div><div class="line">   &lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;</div><div class="line">   &lt;init-param&gt;</div><div class="line">      &lt;param-name&gt;targetFilterLifecycle&lt;/param-name&gt;</div><div class="line">      &lt;param-value&gt;true&lt;/param-value&gt;</div><div class="line">   &lt;/init-param&gt;</div><div class="line">&lt;/filter&gt;</div><div class="line">&lt;filter-mapping&gt;</div><div class="line">   &lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</div><div class="line">   &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">&lt;/filter-mapping&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="引入依赖pom-xml或jarbao"><a href="#引入依赖pom-xml或jarbao" class="headerlink" title="引入依赖pom.xml或jarbao"></a>引入依赖pom.xml或jarbao</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.apache.shiro&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;shiro-all&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.2.3&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<p><img src="/uploads/Shiro/16b34fc6-78dc-4186-8a1b-42f0f6bf9841.jpg" alt=""></p>
+<h4 id="配置过滤器（上面有）"><a href="#配置过滤器（上面有）" class="headerlink" title="配置过滤器（上面有）"></a>配置过滤器（上面有）</h4><h4 id="配置shiro配置文件"><a href="#配置shiro配置文件" class="headerlink" title="配置shiro配置文件"></a>配置shiro配置文件</h4><ul>
+<li><p>在applicationContext.xml中配置shiro配置文件,放在事务管理器之前配置，Spring中引入生成Shiro的动态代理，使用cglib的方式<br><code>&lt;aop:aspectj-autoproxy proxy-target-class=&quot;true&quot; /&gt;</code></p>
+</li>
+<li><p>同时添加专门配置shiro的配置文件<br><code>&lt;import resource=&quot;spring/applicationContext-shiro.xml&quot;/&gt;</code></p>
+</li>
+<li><p>和ehcache支持<code>ehcache-shiro.xml</code>里面放(记得在pom中引入依赖)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;ehcache updateCheck=&quot;false&quot; name=&quot;shiroCache&quot;&gt;</div><div class="line">    &lt;defaultCache</div><div class="line">            maxElementsInMemory=&quot;10000&quot;</div><div class="line">            eternal=&quot;false&quot;</div><div class="line">            timeToIdleSeconds=&quot;120&quot;</div><div class="line">            timeToLiveSeconds=&quot;120&quot;</div><div class="line">            overflowToDisk=&quot;false&quot;</div><div class="line">            diskPersistent=&quot;false&quot;</div><div class="line">            diskExpiryThreadIntervalSeconds=&quot;120&quot;</div><div class="line">            /&gt;</div><div class="line">&lt;/ehcache&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="写配置文件"><a href="#写配置文件" class="headerlink" title="写配置文件"></a>写配置文件</h4><ul>
+<li>新建一个<code>applicationContext-shiro.xml</code>Shiro的配置的文件<ul>
+<li>里面的约束就是Spring的约束，因为Spring与Shire天生就是一对</li>
+<li>具体内容<ul>
+<li>SecurityManager配置</li>
+<li>配置Realm域</li>
+<li>密码比较器</li>
+<li>代理如何生成？ 用工厂来生成Shiro的相关过滤器</li>
+<li>配置缓存：ehcache缓存</li>
+<li>安全管理</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">   &lt;description&gt;Shiro的配置文件&lt;/description&gt;</div><div class="line">   &lt;bean id=&quot;securityManager&quot; class=&quot;org.apache.shiro.web.mgt.DefaultWebSecurityManager&quot;&gt;</div><div class="line">        &lt;property name=&quot;realm&quot; ref=&quot;authRealm&quot;/&gt;&lt;!-- 引用自定义的realm --&gt;</div><div class="line">        &lt;!-- 缓存 --&gt;</div><div class="line">        &lt;property name=&quot;cacheManager&quot; ref=&quot;shiroEhcacheManager&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;!-- 自定义权限认证 --&gt;</div><div class="line">    &lt;bean id=&quot;authRealm&quot; class=&quot;自定义了一个Realm域的包名&quot;&gt;</div><div class="line">    &lt;property name=&quot;userService&quot; ref=&quot;userService&quot;/&gt;</div><div class="line">    &lt;!-- 自定义密码加密算法  --&gt;</div><div class="line">    &lt;property name=&quot;credentialsMatcher&quot; ref=&quot;passwordMatcher&quot;/&gt;</div><div class="line">  &lt;/bean&gt;</div><div class="line"></div><div class="line">  &lt;!-- 设置密码加密策略 md5hash --&gt;</div><div class="line">  &lt;bean id=&quot;passwordMatcher&quot; class=&quot;自定义密码比较器的全路径&quot;/&gt;</div><div class="line"></div><div class="line">    &lt;!-- filter-name这个名字的值来自于web.xml中filter的名字 --&gt;</div><div class="line">    &lt;bean id=&quot;shiroFilter&quot; class=&quot;org.apache.shiro.spring.web.ShiroFilterFactoryBean&quot;&gt;</div><div class="line">        &lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot;/&gt;</div><div class="line">        &lt;!--登录页面  --&gt;</div><div class="line">        &lt;property name=&quot;loginUrl&quot; value=&quot;/index.jsp&quot;&gt;&lt;/property&gt;</div><div class="line">        &lt;!-- 登录成功后 --&gt;</div><div class="line">        &lt;property name=&quot;successUrl&quot; value=&quot;/home.action&quot;&gt;&lt;/property&gt;</div><div class="line">        &lt;!-- 还有过滤器过滤的属性`filterChainDefinitions`</div><div class="line">             anon（匿名访问）可以直接访问</div><div class="line">             authc（认证）不登录不可以直接访问 --&gt;</div><div class="line">        &lt;property name=&quot;filterChainDefinitions&quot;&gt;</div><div class="line">            &lt;!-- /**代表下面的多级目录也过滤 --&gt;</div><div class="line">            &lt;value&gt;</div><div class="line">        /index.jsp* = anon</div><div class="line">        /home* = anon</div><div class="line">        /sysadmin/login/login.jsp* = anon</div><div class="line">        /sysadmin/login/logout.jsp* = anon</div><div class="line">        /login* = anon</div><div class="line">        /logout* = anon</div><div class="line">        /components/** = anon</div><div class="line">        /css/** = anon</div><div class="line">        /images/** = anon</div><div class="line">        /js/** = anon</div><div class="line">        /make/** = anon</div><div class="line">        /skin/** = anon</div><div class="line">        /stat/** = anon</div><div class="line">        /ufiles/** = anon</div><div class="line">        /validator/** = anon</div><div class="line">        /resource/** = anon</div><div class="line">        /** = authc</div><div class="line">        /*.* = authc</div><div class="line">            &lt;/value&gt;</div><div class="line">        &lt;/property&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;!-- 用户授权/认证信息Cache, 采用EhCache  缓存 --&gt;</div><div class="line">    &lt;bean id=&quot;shiroEhcacheManager&quot; class=&quot;org.apache.shiro.cache.ehcache.EhCacheManager&quot;&gt;</div><div class="line">        &lt;property name=&quot;cacheManagerConfigFile&quot; value=&quot;classpath:ehcache-shiro.xml&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;!-- 保证实现了Shiro内部lifecycle函数的bean执行 --&gt;</div><div class="line">    &lt;bean id=&quot;lifecycleBeanPostProcessor&quot;</div><div class="line"></div><div class="line">  class=&quot;org.apache.shiro.spring.LifecycleBeanPostProcessor&quot;/&gt;</div><div class="line"></div><div class="line">    &lt;!-- 生成代理，通过代理进行控制 --&gt;</div><div class="line">    &lt;bean  class=&quot;org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator&quot; depends-on=&quot;lifecycleBeanPostProcessor&quot;&gt;</div><div class="line">        &lt;property name=&quot;proxyTargetClass&quot; value=&quot;true&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;!-- 安全管理器 --&gt;</div><div class="line">    &lt;bean  class=&quot;org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor&quot;&gt;</div><div class="line">        &lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div></pre></td></tr></table></figure>
+<h4 id="自定义realm"><a href="#自定义realm" class="headerlink" title="自定义realm"></a>自定义realm</h4><ul>
+<li>在认证、授权内部实现机制中都有提到，最终处理都将交给Realm进行处理。</li>
+<li>因为在Shiro中，最终是通过Realm来获取应用程序中的用户、角色及权限信息的。</li>
+<li>通常情况下，在Realm中会直接从我们的数据源中获取Shiro需要的验证信息。可以说，Realm是专用于安全框架的DAO.<ul>
+<li>记得配置到配置文件</li>
+<li>注入<code>userService</code>跟<code>credentialsMatchar密码比较器</code>(父类的父类中已经有了，所以就不用再注入了)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 自定义了一个Realm域 （主要作用是提供安全数据：用户，角色，模块）</div><div class="line"> * @author Administrator</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class AuthRealm extends AuthorizingRealm &#123;</div><div class="line">    //注入userService</div><div class="line">    private UserService userService;</div><div class="line">    public void setUserService(UserService userService) &#123;</div><div class="line">        this.userService = userService;</div><div class="line">    &#125;</div><div class="line">    //授权</div><div class="line">    /**</div><div class="line">     * 验证用户是否具有某某权限</div><div class="line">     * 当jsp页面上碰到Shiro标签时就会调用这个方法，当第一次碰到时才调用这个方法</div><div class="line">     */</div><div class="line">    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection pc) &#123;</div><div class="line">        //1.得到用户信息</div><div class="line">        User user = (User) pc.fromRealm(this.getName()).iterator().next();</div><div class="line">        //2.通过对象导航,得到用户的角色列表</div><div class="line">        Set&lt;Role&gt; roles = user.getRoles();</div><div class="line">        List&lt;String&gt; permissions = new ArrayList&lt;String&gt;();</div><div class="line">        //3.遍历角色列表，得到用户的每个角色</div><div class="line">        for(Role role :roles)&#123;</div><div class="line">            //得到每个角色 ，并通过对象导航，进一步加载这个角色下的模块列表</div><div class="line">            Set&lt;Module&gt; modules = role.getModules();</div><div class="line">            //遍历模块的集合，得到每个模块信息</div><div class="line">            for(Module module :modules)&#123;</div><div class="line">                permissions.add(module.getName());</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        //声明AuthorizationInfo的一个子类对象</div><div class="line">        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();</div><div class="line">        info.addStringPermissions(permissions);</div><div class="line">        return info;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 认证（在登录时就会调用这个方法）    Subject.login();</div><div class="line">     * 参数：AuthenticationToken代表用户在界面上输入的用户名和密码</div><div class="line">     * 返回值不为null就会执行密码比较器</div><div class="line">     */</div><div class="line">    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException &#123;</div><div class="line">        //1.将token转化为子类对象</div><div class="line">        UsernamePasswordToken upToken = (UsernamePasswordToken) token;</div><div class="line">        //2.从token中获取用户在界面输入的用户名</div><div class="line">        String username = upToken.getUsername();</div><div class="line">        //3.调用业务逻辑，根据用户名查询用户对象</div><div class="line">        List&lt;User&gt; userList = userService.find(&quot;from User where userName=?&quot; , User.class, new String[]&#123;username&#125;);</div><div class="line"></div><div class="line">        if(userList!=null &amp;&amp; userList.size()&gt;0)&#123;</div><div class="line">            //查询到了用户对象，说明用户名是正确的</div><div class="line">            User user = userList.get(0);</div><div class="line"></div><div class="line">            //principal 代表用户信息             credentials 代表用户的密码              第三个参数：只要是一个字符串就可以</div><div class="line">            AuthenticationInfo info = new SimpleAuthenticationInfo(user,user.getPassword(),this.getName());</div><div class="line">            return info;</div><div class="line">        &#125;</div><div class="line">        //4.组织返回的结果</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="自定义的密码比较器CustomCredentialsMatcher"><a href="#自定义的密码比较器CustomCredentialsMatcher" class="headerlink" title="自定义的密码比较器CustomCredentialsMatcher"></a>自定义的密码比较器<code>CustomCredentialsMatcher</code></h4><ul>
+<li>继承<code>SimpleCredentialsMatcher</code></li>
+<li>重写了密码比较的方法<ul>
+<li>第一个参数AuthenticationToken  代表用户在界面上输入的用户名和密码</li>
+<li>第二个参数AuthenticationInfo   代表了当前这个用户在数据库中的信息，就会有加密后的密码</li>
+</ul>
+</li>
+<li>返回值：<ul>
+<li>true证明密码比较成功了</li>
+<li>false证明密码比较失败，密码输入错误，程序会抛出异常<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) &#123;</div><div class="line">    //1.将用户在界面输入的密码进行加密</div><div class="line">    UsernamePasswordToken upToken = (UsernamePasswordToken) token;//向下转型</div><div class="line">    String inputpwd = new String(upToken.getPassword());</div><div class="line">    String inputpwdEncrypt = Encrypt.md5(inputpwd, upToken.getUsername());//md5hash算法进行加密</div><div class="line">    //2.将用户在数据库中的密码读取出来</div><div class="line">    String dbPwd = info.getCredentials().toString();</div><div class="line">    //3.进行比较</div><div class="line">    return super.equals(inputpwdEncrypt, dbPwd);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="自己的程序与Shiro交互"><a href="#自己的程序与Shiro交互" class="headerlink" title="自己的程序与Shiro交互"></a>自己的程序与Shiro交互</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">public class LoginAction extends BaseAction &#123;</div><div class="line">  private static final long serialVersionUID = 1L;</div><div class="line">  private String username;</div><div class="line">  private String password;</div><div class="line">  public String login() throws Exception &#123;</div><div class="line">    //如果username是空的则表示还没有登陆跳转到登陆页面</div><div class="line">    if(UtilFuns.isEmpty(username))&#123;</div><div class="line">      return &quot;login&quot;;</div><div class="line">    &#125;</div><div class="line">    try &#123;</div><div class="line">      //1.与Shiro交互</div><div class="line">      Subject subject = SecurityUtils.getSubject();</div><div class="line">      //2.调用subject中的方法，来实现登录</div><div class="line">      //将用户在界面输入的用户名密码进行封装</div><div class="line">      UsernamePasswordToken token = new UsernamePasswordToken(username, password);</div><div class="line">      //当login执行时，就会自动跳入authRealm域中的认证方法</div><div class="line">      subject.login(token);</div><div class="line">      //3.从Shiro中取出用户登录结果信息</div><div class="line">      User user = (User) subject.getPrincipal();</div><div class="line">      //4.将用户信息保存到session中</div><div class="line">      session.put(SysConstant.CURRENT_USER_INFO, user);</div><div class="line">      return SUCCESS;</div><div class="line">    &#125; catch (Exception e) &#123;</div><div class="line">      e.printStackTrace();</div><div class="line">      request.put(&quot;errorInfo&quot;, &quot;登录失败，用户名或密码错误！&quot;);</div><div class="line">      return &quot;login&quot;;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  //退出</div><div class="line">  public String logout()&#123;</div><div class="line">    session.remove(SysConstant.CURRENT_USER_INFO);    //删除session   </div><div class="line">    return &quot;logout&quot;;</div><div class="line">  &#125;</div><div class="line">  public String getUsername() &#123;</div><div class="line">    return username;</div><div class="line">  &#125;</div><div class="line">  public void setUsername(String username) &#123;</div><div class="line">    this.username = username;</div><div class="line">  &#125;</div><div class="line">  public String getPassword() &#123;</div><div class="line">    return password;</div><div class="line">  &#125;</div><div class="line">  public void setPassword(String password) &#123;</div><div class="line">    this.password = password;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="面使用shiro标签，-home-title-jsp-主菜单"><a href="#面使用shiro标签，-home-title-jsp-主菜单" class="headerlink" title="面使用shiro标签，/home/title.jsp 主菜单"></a>面使用shiro标签，/home/title.jsp 主菜单</h4><p>当页面上出现shiro标签的时候就会去授权，然后比较集合中是否有这一项，有就显示没有就不显示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;%@ taglib uri=&quot;http://shiro.apache.org/tags&quot; prefix=&quot;shiro&quot;%&gt;</div><div class="line"></div><div class="line">&lt;shiro:hasPermission name=&quot;sysadmin&quot;&gt;</div><div class="line">&lt;span id=&quot;topmenu&quot; onclick=&quot;toModule(&apos;sysadmin&apos;);&quot;&gt;系统管理&lt;/span&gt;</div><div class="line">&lt;/shiro:hasPermission&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="shiro的实现图解"><a href="#shiro的实现图解" class="headerlink" title="shiro的实现图解"></a>shiro的实现图解</h4><ul>
+<li><p>shiro的执行流程<br><img src="/uploads/Shiro/b4fd2a92-fa15-4c27-bcdc-375546e68a75.png" alt=""></p>
+</li>
+<li><p>使用shiro实现用户登录<br><img src="/uploads/Shiro/93c46dde-9534-4801-9114-c0e6cae8494e.png" alt=""></p>
+</li>
+<li><p>授权的过程<br><img src="/uploads/Shiro/49c5f6f7-b4cf-4f0f-87b5-7cbf423489ce.png" alt=""></p>
+</li>
+</ul>
+<h4 id="md5hash"><a href="#md5hash" class="headerlink" title="md5hash"></a>md5hash</h4><blockquote>
+<p>比md5强大的加密算法md5hash：</p>
+</blockquote>
+<ul>
+<li>破解md5：<ul>
+<li>破解思路，暴力破解，因为md5是一 一 对应方式，所以如果有一个大的数据字典就很容易破解</li>
+<li>或者如果能够操作数据库把密码改成一个自己知道的密文即可，md5hash不知道具体加密的次数跟盐所以行不通</li>
+</ul>
+</li>
+<li>md5hash算法加密：<ul>
+<li>md5hash因为同样的明文对应不一样的密文，所以不好破解</li>
+<li>因为加密的时候有三个参数:原文，盐(用什么参数加密),跟加密的次数</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Shiro/" rel="tag">#Shiro</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/03/ZTree/" rel="next" title="ZTree">
+                <i class="fa fa-chevron-left"></i> ZTree
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/12/05/Shiro/"
+     data-title="Shiro"
+     data-content=""
+     data-url="https://markzc.github.io/2016/12/05/Shiro/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/05/Shiro/"
+           data-title="Shiro" data-url="https://markzc.github.io/2016/12/05/Shiro/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/markzc" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3490969043" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/john_zc" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shiro"><span class="nav-number">1.</span> <span class="nav-text">shiro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Shiro安全框架"><span class="nav-number">1.1.</span> <span class="nav-text">Shiro安全框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Shiro"><span class="nav-number">1.1.1.</span> <span class="nav-text">什么是Shiro</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shiro的内部组织结构"><span class="nav-number">1.1.2.</span> <span class="nav-text">Shiro的内部组织结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用程序如何使用Shiro框架"><span class="nav-number">1.1.3.</span> <span class="nav-text">应用程序如何使用Shiro框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">1.1.4.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引入依赖pom-xml或jarbao"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">引入依赖pom.xml或jarbao</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置过滤器（上面有）"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">配置过滤器（上面有）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置shiro配置文件"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">配置shiro配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写配置文件"><span class="nav-number">1.1.4.4.</span> <span class="nav-text">写配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义realm"><span class="nav-number">1.1.4.5.</span> <span class="nav-text">自定义realm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义的密码比较器CustomCredentialsMatcher"><span class="nav-number">1.1.4.6.</span> <span class="nav-text">自定义的密码比较器CustomCredentialsMatcher</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自己的程序与Shiro交互"><span class="nav-number">1.1.4.7.</span> <span class="nav-text">自己的程序与Shiro交互</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#面使用shiro标签，-home-title-jsp-主菜单"><span class="nav-number">1.1.4.8.</span> <span class="nav-text">面使用shiro标签，/home/title.jsp 主菜单</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shiro的实现图解"><span class="nav-number">1.1.4.9.</span> <span class="nav-text">shiro的实现图解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#md5hash"><span class="nav-number">1.1.4.10.</span> <span class="nav-text">md5hash</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
