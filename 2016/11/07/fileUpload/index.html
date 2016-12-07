@@ -1,0 +1,1136 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="fileUpload," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="文件上传文件上传
+文件上传的概念：
+什么是文件上传，将本地的文件，通过流，写入到服务器上。
+
+
+文件上传的技术
+jspSmartUpload：应用在jsp中的文件上传和下载的组建。（应用在Model1年代）
+fileUpload ： Apache下的一个子项目，在java的环境下实现文件的上传
+Servlet3.0 ： 注解开发，文件上传（API不全 ），异步请求
+struts2 ： 支持文件上传">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fileUpload">
+<meta property="og:url" content="https://markzc.github.io/2016/11/07/fileUpload/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="文件上传文件上传
+文件上传的概念：
+什么是文件上传，将本地的文件，通过流，写入到服务器上。
+
+
+文件上传的技术
+jspSmartUpload：应用在jsp中的文件上传和下载的组建。（应用在Model1年代）
+fileUpload ： Apache下的一个子项目，在java的环境下实现文件的上传
+Servlet3.0 ： 注解开发，文件上传（API不全 ），异步请求
+struts2 ： 支持文件上传">
+<meta property="og:image" content="https://markzc.github.io/uploads/fileUpload/wps3E12.tmp.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/fileUpload/wpsB130.tmp.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/fileUpload/wpsDAD1.tmp.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/fileUpload/wpsF60B.tmp.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/fileUpload/wpsFAE.tmp.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/fileUpload/wps2BF2.tmp.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/fileUpload/wps4288.tmp.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/fileUpload/wps5A28.tmp.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/fileUpload/wps7226.tmp.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/fileUpload/wps867A.tmp.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/fileUpload/wpsA86A.tmp.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/fileUpload/bac78fff-e2cd-45f3-a157-216dc05b48ac.jpg">
+<meta property="og:updated_time" content="2016-12-07T12:26:05.193Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fileUpload">
+<meta name="twitter:description" content="文件上传文件上传
+文件上传的概念：
+什么是文件上传，将本地的文件，通过流，写入到服务器上。
+
+
+文件上传的技术
+jspSmartUpload：应用在jsp中的文件上传和下载的组建。（应用在Model1年代）
+fileUpload ： Apache下的一个子项目，在java的环境下实现文件的上传
+Servlet3.0 ： 注解开发，文件上传（API不全 ），异步请求
+struts2 ： 支持文件上传">
+<meta name="twitter:image" content="https://markzc.github.io/uploads/fileUpload/wps3E12.tmp.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://markzc.github.io/2016/11/07/fileUpload/"/>
+
+
+  <title> fileUpload | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                fileUpload
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-07T20:13:23+08:00" content="2016-11-07">
+              2016-11-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">javaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/07/fileUpload/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/07/fileUpload/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/07/fileUpload/" class="leancloud_visitors" data-flag-title="fileUpload">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传-1"><a href="#文件上传-1" class="headerlink" title="文件上传"></a>文件上传</h2><ul>
+<li>文件上传的概念：<ul>
+<li>什么是文件上传，将本地的文件，通过流，写入到服务器上。</li>
+</ul>
+</li>
+<li>文件上传的技术<ul>
+<li>jspSmartUpload：应用在jsp中的文件上传和下载的组建。（应用在Model1年代）</li>
+<li>fileUpload ： Apache下的一个子项目，在java的环境下实现文件的上传</li>
+<li>Servlet3.0 ： <strong>注解开发，文件上传（API不全 ）</strong>，异步请求</li>
+<li>struts2 ： 支持文件上传（底层FileUpload）</li>
+</ul>
+</li>
+<li><p>文件上传的要素：</p>
+<ul>
+<li>表单提交的方式是post(get有大小限制)</li>
+<li>表单中必须有文件上传项，而且必须要有name属性跟值。<code>&lt;input type=&quot;file&quot; name=&quot;upload&quot;&gt;</code></li>
+<li>表单中必须要有<code>enctype</code>属性值为<code>multipart/form-data</code>要不拿不到文件内容<ul>
+<li>enctype有默认值为<code>application/x-www-form-urlencoded</code>如果不改的话，上传文件的时候只能上传文件名</li>
+<li><code>enctype</code>属性值为<code>multipart/form-data</code>时就不能用getParameter();来获得属性了要用<code>String name =fileItem.getFiledName();</code>来获得名字，用<code>String value=fileItem.getString(&quot;编码方式&quot;);</code>获得值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>文件上传的原理分析</p>
+</li>
+</ul>
+<ul>
+<li>FileUpload文件上传的步骤分析<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">1.创建一个磁盘文件项工厂</div><div class="line">DiskFileItemFactory diskFileItemFactory=new DiskFileItemFactory();</div><div class="line">2.创建核心解析类</div><div class="line">ServletFileUpload servletFileUpload=new ServletFileUpload(diskFileItemFactory);</div><div class="line">3.解析request，返回List集合</div><div class="line">List&lt;FileItem&gt; list = servletFileUpload.parseRequest(request);</div><div class="line">4.遍历集合获得每个部分的内容，获得每个部分，如果是文件上传项，完成文件上传工作操作。</div><div class="line">for(FileItem fileItem:list)&#123;</div><div class="line">   //4.1判断是否是普通项</div><div class="line">   if(fileItem.isFileField())&#123;</div><div class="line">      //普通项</div><div class="line">      //接受到普通项的名字跟值</div><div class="line">      String name =fileItem.getFiledName();</div><div class="line">      String value=fileItem.getString();</div><div class="line">   &#125;else&#123;</div><div class="line">      //文件项</div><div class="line">      //获得文件名跟输入流</div><div class="line">      String fileName=fileItem.getName();</div><div class="line">      InputStream is=fileItem.getInputStream();</div><div class="line">      //获得文件上传的路径：</div><div class="line">      String path =this.getServletContext.getRealPath(&quot;/upload&quot;);</div><div class="line">      OutputStream os=new FileOutputStream(path + &quot;/&quot;+fileName);</div><div class="line">      //两个流对接</div><div class="line">      int len =0;</div><div class="line">      byte[] b=new byte[1024];</div><div class="line">      while((len=is.read(b))!=-1)&#123;</div><div class="line">         os.write(b,0,len);</div><div class="line">      &#125;</div><div class="line">      is.close();</div><div class="line">      os.close();</div><div class="line">   &#125;</div><div class="line">   //删除临时文件</div><div class="line">   fileItem.delete();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="FileUpload中API"><a href="#FileUpload中API" class="headerlink" title="FileUpload中API"></a>FileUpload中API</h2><ul>
+<li>DiskFileItemFactory：磁盘文件项工厂</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//设置缓冲区的大小3M</div><div class="line">diskFileItemFactory.setSizeThreshold(3*1024*1024);</div><div class="line">//设置临时文件存放的路径（比缓冲区大才会生成临时文件）</div><div class="line">String path=this.getServletContext.getRealPath(&quot;/temp&quot;);</div><div class="line">diskFileItemFactory.setRepository(new File(path));</div></pre></td></tr></table></figure>
+<ul>
+<li><p>ServletFileUpload</p>
+<ul>
+<li><p>判断表单中的enctype属性是否是multipart/form-data<br><img src="/uploads/fileUpload/wps3E12.tmp.jpg" alt=""></p>
+</li>
+<li><p>解析 request<br><img src="/uploads/fileUpload/wpsB130.tmp.jpg" alt=""></p>
+</li>
+<li><p>设置中文文件名乱码<br><img src="/uploads/fileUpload/wpsDAD1.tmp.jpg" alt=""></p>
+</li>
+<li><p>设置上传的当个文件大小<br><img src="/uploads/fileUpload/wpsF60B.tmp.jpg" alt=""></p>
+</li>
+<li><p>设置上传的总文件大小<br><img src="/uploads/fileUpload/wpsFAE.tmp.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>FileItem</p>
+<ul>
+<li><p>判断是普通项还是文件上传项<br><img src="/uploads/fileUpload/wps2BF2.tmp.jpg" alt=""></p>
+</li>
+<li><p>普通项(获得普通项名)<br><img src="/uploads/fileUpload/wps4288.tmp.jpg" alt=""></p>
+</li>
+<li><p>普通项(获得普通项的值)<br><img src="/uploads/fileUpload/wps5A28.tmp.jpg" alt=""></p>
+</li>
+<li><p>上传项(获得文件名)<br><img src="/uploads/fileUpload/wps7226.tmp.jpg" alt=""></p>
+</li>
+<li><p>上传项(获得文件输入流)<br><img src="/uploads/fileUpload/wps867A.tmp.jpg" alt=""></p>
+</li>
+<li><p>删除临时文件<br><img src="/uploads/fileUpload/wpsA86A.tmp.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="文件上传的问题解决"><a href="#文件上传的问题解决" class="headerlink" title="文件上传的问题解决"></a>文件上传的问题解决</h2><ul>
+<li><p>文件名路径重名（老版本的浏览器带文件名路径）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">int id=fileName.lastIndexOf(&quot;/&quot;);</div><div class="line">if(id!= -1)&#123;</div><div class="line">   //说明文件名中不包含路径</div><div class="line">   fileName=fileName.substring(id+1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>文件名重名(可以封装成一个工具类)</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int idx=fileName.laseIndexOf(&quot;.&quot;);</div><div class="line">String extetion=fileName.substring(idx); String newFileName=UUID.randomUUID().toString().replace(&quot;-&quot;,&quot;&quot;)+extetion;</div></pre></td></tr></table></figure>
+<ul>
+<li>一个目录下存放的文件过多(目录分离)<ul>
+<li>按时间分离：一个星期一个目录</li>
+<li>按用户分离：一个用户一个目录</li>
+<li>按个数分离：一个目录下放300个</li>
+<li>按算法分离：按照特定的目录分离算法进行分离</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//算法分离（工具类中）</div><div class="line">//获得唯一文件名的hashcode值</div><div class="line">int code1=uuidFileName.hashCode();</div><div class="line">//让这个值&amp;0xf 到一个一级目录</div><div class="line">int d1=code1 &amp; 0xf;</div><div class="line">//让hashcode值右移4位</div><div class="line">int code2=code1&gt;&gt;&gt;4;</div><div class="line">int d2 = code2 &amp; 0xf; //作为2级目录</div><div class="line">return &quot;/&quot;+d1+&quot;/&quot;+d2;</div></pre></td></tr></table></figure>
+<p>以此类推可以得到最多8级目录，每级中有16个不同的值。<br>使用这个工具类时如下：<br><img src="/uploads/fileUpload/bac78fff-e2cd-45f3-a157-216dc05b48ac.jpg" alt=""></p>
+<h3 id="注："><a href="#注：" class="headerlink" title="注："></a>注：</h3><p>在文件上传的时候因为form表单中的<code>enctype</code>属性值为<code>mulipart/form-data</code>时就不能用<code>getParameter()</code>了,所以就不能继承basicServlet了，要单独自己写一个servlet</p>
+<h2 id="Struts中的文件上传"><a href="#Struts中的文件上传" class="headerlink" title="Struts中的文件上传"></a>Struts中的文件上传</h2><ul>
+<li>Struts2中实现文件上传的基本的功能：<ul>
+<li>在Struts2中实现文件上传是通过拦截器实现的</li>
+<li>提供三个对象的属性即可：<ul>
+<li>上传的文件名：表单上传的名称+FileName. <code>private String uploadFileName;</code></li>
+<li>上传的文件类型：表单上传名称+ContentType.  <code>private String uploadContentType;</code></li>
+<li>上传的文件 文件类型的表单上传项。   <code>private Fileupload.</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">//实现文件上传，首先提供这三个属性</div><div class="line">private String uploadFileName;</div><div class="line">private String uploadContentType;</div><div class="line">private File upload;</div><div class="line">//记得要提供set方法</div><div class="line"></div><div class="line">//在指定的方法中实现文件上传</div><div class="line">private String uploadAction()&#123;</div><div class="line">   //判断是否选中文件</div><div class="line">   if(upload != null)&#123;</div><div class="line">       //文件上传的路劲</div><div class="line">       String realPath=&quot;.....&quot;;</div><div class="line">       //可以获得唯一文件名</div><div class="line">       String uuidFileName = UploadUtils.getUUIDFileName(uploadFileName);</div><div class="line">       //获得目录分离的路劲</div><div class="line">       String path = UploadUtils.getPath(uuidFileName);</div><div class="line">       File file = new File (realPath + path);</div><div class="line">       if(!file.exists())&#123;</div><div class="line">           file.mkdirs();</div><div class="line">       &#125;</div><div class="line">       //创建一个文件目录</div><div class="line">       String str=readPath+path+&quot;/&quot;+uuidFileName;</div><div class="line">       File dickFile = new File (str);</div><div class="line">       //实现文件上传</div><div class="line">       FileUtils.copyFile(upload,dickFile);</div><div class="line">   &#125;</div><div class="line">   return &quot;saveSuccess&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>文件上传的参数都在 <code>default.properties</code> 中呢</li>
+<li>有的则需要在拦截器中设置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//设置拦截器需要在配置文件中&lt;action&gt;标签中设置</div><div class="line">&lt;interceptor-ref name=&quot;defaultStack&quot;&gt;</div><div class="line">    &lt;!-- 数据的最大值 --&gt;</div><div class="line">    &lt;param name=&quot;fileUpload.maximumSize&quot;&gt;1048576&lt;/param&gt;</div><div class="line">    &lt;!-- 后缀名 --&gt;</div><div class="line">    &lt;param name=&quot;fileUpload.allows&quot;&gt;.jpg&lt;/param&gt;</div><div class="line">&lt;/interceptor-ref&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>还需要在配置文件中设置input标签，如果上传内容与拦截器中规定的不同会走Input标签<ul>
+<li>还能再input返回的页面设置<code>&lt;s:fielderror/&gt;</code>显示上传的错误信息</li>
+</ul>
+</li>
+</ul>
+<h3 id="uploadUtils"><a href="#uploadUtils" class="headerlink" title="uploadUtils"></a>uploadUtils</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">import java.util.UUID;</div><div class="line">/**</div><div class="line"> * 文件上传的工具类</div><div class="line"> * @author zc</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class UploadUtils &#123;</div><div class="line">    </div><div class="line">    /**</div><div class="line">     * 获得唯一文件名的方法：</div><div class="line">     * @param fileName</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    public static String getUUIDFileName(String fileName)&#123;</div><div class="line">        // aaa.txt   --- sdklflsdf.txt </div><div class="line">        int idx = fileName.lastIndexOf(&quot;.&quot;);</div><div class="line">        String extetion = fileName.substring(idx);</div><div class="line">        return UUID.randomUUID().toString().replace(&quot;-&quot;, &quot;&quot;)+extetion;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    /**</div><div class="line">     * 获得分录分录的路径：</div><div class="line">     * @param args</div><div class="line">     */</div><div class="line">    public static String getPath(String uuidFileName)&#123;</div><div class="line">        // 获得唯一文件名的hashCode值。</div><div class="line">        int code1 = uuidFileName.hashCode();</div><div class="line">        // 让这个值&amp;0xf 得到一个一级目录。</div><div class="line">        int d1 = code1 &amp; 0xf;// 作为1级目录.</div><div class="line">        // 让hashCode值右移4位:</div><div class="line">        int code2 = code1 &gt;&gt;&gt; 4;</div><div class="line">        int d2 = code2 &amp; 0xf; // 作为2级目录.</div><div class="line">        return &quot;/&quot;+d1+&quot;/&quot;+d2;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        System.out.println(&quot;986a6146e9104e00838c123bcc371cd3.txt&quot;.hashCode());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/fileUpload/" rel="tag">#fileUpload</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/01/oracle总结/" rel="next" title="oracle总结">
+                <i class="fa fa-chevron-left"></i> oracle总结
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/23/easyUI/" rel="prev" title="easyUI">
+                easyUI <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/07/fileUpload/"
+     data-title="fileUpload"
+     data-content=""
+     data-url="https://markzc.github.io/2016/11/07/fileUpload/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/07/fileUpload/"
+           data-title="fileUpload" data-url="https://markzc.github.io/2016/11/07/fileUpload/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/markzc" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3490969043" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/john_zc" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文件上传"><span class="nav-number">1.</span> <span class="nav-text">文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传-1"><span class="nav-number">1.1.</span> <span class="nav-text">文件上传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FileUpload中API"><span class="nav-number">1.2.</span> <span class="nav-text">FileUpload中API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传的问题解决"><span class="nav-number">1.3.</span> <span class="nav-text">文件上传的问题解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注："><span class="nav-number">1.3.1.</span> <span class="nav-text">注：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Struts中的文件上传"><span class="nav-number">1.4.</span> <span class="nav-text">Struts中的文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#uploadUtils"><span class="nav-number">1.4.1.</span> <span class="nav-text">uploadUtils</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

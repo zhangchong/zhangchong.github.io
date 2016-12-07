@@ -1,0 +1,1109 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javaMail," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="javaMailjavaMail
+
+SMTP: Simple Message Transfer Protocal 发送协议 默认端口：25
+POP:Post Office Protocal 邮局协议。POP3这个版本用的最多，端口：110
+
+发邮件的过程：
+使用代码发邮件
+引入依赖
+
+
+
+在pom.xml中引入依赖
+
+还有与Spring整合的
+
+
+
+具体业务,当新员工入职的时候发送邮件
+
+1234">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javaMail">
+<meta property="og:url" content="https://markzc.github.io/2016/10/07/javaMail/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="javaMailjavaMail
+
+SMTP: Simple Message Transfer Protocal 发送协议 默认端口：25
+POP:Post Office Protocal 邮局协议。POP3这个版本用的最多，端口：110
+
+发邮件的过程：
+使用代码发邮件
+引入依赖
+
+
+
+在pom.xml中引入依赖
+
+还有与Spring整合的
+
+
+
+具体业务,当新员工入职的时候发送邮件
+
+1234">
+<meta property="og:image" content="https://markzc.github.io/uploads/javaMail/535af99e-a191-43e8-8d3b-3deb986e267c.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/javaMail/bed05c68-2497-4f46-bd74-256004d3854d.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/javaMail/865133c1-45ad-4445-bec2-1411a31015ff.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/javaMail/af2a411a-b9b5-443f-9cfd-68fa63127653.png">
+<meta property="og:image" content="https://markzc.github.io/uploads/javaMail/00608e95-2864-41ad-a716-044de61deef3.png">
+<meta property="og:updated_time" content="2016-12-07T12:26:45.805Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javaMail">
+<meta name="twitter:description" content="javaMailjavaMail
+
+SMTP: Simple Message Transfer Protocal 发送协议 默认端口：25
+POP:Post Office Protocal 邮局协议。POP3这个版本用的最多，端口：110
+
+发邮件的过程：
+使用代码发邮件
+引入依赖
+
+
+
+在pom.xml中引入依赖
+
+还有与Spring整合的
+
+
+
+具体业务,当新员工入职的时候发送邮件
+
+1234">
+<meta name="twitter:image" content="https://markzc.github.io/uploads/javaMail/535af99e-a191-43e8-8d3b-3deb986e267c.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://markzc.github.io/2016/10/07/javaMail/"/>
+
+
+  <title> javaMail | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                javaMail
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-07T20:03:52+08:00" content="2016-10-07">
+              2016-10-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">javaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/07/javaMail/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/07/javaMail/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/07/javaMail/" class="leancloud_visitors" data-flag-title="javaMail">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="javaMail"><a href="#javaMail" class="headerlink" title="javaMail"></a>javaMail</h1><h2 id="javaMail-1"><a href="#javaMail-1" class="headerlink" title="javaMail"></a>javaMail</h2><p><img src="/uploads/javaMail/535af99e-a191-43e8-8d3b-3deb986e267c.jpg" alt=""></p>
+<ul>
+<li>SMTP: Simple Message Transfer Protocal 发送协议 默认端口：25</li>
+<li>POP:Post Office Protocal 邮局协议。POP3这个版本用的最多，端口：110</li>
+</ul>
+<p>发邮件的过程：<br><img src="/uploads/javaMail/bed05c68-2497-4f46-bd74-256004d3854d.png" alt=""></p>
+<h3 id="使用代码发邮件"><a href="#使用代码发邮件" class="headerlink" title="使用代码发邮件"></a>使用代码发邮件</h3><ol>
+<li>引入依赖</li>
+</ol>
+<p><img src="/uploads/javaMail/865133c1-45ad-4445-bec2-1411a31015ff.jpg" alt=""></p>
+<ul>
+<li><p>在pom.xml中引入依赖<br><img src="/uploads/javaMail/af2a411a-b9b5-443f-9cfd-68fa63127653.png" alt=""></p>
+</li>
+<li><p>还有与Spring整合的<br><img src="/uploads/javaMail/00608e95-2864-41ad-a716-044de61deef3.png" alt=""></p>
+</li>
+</ul>
+<ol>
+<li>具体业务,当新员工入职的时候发送邮件</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">//1. 设置邮件的一些信息</div><div class="line">Properties props = new Properties();</div><div class="line">//发送邮件的服务器地址下面是网易的，qq的就是stmp.qq.com  新浪：stmp.sina.com</div><div class="line">props.put(&quot;mail.smtp.host&quot;,&quot;smtp.163.com&quot;);</div><div class="line">props.put(&quot;mail.smtp.auth&quot;,&quot;true&quot;);  //身份认证，一般都会开</div><div class="line"></div><div class="line">//2. 创建Session对象</div><div class="line">Session session = Session.getInstance（props）；</div><div class="line"></div><div class="line">//3.创建MimeMessage，邮件的消息对象</div><div class="line">MimeMessage message = new MimeMessage(session);</div><div class="line"></div><div class="line">//4.设置发件人</div><div class="line">Address fromAddr = new InternetAddress(&quot;zc@163.com&quot;);</div><div class="line">message.setFrom(fromAddr);</div><div class="line"></div><div class="line">//5.设置收件人</div><div class="line">Address toAddr = new InternetAddress(john@163.com);</div><div class="line">message.setRecipient(RecipientType.TO,toAddr);</div><div class="line"></div><div class="line">//6.设置邮件的主题</div><div class="line">message.setSubject(&quot;项目进展顺序&quot;);</div><div class="line"></div><div class="line">//7.设置邮件的正文</div><div class="line">message.setText(&quot;项目进展顺序，所有兄弟们都非常努力，老板今天可以请吃饭&quot;);</div><div class="line">message.saveChanges();//保存更新</div><div class="line"></div><div class="line">//8.得到火箭</div><div class="line">Transport transport = session.getTransport(&quot;smtp&quot;);</div><div class="line"></div><div class="line">transport.connect(&quot;smtp.163.com&quot;, &quot;zc@163.com&quot;, &quot;密码&quot;);//设置了火箭的发射地址</div><div class="line"></div><div class="line">transport.sendMessage(message, message.getAllRecipients());//发送具体内容及接收人</div><div class="line"></div><div class="line">transport.close();</div></pre></td></tr></table></figure>
+<h3 id="引入到项目中，入职员工后发送邮件"><a href="#引入到项目中，入职员工后发送邮件" class="headerlink" title="引入到项目中，入职员工后发送邮件"></a>引入到项目中，入职员工后发送邮件</h3><ul>
+<li>在数据库增加邮件字段</li>
+<li>发送邮件的代码可以封装成一个Utils，在Service完成业务</li>
+<li>邮件发送的工作，需要用到网络，比较耗时。并且也是一个独立的任务</li>
+<li><p>所以可以开启一个新线程，来发送</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Thread th = new Thread(new Runnable()&#123;</div><div class="line">    public void run()&#123;</div><div class="line">           try&#123;</div><div class="line">             MailUtil.sendMsg(entity.getUserinfo().getEmail(),&quot;新员工入职信息&quot;,&quot;欢迎&quot;+entity.getUserinfo().getName()+&quot;加入xxx,您的登录名是&quot;+entity.getUsername()+&quot;密码是：&quot;+entity.getPassword());</div><div class="line">        &#125;catch(Exception e)&#123;</div><div class="line">             e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">//启动线程</div><div class="line">th.start();</div></pre></td></tr></table></figure>
+</li>
+<li><p>因为匿名内部类使用外边的变量要加final。所以在外边的entity上加final</p>
+</li>
+<li>这里的异常要捕获，因为有事务，所以在这的异常要捕获，即使失败了自己处理就行，不会影响员工入职</li>
+</ul>
+<h2 id="javaMail与Spring整合"><a href="#javaMail与Spring整合" class="headerlink" title="javaMail与Spring整合"></a>javaMail与Spring整合</h2><ul>
+<li>引入pom依赖前面已经引了</li>
+<li><p>创建一个配置文件mail.properties</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mail.host=smtp.163.com</div><div class="line">mail.username=发送人用户名</div><div class="line">mail.password=密码</div><div class="line">mail.from=zc@163.com</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建一个<code>applicationContext-mail</code>配置文件，先加载<code>mail.properties</code><br><code>&lt;context:property-placeholder location=&quot;classpath:mail.properties&quot; /&gt;</code></p>
+</li>
+<li><p>然后</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 简单消息对象创建 --&gt;</div><div class="line">&lt;bean id=&quot;mailMessage&quot; class=&quot;org.springframework.mail.SimpleMailMessage&quot;&gt;</div><div class="line">     &lt;property name=&quot;from&quot; value=&quot;$&#123;mail.from&#125;&quot;&gt;&lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div><div class="line"></div><div class="line">&lt;!-- 2.创建发送器 --&gt;    </div><div class="line">&lt;bean id=&quot;mailSender&quot; class=&quot;org.springframework.mail.javamail.JavaMailSenderImpl&quot;&gt;</div><div class="line">     &lt;property name=&quot;host&quot; value=&quot;$&#123;mail.host&#125;&quot;&gt;&lt;/property&gt;</div><div class="line">     &lt;property name=&quot;username&quot; value=&quot;$&#123;mail.username&#125;&quot;&gt;&lt;/property&gt;</div><div class="line">     &lt;property name=&quot;password&quot; value=&quot;$&#123;mail.password&#125;&quot;&gt;&lt;/property&gt;</div><div class="line">     &lt;property name=&quot;defaultEncoding&quot; value=&quot;UTF-8&quot;&gt;&lt;/property&gt;</div><div class="line">     &lt;property name=&quot;javaMailProperties&quot;&gt;</div><div class="line">        &lt;props&gt;</div><div class="line">             &lt;prop key=&quot;mail.smtp.auth&quot;&gt;true&lt;/prop&gt;</div><div class="line">             &lt;prop key=&quot;mail.debug&quot;&gt;true&lt;/prop&gt;</div><div class="line">             &lt;prop key=&quot;mail.smtp.timeout&quot;&gt;0&lt;/prop&gt;</div><div class="line">        &lt;/props&gt;</div><div class="line">     &lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>测试一下<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void testJavaMail() throws Exception&#123;</div><div class="line">    ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;classpath:spring/applicationContext-mail.xml&quot;);</div><div class="line">    //得到了简单邮件的消息对象</div><div class="line">    SimpleMailMessage smm = (SimpleMailMessage) ac.getBean(&quot;mailMessage&quot;);</div><div class="line">    smm.setTo(&quot;113@qq.com&quot;);</div><div class="line">    smm.setSubject(&quot;今天晚上约你&quot;);</div><div class="line">    smm.setText(&quot;本人是一个18岁的小姑娘，相约回龙观东大街&quot;);</div><div class="line">    //得到发送器</div><div class="line">    JavaMailSender mailSender = (JavaMailSender) ac.getBean(&quot;mailSender&quot;);</div><div class="line">    //发送</div><div class="line">    mailSender.send(smm);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>整合进ssh，在ServiceImpl中把<code>mailMessage</code>跟<code>mailSender</code>注入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//使用spring与javaMail实现新员工入职时邮件的发送</div><div class="line">Thread th  = new Thread(new Runnable() &#123;</div><div class="line">    public void run() &#123;</div><div class="line">        try &#123;</div><div class="line">            mailMessage.setTo(entity.getUserinfo().getEmail());</div><div class="line">            mailMessage.setSubject(&quot;新员工入职信息&quot;);</div><div class="line">            mailMessage.setText(&quot;欢迎&quot;+entity.getUserinfo().getName()+&quot;加入传智播客集团，您在公司的账号：&quot;+entity.getUserName()+&quot;,密码：&quot;+SysConstant.DEFAULT_PASS);</div><div class="line">            mailSender.send(mailMessage);//发送邮件</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;    </div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">th.start();</div></pre></td></tr></table></figure>
+<ul>
+<li>SMTP协议（发送邮件的时候控制台中输出）：<ul>
+<li>334 DXNLtYTE0     http协议中请输入用户名</li>
+<li>334 UGFzc3dvcmQ6  http协议中请输入密码</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="发送复杂的内容"><a href="#发送复杂的内容" class="headerlink" title="发送复杂的内容"></a>发送复杂的内容</h3><p>发送邮件的时候可能会有图片跟附加文件：<br>当然首先要引入依赖跟配置配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void testJavaMail() throws Exception&#123;</div><div class="line">    ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;classpath:spring/applicationContext-mail.xml&quot;);</div><div class="line"></div><div class="line">    //得到发送器</div><div class="line">    JavaMailSender mailSender = (JavaMailSender) ac.getBean(&quot;mailSender&quot;);</div><div class="line"></div><div class="line">    //得到一个MimeMessage对象</div><div class="line">    MimeMessage message = mailSender.createMimeMessage();</div><div class="line"></div><div class="line">    //产生出一个MimeMessageHelper helper </div><div class="line">    MimeMessageHelper helper = new MimeMessageHelper(message, true);//工具类本质是操作message消息   true代表可以带附件，图片</div><div class="line"></div><div class="line">    //3.使用helper工具类，设置邮件的发送者，接收者，主题，正文</div><div class="line">    helper.setFrom(&quot;itheima14@163.com&quot;);</div><div class="line">    helper.setTo(&quot;3462420264@qq.com&quot;);</div><div class="line">    helper.setSubject(&quot;发送图片和附件&quot;);</div><div class="line">    helper.setText(&quot;&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;hello!!spring image html mail&lt;/h1&gt;&lt;a href=http://www.baidu.com&gt;baidu&lt;/a&gt;&lt;br/&gt;&lt;img src=&apos;cid:image&apos; /&gt;&lt;/body&gt;&lt;/html&gt;&quot;, true);</div><div class="line"></div><div class="line">    //指定cid的取值</div><div class="line">    FileSystemResource imgResource = new FileSystemResource(new File(&quot;E:/图片路劲.png&quot;));</div><div class="line">    helper.addInline(&quot;image&quot;, imgResource);</div><div class="line"></div><div class="line">    //带附件</div><div class="line">    FileSystemResource fileResource = new FileSystemResource(new File(&quot;E:/附加文件路劲.zip&quot;));</div><div class="line">    helper.addAttachment(&quot;javamail1_4_4.zip&quot;, fileResource);</div><div class="line">    //发送</div><div class="line">    mailSender.send(message);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javaMail/" rel="tag">#javaMail</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/05/异常处理框架/" rel="next" title="异常处理框架">
+                <i class="fa fa-chevron-left"></i> 异常处理框架
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/23/oracle01/" rel="prev" title="oracle第一阶段">
+                oracle第一阶段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/10/07/javaMail/"
+     data-title="javaMail"
+     data-content=""
+     data-url="https://markzc.github.io/2016/10/07/javaMail/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/07/javaMail/"
+           data-title="javaMail" data-url="https://markzc.github.io/2016/10/07/javaMail/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/markzc" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3490969043" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/john_zc" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://my.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#javaMail"><span class="nav-number">1.</span> <span class="nav-text">javaMail</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#javaMail-1"><span class="nav-number">1.1.</span> <span class="nav-text">javaMail</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用代码发邮件"><span class="nav-number">1.1.1.</span> <span class="nav-text">使用代码发邮件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入到项目中，入职员工后发送邮件"><span class="nav-number">1.1.2.</span> <span class="nav-text">引入到项目中，入职员工后发送邮件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#javaMail与Spring整合"><span class="nav-number">1.2.</span> <span class="nav-text">javaMail与Spring整合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发送复杂的内容"><span class="nav-number">1.2.1.</span> <span class="nav-text">发送复杂的内容</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
