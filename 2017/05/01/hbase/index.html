@@ -84,21 +84,21 @@
 
 
 
-<meta name="description" content="简介HBase是一个分布式的、面向列的开源数据库,源于google的一篇论文&amp;lt;a&amp;gt;《bigtable：一个结构化数据的分布式存储系统》&amp;lt;/a&amp;gt;。HBase是Google Bigtable的开源实现，它利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为协同服务。
-HBase的表结构HBas">
+<meta name="description" content="简介HBase是一个分布式的、面向列的开源数据库,源于google的一篇论文《bigtable：一个结构化数据的分布式存储系统》。HBase是Google Bigtable的开源实现，它利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为协同服务。
+HBase的表结构HBase以表的形式存储数据。表有行和列组成。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hbase">
 <meta property="og:url" content="https://markzc.github.io/2017/05/01/hbase/index.html">
 <meta property="og:site_name" content="张冲'blog">
-<meta property="og:description" content="简介HBase是一个分布式的、面向列的开源数据库,源于google的一篇论文&amp;lt;a&amp;gt;《bigtable：一个结构化数据的分布式存储系统》&amp;lt;/a&amp;gt;。HBase是Google Bigtable的开源实现，它利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为协同服务。
-HBase的表结构HBas">
+<meta property="og:description" content="简介HBase是一个分布式的、面向列的开源数据库,源于google的一篇论文《bigtable：一个结构化数据的分布式存储系统》。HBase是Google Bigtable的开源实现，它利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为协同服务。
+HBase的表结构HBase以表的形式存储数据。表有行和列组成。">
 <meta property="og:image" content="https://markzc.github.io/uploads/hbase/2c7d6671-b4c6-41ab-83b1-9eaf2f08fc7e.jpg">
 <meta property="og:image" content="https://markzc.github.io/uploads/hbase/802dde5c-2059-4cda-b412-4bed02e45166.png">
-<meta property="og:updated_time" content="2017-07-27T01:47:15.798Z">
+<meta property="og:updated_time" content="2017-07-27T03:32:24.642Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hbase">
-<meta name="twitter:description" content="简介HBase是一个分布式的、面向列的开源数据库,源于google的一篇论文&amp;lt;a&amp;gt;《bigtable：一个结构化数据的分布式存储系统》&amp;lt;/a&amp;gt;。HBase是Google Bigtable的开源实现，它利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为协同服务。
-HBase的表结构HBas">
+<meta name="twitter:description" content="简介HBase是一个分布式的、面向列的开源数据库,源于google的一篇论文《bigtable：一个结构化数据的分布式存储系统》。HBase是Google Bigtable的开源实现，它利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为协同服务。
+HBase的表结构HBase以表的形式存储数据。表有行和列组成。">
 <meta name="twitter:image" content="https://markzc.github.io/uploads/hbase/2c7d6671-b4c6-41ab-83b1-9eaf2f08fc7e.jpg">
 
 
@@ -111,7 +111,7 @@ HBase的表结构HBas">
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: '0',
+      userId: 'undefined',
       author: '博主'
     }
   };
@@ -316,13 +316,6 @@ HBase的表结构HBas">
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/05/01/hbase/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/01/hbase/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -351,8 +344,8 @@ HBase的表结构HBas">
       
 
       
-        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><pre><code>HBase是一个分布式的、面向列的开源数据库,源于google的一篇论文&lt;a&gt;《bigtable：一个结构化数据的分布式存储系统》&lt;/a&gt;。HBase是Google Bigtable的开源实现，它利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为协同服务。
-</code></pre><h2 id="HBase的表结构"><a href="#HBase的表结构" class="headerlink" title="HBase的表结构"></a>HBase的表结构</h2><p>HBase以表的形式存储数据。表有行和列组成。列划分为若干个列族/列簇(column family)。</p>
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>HBase是一个分布式的、面向列的开源数据库,源于google的一篇论文<a>《bigtable：一个结构化数据的分布式存储系统》</a>。HBase是Google Bigtable的开源实现，它利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为协同服务。</p>
+<h2 id="HBase的表结构"><a href="#HBase的表结构" class="headerlink" title="HBase的表结构"></a>HBase的表结构</h2><p>HBase以表的形式存储数据。表有行和列组成。列划分为若干个列族/列簇(column family)。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">| Row Key | column-family1 | column-family2 | column-family3 |</div><div class="line">| column1 | column2 | column1 | column2 | column3 | column1 |</div><div class="line">| key1 |</div><div class="line">| key2 |</div><div class="line">| key3 |</div></pre></td></tr></table></figure>
 <p>如上图所示，key1,key2,key3是三条记录的唯一的row key值，column-family1,column-family2,column-family3是三个列族，每个列族下又包括几列。比如column-family1这个列族下包括两列，名字是column1和column2，t1:abc,t2:gdxdf是由row key1和column-family1-column1唯一确定的一个单元cell。这个cell中有两个数据，abc和gdxdf。两个值的时间戳不一样，分别是t1,t2, hbase会返回最新时间的值给请求者。</p>
 <p>这些名词的具体含义如下：</p>
@@ -550,28 +543,36 @@ HBase的表结构HBas">
     </footer>
   </article>
 
+   <div>
+  
+    <div>
+    
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTc2My82MzI5">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+</div>
+  
+</div>
+
 
 
     <div class="post-spread">
-      
-        <div class="ds-share flat" data-thread-key="2017/05/01/hbase/"
-     data-title="Hbase"
-     data-content=""
-     data-url="https://markzc.github.io/2017/05/01/hbase/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
       
     </div>
   </div>
@@ -583,10 +584,6 @@ HBase的表结构HBas">
 
           
   <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2017/05/01/hbase/"
-           data-title="Hbase" data-url="https://markzc.github.io/2017/05/01/hbase/">
-      </div>
     
   </div>
 
@@ -841,30 +838,9 @@ HBase的表结构HBas">
 
   
 
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"markzc"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
 
 
+  
 
 
 
