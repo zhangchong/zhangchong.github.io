@@ -1,0 +1,1133 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="hbase," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="简介HBase是一个分布式的、面向列的开源数据库,源于google的一篇论文&amp;lt;a&amp;gt;《bigtable：一个结构化数据的分布式存储系统》&amp;lt;/a&amp;gt;。HBase是Google Bigtable的开源实现，它利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为协同服务。
+HBase的表结构HBas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hbase">
+<meta property="og:url" content="https://markzc.github.io/2017/05/01/hbase/index.html">
+<meta property="og:site_name" content="张冲'blog">
+<meta property="og:description" content="简介HBase是一个分布式的、面向列的开源数据库,源于google的一篇论文&amp;lt;a&amp;gt;《bigtable：一个结构化数据的分布式存储系统》&amp;lt;/a&amp;gt;。HBase是Google Bigtable的开源实现，它利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为协同服务。
+HBase的表结构HBas">
+<meta property="og:image" content="https://markzc.github.io/uploads/hbase/2c7d6671-b4c6-41ab-83b1-9eaf2f08fc7e.jpg">
+<meta property="og:image" content="https://markzc.github.io/uploads/hbase/802dde5c-2059-4cda-b412-4bed02e45166.png">
+<meta property="og:updated_time" content="2017-07-27T01:47:15.798Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hbase">
+<meta name="twitter:description" content="简介HBase是一个分布式的、面向列的开源数据库,源于google的一篇论文&amp;lt;a&amp;gt;《bigtable：一个结构化数据的分布式存储系统》&amp;lt;/a&amp;gt;。HBase是Google Bigtable的开源实现，它利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为协同服务。
+HBase的表结构HBas">
+<meta name="twitter:image" content="https://markzc.github.io/uploads/hbase/2c7d6671-b4c6-41ab-83b1-9eaf2f08fc7e.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://markzc.github.io/2017/05/01/hbase/"/>
+
+
+  <title> Hbase | 张冲'blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲'blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hbase
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-01T09:43:41+08:00" content="2017-05-01">
+              2017-05-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/01/hbase/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/01/hbase/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/05/01/hbase/" class="leancloud_visitors" data-flag-title="Hbase">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><pre><code>HBase是一个分布式的、面向列的开源数据库,源于google的一篇论文&lt;a&gt;《bigtable：一个结构化数据的分布式存储系统》&lt;/a&gt;。HBase是Google Bigtable的开源实现，它利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为协同服务。
+</code></pre><h2 id="HBase的表结构"><a href="#HBase的表结构" class="headerlink" title="HBase的表结构"></a>HBase的表结构</h2><p>HBase以表的形式存储数据。表有行和列组成。列划分为若干个列族/列簇(column family)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">| Row Key | column-family1 | column-family2 | column-family3 |</div><div class="line">| column1 | column2 | column1 | column2 | column3 | column1 |</div><div class="line">| key1 |</div><div class="line">| key2 |</div><div class="line">| key3 |</div></pre></td></tr></table></figure>
+<p>如上图所示，key1,key2,key3是三条记录的唯一的row key值，column-family1,column-family2,column-family3是三个列族，每个列族下又包括几列。比如column-family1这个列族下包括两列，名字是column1和column2，t1:abc,t2:gdxdf是由row key1和column-family1-column1唯一确定的一个单元cell。这个cell中有两个数据，abc和gdxdf。两个值的时间戳不一样，分别是t1,t2, hbase会返回最新时间的值给请求者。</p>
+<p>这些名词的具体含义如下：</p>
+<h3 id="Row-Key"><a href="#Row-Key" class="headerlink" title="Row Key"></a>Row Key</h3><ul>
+<li>与nosql数据库们一样,row key是用来检索记录的主键。访问hbase table中的行，只有三种方式：<ul>
+<li>通过单个row key访问</li>
+<li>通过row key的range</li>
+<li>全表扫描</li>
+</ul>
+</li>
+<li>Row key行键 (Row key)可以是任意字符串(最大长度是 64KB，实际应用中长度一般为 10-100bytes)，在hbase内部，row key保存为字节数组。</li>
+<li>存储时，数据按照Row key的字典序(byte order)排序存储。设计key时，要充分排序存储这个特性，将经常一起读取的行存储放到一起。(位置相关性)</li>
+<li>注意：字典序对int排序的结果是1,10,100,11,12,13,14,15,16,17,18,19,2,20,21,…,9,91,92,93,94,95,96,97,98,99。要保持整形的自然序，行键必须用0作左填充。</li>
+<li>行的一次读写是原子操作 (不论一次读写多少列)。这个设计决策能够使用户很容易的理解程序在对同一个行进行并发更新操作时的行为。</li>
+</ul>
+<h3 id="列族-column-family"><a href="#列族-column-family" class="headerlink" title="列族 column family"></a>列族 column family</h3><ul>
+<li>hbase表中的每个列，都归属与某个列族。列族是表的chema的一部分(而列不是)，必须在使用表之前定义。列名都以列族作为前缀。例如<code>courses:history</code> ， <code>courses:math</code> 都属于 <code>courses</code>这个列族。</li>
+<li>访问控制、磁盘和内存的使用统计都是在列族层面进行的。实际应用中，列族上的控制权限能帮助我们管理不同类型的应用：我们允许一些应用可以添加新的基本数据、一些应用可以读取基本数据并创建继承的列族、一些应用则只允许浏览数据（甚至可能因为隐私的原因不能浏览所有数据）。</li>
+</ul>
+<h3 id="单元-Cell"><a href="#单元-Cell" class="headerlink" title="单元 Cell"></a>单元 Cell</h3><p>HBase中通过row和columns确定的为一个存贮单元称为cell。由<code>{row key, column( =&lt;family&gt; + &lt;label&gt;), version}</code> 唯一确定的单元。cell中的数据是没有类型的，全部是字节码形式存储。</p>
+<h3 id="时间戳-timestamp"><a href="#时间戳-timestamp" class="headerlink" title="时间戳 timestamp"></a>时间戳 timestamp</h3><ul>
+<li>每个cell都保存着同一份数据的多个版本。版本通过时间戳来索引。时间戳的类型是 64位整型。时间戳可以由hbase(在数据写入时自动 )赋值，此时时间戳是精确到毫秒的当前系统时间。时间戳也可以由客户显式赋值。如果应用程序要避免数据版本冲突，就必须自己生成具有唯一性的时间戳。每个cell中，不同版本的数据按照时间倒序排序，即最新的数据排在最前面。</li>
+<li>为了避免数据存在过多版本造成的的管理 (包括存贮和索引)负担，hbase提供了两种数据版本回收方式。一是保存数据的最后n个版本，二是保存最近一段时间内的版本（比如最近七天）。用户可以针对每个列族进行设置。</li>
+</ul>
+<h2 id="列存储"><a href="#列存储" class="headerlink" title="列存储"></a>列存储</h2><blockquote>
+<p>列存储不同于传统的关系型数据库，其数据在表中是按行存储的，列方式所带来的重要好处之一就是，由于查询中的选择规则是通过列来定义的，因 此整个数据库是自动索引化的。按列存储每个字段的数据聚集存储，在查询只需要少数几个字段的时候，能大大减少读取的数据量，一个字段的数据聚集存储，那就 更容易为这种聚集存储设计更好的压缩/解压算法。这张图讲述了传统的行存储和列存储的区别：</p>
+</blockquote>
+<p><img src="/uploads/hbase/2c7d6671-b4c6-41ab-83b1-9eaf2f08fc7e.jpg" alt=""></p>
+<h1 id="安装及使用"><a href="#安装及使用" class="headerlink" title="安装及使用"></a>安装及使用</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p>从 Apache的HBase的镜像网站上下载一个稳定版本的HBase <code>http://mirrors.devlib.org/apache/hbase/stable/hbase-1.1.2-bin.tar.gz</code>， 下载完成后，对其进行解压缩。确定你的机器中已经正确的安装了Java SDK、SSH，否则将无法正常运行。</p>
+</blockquote>
+<ul>
+<li>进入到hbase的安装目录编辑 <code>conf/hbase-env.sh</code> 文件,将<code>JAVA_HOME</code>修改为你的JDK安装目录<code>export JAVA_HOME=/JDK_PATH</code></li>
+<li>编辑<code>regionservers</code>,里面改为你的Hbase所有服务器名，ip地址或者是代理名，如果是单机版的则是只需要<code>localhost</code>即可。</li>
+<li>然后编辑<code>hbase-site.xml</code>文件，在里面加入:</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//指定hbase在HDFS上存储的路劲：hdfs://root1/hbase</div><div class="line">//也可以是本地路劲</div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/home/bingbing/hbase-1.1.2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">//指定Hbase是分布式的</div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.cluster.distributed<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">//指定ZK的地址，多个用","分割，hbase必须依赖zookeeper，自带zookeeper，但是自带的不太好用一般用外部的</div><div class="line">//当然要想让外部的zookeeper生效，还需要在hbase-env.sh中加入一个配置：export HBASE_MANAGES_ZK=false，表示hbase的zk就不管了</div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.quorum<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>node01：2181，node02：2181<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li>此外还可以输入一些配置：<ul>
+<li><code>hbase.master.port</code>HBase的Master的端口.默认: <code>60000</code></li>
+<li><code>hbase.cluster.distributed</code>HBase的运行模式。false是单机模式，true是分布式模式。若为false,HBase和Zookeeper会运行在同一个JVM里面。默认: <code>false</code>.</li>
+<li><code>hbase.master.info.port</code>HBase Master web 界面端口. 设置为-1 意味着你不想让他运行。0.98 版本以后默认:<code>16010</code>以前是<code>60010</code>.</li>
+<li><code>hbase.zookeeper.quorum</code>Zookeeper集群的地址列表，用逗号分割。例如：”host1.mydomain.com,host2.mydomain.com,host3.mydomain.com”.默认是localhost,是给伪分布式用的。要修改才能在完全分布式的情况下使用。如果在hbase-env.sh设置了HBASE_MANAGES_ZK，这些ZooKeeper节点就会和HBase一起启动。默认: <code>localhost</code>.</li>
+<li><code>hbase.zookeeper.property.clientPort</code>ZooKeeper的zoo.conf中的配置.客户端连接的端口，默认: <code>2181</code>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ul>
+<li>启动：进入到bin目录，然后<code>./start-hbase.sh</code>即可启动hbase.<ul>
+<li>可以通过web的方式查看hbase的运行状态:<code>ip:61010</code></li>
+</ul>
+</li>
+<li>停止：<code>./stop-hbase.sh</code>.</li>
+</ul>
+<h3 id="使用shell语言"><a href="#使用shell语言" class="headerlink" title="使用shell语言"></a>使用shell语言</h3><blockquote>
+<p>进入bin目录下运行<code>hbase shell</code>命令可以HQL指模式：</p>
+</blockquote>
+<p>基本命令：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>命令表达式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查看所有表</td>
+<td>list</td>
+</tr>
+<tr>
+<td>创建表</td>
+<td>create ‘表名称’, ‘列名称1’,’列名称2’,’列名称N’   或者规定版本有多少 create ‘表名称’,{NAME=&gt;’表名称’,VERSIONS=&gt;3}…</td>
+</tr>
+<tr>
+<td>添加记录</td>
+<td>put ‘表名称’, ‘行名称’, ‘列名称:*’, ‘值’</td>
+</tr>
+<tr>
+<td>查看记录</td>
+<td>get ‘表名称’, ‘行名称’</td>
+</tr>
+<tr>
+<td>查看表中的记录总数</td>
+<td>count ‘表名称’</td>
+</tr>
+<tr>
+<td>删除记录</td>
+<td>delete ‘表名’ ,’行名称’ , ‘列名称’</td>
+</tr>
+<tr>
+<td>删除一张表</td>
+<td>先要屏蔽该表，才能对该表进行删除，第一步 disable ‘表名称’ 第二步 drop ‘表名称’</td>
+</tr>
+<tr>
+<td>查看所有记录</td>
+<td>scan “表名称”</td>
+</tr>
+<tr>
+<td>查看某个表某个列中所有数据</td>
+<td>scan “表名称” , [‘列名称:*’]</td>
+</tr>
+<tr>
+<td>更新记录</td>
+<td>就是重写一遍进行覆盖</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>version 查看hbase版本号</li>
+<li>describe ‘表名’ 查看表结构</li>
+<li>hbase更新之后，以前的数据不丢失，分版本存起来，时间戳为版本的区分，老的版本存一个小时</li>
+<li>hbase中存储的都是byte数组，即使你写字符串进去也会转换成byte数组</li>
+</ul>
+<h3 id="java操作hbase"><a href="#java操作hbase" class="headerlink" title="java操作hbase"></a>java操作hbase</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.HBaseConfiguration;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.HColumnDescriptor;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.HTableDescriptor;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.TableName;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.HBaseAdmin;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.HTable;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Put;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.util.Bytes;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HbaseDao</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="comment">//插入数据</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertTest</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">        Configuration conf =  HBaseConfiguration.create();</div><div class="line">        <span class="comment">//可以不加配置文件然后在这里直接指定zk即可，只要指定zk然后zk就会找到root表就能操作hbase了</span></div><div class="line">        conf.set(<span class="string">"hbase.zookeeper.quorum"</span>, <span class="string">"weekend05:2181,weekend06:2181,weekend07:2181"</span>);</div><div class="line">        <span class="comment">//new一个表</span></div><div class="line">        HTable nvshen = <span class="keyword">new</span> HTable(conf, <span class="string">"nvshen"</span>);</div><div class="line">        <span class="comment">//hbase提供的一个转换工具</span></div><div class="line">        Put name = <span class="keyword">new</span> Put(Bytes.toBytes(<span class="string">"rk0001"</span>));</div><div class="line">        name.add(Bytes.toBytes(<span class="string">"base_info"</span>), Bytes.toBytes(<span class="string">"name"</span>), Bytes.toBytes(<span class="string">"angelababy"</span>));</div><div class="line">        </div><div class="line">        Put age = <span class="keyword">new</span> Put(Bytes.toBytes(<span class="string">"rk0001"</span>));</div><div class="line">        age.add(Bytes.toBytes(<span class="string">"base_info"</span>), Bytes.toBytes(<span class="string">"age"</span>), Bytes.toBytes(<span class="number">18</span>));</div><div class="line">        </div><div class="line">        ArrayList&lt;Put&gt; puts = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        puts.add(name);</div><div class="line">        puts.add(age);</div><div class="line">        </div><div class="line">        nvshen.put(puts);</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    <span class="comment">//创建一个表</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        </div><div class="line">        Configuration conf =  HBaseConfiguration.create();</div><div class="line">        conf.set(<span class="string">"hbase.zookeeper.quorum"</span>, <span class="string">"weekend05:2181,weekend06:2181,weekend07:2181"</span>);</div><div class="line">        HBaseAdmin admin = <span class="keyword">new</span> HBaseAdmin(conf);</div><div class="line">        <span class="comment">//new 一个表名，hbase中存储的都是byte数组，即使你写字符串进去也会转换成byte数组</span></div><div class="line">        TableName name = TableName.valueOf(<span class="string">"nvshen"</span>);</div><div class="line">        </div><div class="line">        HTableDescriptor desc = <span class="keyword">new</span> HTableDescriptor(name);</div><div class="line">        </div><div class="line">        <span class="comment">//new两个列簇，然后指定版本号</span></div><div class="line">        HColumnDescriptor base_info = <span class="keyword">new</span> HColumnDescriptor(<span class="string">"base_info"</span>);</div><div class="line">        HColumnDescriptor extra_info = <span class="keyword">new</span> HColumnDescriptor(<span class="string">"extra_info"</span>);</div><div class="line">        base_info.setMaxVersions(<span class="number">5</span>);</div><div class="line">        </div><div class="line">        desc.addFamily(base_info);</div><div class="line">        desc.addFamily(extra_info);</div><div class="line">        <span class="comment">//创建表</span></div><div class="line">        admin.createTable(desc);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>更多</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div></pre></td><td class="code"><pre><div class="line">public class HbaseDemo &#123;</div><div class="line"></div><div class="line">    private Configuration conf = null;</div><div class="line">    </div><div class="line">    @Before</div><div class="line">    public void init()&#123;</div><div class="line">        conf = HBaseConfiguration.create();</div><div class="line">        conf.set(&quot;hbase.zookeeper.quorum&quot;, &quot;weekend05,weekend06,weekend07&quot;);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @Test</div><div class="line">    public void testDrop() throws Exception&#123;</div><div class="line">        HBaseAdmin admin = new HBaseAdmin(conf);</div><div class="line">        admin.disableTable(&quot;account&quot;);</div><div class="line">        admin.deleteTable(&quot;account&quot;);</div><div class="line">        admin.close();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @Test</div><div class="line">    public void testPut() throws Exception&#123;</div><div class="line">        HTable table = new HTable(conf, &quot;person_info&quot;);</div><div class="line">        Put p = new Put(Bytes.toBytes(&quot;person_rk_bj_zhang_000002&quot;));</div><div class="line">        p.add(&quot;base_info&quot;.getBytes(), &quot;name&quot;.getBytes(), &quot;zhangwuji&quot;.getBytes());</div><div class="line">        table.put(p);</div><div class="line">        table.close();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @Test</div><div class="line">    public void testGet() throws Exception&#123;</div><div class="line">        HTable table = new HTable(conf, &quot;person_info&quot;);</div><div class="line">        Get get = new Get(Bytes.toBytes(&quot;person_rk_bj_zhang_000001&quot;));</div><div class="line">        get.setMaxVersions(5);</div><div class="line">        Result result = table.get(get);</div><div class="line">        List&lt;Cell&gt; cells = result.listCells();</div><div class="line">        </div><div class="line">//            result.getValue(family, qualifier);  可以从result中直接取出一个特定的value</div><div class="line">        </div><div class="line">        //遍历出result中所有的键值对</div><div class="line">        for(KeyValue kv : result.list())&#123;</div><div class="line">            String family = new String(kv.getFamily());</div><div class="line">            System.out.println(family);</div><div class="line">            String qualifier = new String(kv.getQualifier());</div><div class="line">            System.out.println(qualifier);</div><div class="line">            System.out.println(new String(kv.getValue()));</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">        table.close();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 多种过滤条件的使用方法</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    @Test</div><div class="line">    public void testScan() throws Exception&#123;</div><div class="line">        HTable table = new HTable(conf, &quot;person_info&quot;.getBytes());</div><div class="line">        Scan scan = new Scan(Bytes.toBytes(&quot;person_rk_bj_zhang_000001&quot;), Bytes.toBytes(&quot;person_rk_bj_zhang_000002&quot;));</div><div class="line">        </div><div class="line">        //前缀过滤器----针对行键</div><div class="line">        Filter filter = new PrefixFilter(Bytes.toBytes(&quot;rk&quot;));</div><div class="line">        </div><div class="line">        //行过滤器</div><div class="line">        ByteArrayComparable rowComparator = new BinaryComparator(Bytes.toBytes(&quot;person_rk_bj_zhang_000001&quot;));</div><div class="line">        RowFilter rf = new RowFilter(CompareOp.LESS_OR_EQUAL, rowComparator);</div><div class="line"></div><div class="line">        /**</div><div class="line">         * 假设rowkey格式为：创建日期_发布日期_ID_TITLE</div><div class="line">         * 目标：查找  发布日期  为  2014-12-21  的数据</div><div class="line">         */</div><div class="line">        rf = new RowFilter(CompareOp.EQUAL , new SubstringComparator(&quot;_2014-12-21_&quot;));</div><div class="line">        </div><div class="line">        </div><div class="line">        //单值过滤器 1 完整匹配字节数组</div><div class="line">        new SingleColumnValueFilter(&quot;base_info&quot;.getBytes(), &quot;name&quot;.getBytes(), CompareOp.EQUAL, &quot;zhangsan&quot;.getBytes());</div><div class="line">        //单值过滤器2 匹配正则表达式</div><div class="line">        ByteArrayComparable comparator = new RegexStringComparator(&quot;zhang.&quot;);</div><div class="line">        new SingleColumnValueFilter(&quot;info&quot;.getBytes(), &quot;NAME&quot;.getBytes(), CompareOp.EQUAL, comparator);</div><div class="line"></div><div class="line">        //单值过滤器2 匹配是否包含子串,大小写不敏感</div><div class="line">        comparator = new SubstringComparator(&quot;wu&quot;);</div><div class="line">        new SingleColumnValueFilter(&quot;info&quot;.getBytes(), &quot;NAME&quot;.getBytes(), CompareOp.EQUAL, comparator);</div><div class="line"></div><div class="line">        //键值对元数据过滤-----family过滤----字节数组完整匹配</div><div class="line">        FamilyFilter ff = new FamilyFilter(</div><div class="line">                CompareOp.EQUAL , </div><div class="line">                new BinaryComparator(Bytes.toBytes(&quot;base_info&quot;))   //表中不存在inf列族，过滤结果为空</div><div class="line">                );</div><div class="line">        //键值对元数据过滤-----family过滤----字节数组前缀匹配</div><div class="line">        ff = new FamilyFilter(</div><div class="line">                CompareOp.EQUAL , </div><div class="line">                new BinaryPrefixComparator(Bytes.toBytes(&quot;inf&quot;))   //表中存在以inf打头的列族info，过滤结果为该列族所有行</div><div class="line">                );</div><div class="line">        </div><div class="line">        </div><div class="line">       //键值对元数据过滤-----qualifier过滤----字节数组完整匹配</div><div class="line">        </div><div class="line">        filter = new QualifierFilter(</div><div class="line">                CompareOp.EQUAL , </div><div class="line">                new BinaryComparator(Bytes.toBytes(&quot;na&quot;))   //表中不存在na列，过滤结果为空</div><div class="line">                );</div><div class="line">        filter = new QualifierFilter(</div><div class="line">                CompareOp.EQUAL , </div><div class="line">                new BinaryPrefixComparator(Bytes.toBytes(&quot;na&quot;))   //表中存在以na打头的列name，过滤结果为所有行的该列数据</div><div class="line">                );</div><div class="line"></div><div class="line">        //基于列名(即Qualifier)前缀过滤数据的ColumnPrefixFilter</div><div class="line">        filter = new ColumnPrefixFilter(&quot;na&quot;.getBytes());</div><div class="line"></div><div class="line">        //基于列名(即Qualifier)多个前缀过滤数据的MultipleColumnPrefixFilter</div><div class="line">        byte[][] prefixes = new byte[][] &#123;Bytes.toBytes(&quot;na&quot;), Bytes.toBytes(&quot;me&quot;)&#125;;</div><div class="line">        filter = new MultipleColumnPrefixFilter(prefixes);</div><div class="line"> </div><div class="line">        //为查询设置过滤条件</div><div class="line">        scan.setFilter(filter);</div><div class="line">    scan.addFamily(Bytes.toBytes(&quot;base_info&quot;));</div><div class="line">        ResultScanner scanner = table.getScanner(scan);</div><div class="line">        for(Result r : scanner)&#123;</div><div class="line">            /**</div><div class="line">            for(KeyValue kv : r.list())&#123;</div><div class="line">                String family = new String(kv.getFamily());</div><div class="line">                System.out.println(family);</div><div class="line">                String qualifier = new String(kv.getQualifier());</div><div class="line">                System.out.println(qualifier);</div><div class="line">                System.out.println(new String(kv.getValue()));</div><div class="line">            &#125;</div><div class="line">            */</div><div class="line">            //直接从result中取到某个特定的value</div><div class="line">            byte[] value = r.getValue(Bytes.toBytes(&quot;base_info&quot;), Bytes.toBytes(&quot;name&quot;));</div><div class="line">            System.out.println(new String(value));</div><div class="line">        &#125;</div><div class="line">        table.close();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @Test</div><div class="line">    public void testDel() throws Exception&#123;</div><div class="line">        HTable table = new HTable(conf, &quot;user&quot;);</div><div class="line">        Delete del = new Delete(Bytes.toBytes(&quot;rk0001&quot;));</div><div class="line">        del.deleteColumn(Bytes.toBytes(&quot;data&quot;), Bytes.toBytes(&quot;pic&quot;));</div><div class="line">        table.delete(del);</div><div class="line">        table.close();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public static void main(String[] args) throws Exception &#123;</div><div class="line">        Configuration conf = HBaseConfiguration.create();</div><div class="line">//        conf.set(&quot;hbase.zookeeper.quorum&quot;, &quot;weekend05:2181,weekend06:2181,weekend07:2181&quot;);</div><div class="line">        HBaseAdmin admin = new HBaseAdmin(conf);</div><div class="line">        TableName tableName = TableName.valueOf(&quot;person_info&quot;);</div><div class="line">        HTableDescriptor td = new HTableDescriptor(tableName);</div><div class="line">        HColumnDescriptor cd = new HColumnDescriptor(&quot;base_info&quot;);</div><div class="line">        cd.setMaxVersions(10);</div><div class="line">        td.addFamily(cd);</div><div class="line">        admin.createTable(td);</div><div class="line">        admin.close();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="hbase的集群架构和表存储机制"><a href="#hbase的集群架构和表存储机制" class="headerlink" title="hbase的集群架构和表存储机制"></a>hbase的集群架构和表存储机制</h1><ul>
+<li>对事务的支持性很弱</li>
+<li>支持简单的查询，但是对数据的支持很大</li>
+<li>hbase表结构：建表时，不需要限定表中的字段，只需要指定若干个列族<ul>
+<li>插入数据时，列族中可以存储任意多个列(KV,列名，列值)</li>
+</ul>
+</li>
+<li>一个value可以有多个版本，通过版本来区分(时间戳)</li>
+<li>要查询某一个具体字段的值，需要指定的坐标：表名—–&gt;行键—–&gt;列族（ColumnFamily）:列名（Qualifier）—–&gt;版本</li>
+</ul>
+<hr>
+<p>集群架构</p>
+<ul>
+<li>存储的时候会把表分片，然后存在Region Server中，通常跟DataNode在一台机器上，然后Region Server存储在Hbase上。</li>
+<li>还有一个协调者叫做，HMaster也叫做主节点，不负责存储表数据，负责：<ul>
+<li>管理RegionServer的状态</li>
+<li>负责RegionServer的负载均衡</li>
+</ul>
+</li>
+<li>在查找数据的时候，会有一个专门记录信息在哪台Region的表叫做META表，然后这张表还会在分片放在Region中还有一张记录这张表的存储信息的表叫做ROOT表。</li>
+</ul>
+<p><img src="/uploads/hbase/802dde5c-2059-4cda-b412-4bed02e45166.png" alt=""></p>
+<ul>
+<li>Region中其实也是很丰富的，里面有HLogH，还有store，一个store存储一个region中的列族，store里面还有一块内存叫做Hfile表示访问频率多的数据。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="zc wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信关注我！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hbase/" rel="tag">#hbase</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/28/SpringMVC02/" rel="next" title="SpringMVC第二阶段">
+                <i class="fa fa-chevron-left"></i> SpringMVC第二阶段
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/05/01/hbase/"
+     data-title="Hbase"
+     data-content=""
+     data-url="https://markzc.github.io/2017/05/01/hbase/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/01/hbase/"
+           data-title="Hbase" data-url="https://markzc.github.io/2017/05/01/hbase/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="zc" />
+          <p class="site-author-name" itemprop="name">zc</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/markzc" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3490969043" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/john_zc" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/markzc" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HBase的表结构"><span class="nav-number">1.1.</span> <span class="nav-text">HBase的表结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Row-Key"><span class="nav-number">1.1.1.</span> <span class="nav-text">Row Key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列族-column-family"><span class="nav-number">1.1.2.</span> <span class="nav-text">列族 column family</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单元-Cell"><span class="nav-number">1.1.3.</span> <span class="nav-text">单元 Cell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间戳-timestamp"><span class="nav-number">1.1.4.</span> <span class="nav-text">时间戳 timestamp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列存储"><span class="nav-number">1.2.</span> <span class="nav-text">列存储</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装及使用"><span class="nav-number">2.</span> <span class="nav-text">安装及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">2.2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用shell语言"><span class="nav-number">2.2.1.</span> <span class="nav-text">使用shell语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java操作hbase"><span class="nav-number">2.2.2.</span> <span class="nav-text">java操作hbase</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hbase的集群架构和表存储机制"><span class="nav-number">3.</span> <span class="nav-text">hbase的集群架构和表存储机制</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zc</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"markzc"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
