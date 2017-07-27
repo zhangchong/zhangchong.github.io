@@ -125,7 +125,7 @@ springMVC作用
 <meta property="og:image" content="https://markzc.github.io/uploads/springMvc/4ffcbd27-00a1-4431-b32c-01c202a3830d.png">
 <meta property="og:image" content="https://markzc.github.io/uploads/springMvc/b3141aad-4247-4ca8-af8d-5302174a939b.png">
 <meta property="og:image" content="https://markzc.github.io/index_files/190ba5e6-6e5c-4bf6-a1a5-6e53686535a7.png">
-<meta property="og:updated_time" content="2016-12-28T07:30:38.451Z">
+<meta property="og:updated_time" content="2016-12-29T02:27:24.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC第一阶段">
 <meta name="twitter:description" content="springMVC什么是springMVC  springMVC是spring公司出品的一个表现层框架
@@ -493,6 +493,51 @@ springMVC作用
 <li>配置好前缀跟后缀后：页面的路劲=前缀+controller中的地址+后缀</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="架构流程"><a href="#架构流程" class="headerlink" title="架构流程"></a>架构流程</h3><ol>
+<li>用户发送请求至前端控制器DispatcherServlet.</li>
+<li>DispatcherServlet收到请求调用HandlerMapping处理器映射器。</li>
+<li>处理器映射器根据请求url找到具体的处理器，生成处理器对象及处理器拦截器(如果有则生成)一并返回给DispatcherServlet。</li>
+<li>DispatcherServlet通过HandlerAdapter处理器适配器调用处理器.</li>
+<li>执行处理器(Controller，也叫后端控制器)。</li>
+<li>Controller执行完成返回ModelAndView.</li>
+<li>HandlerAdapter将controller执行结果ModelAndView返回给DispatcherServlet</li>
+<li>DispatcherServlet将ModelAndView传给ViewReslover视图解析器.</li>
+<li>ViewReslover解析后返回具体View.</li>
+<li>DispatcherServlet对View进行渲染视图（即将模型数据填充至视图中）。</li>
+<li>DispatcherServlet响应用户.</li>
+</ol>
+<h3 id="组件说明"><a href="#组件说明" class="headerlink" title="组件说明"></a>组件说明</h3><ul>
+<li>DispatcherServlet：前端控制器<ul>
+<li>用户请求到达前端控制器，它就相当于mvc模式中的c，dispatcherServlet是整个流程控制的中心，由它调用其它组件处理用户的请求，dispatcherServlet的存在降低了组件之间的耦合性。</li>
+</ul>
+</li>
+<li>HandlerMapping：处理器映射器<ul>
+<li>HandlerMapping负责根据用户请求找到Handler即处理器，springmvc提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等。</li>
+</ul>
+</li>
+<li>Handler：处理器<ul>
+<li>Handler 是继DispatcherServlet前端控制器的后端控制器，在DispatcherServlet的控制下Handler对具体的用户请求进行处理。</li>
+<li>由于Handler涉及到具体的用户业务请求，所以一般情况需要程序员根据业务需求开发Handler。</li>
+</ul>
+</li>
+<li>HandlAdapter：处理器适配器<ul>
+<li>通过HandlerAdapter对处理器进行执行，这是适配器模式的应用，通过扩展适配器可以对更多类型的处理器进行执行。</li>
+</ul>
+</li>
+<li>View Resolver：视图解析器<ul>
+<li>View Resolver负责将处理结果生成View视图，View Resolver首先根据逻辑视图名解析成物理视图名即具体的页面地址，再生成View视图对象，最后对View进行渲染将处理结果通过页面展示给用户.</li>
+</ul>
+</li>
+<li>View：视图<ul>
+<li>springmvc框架提供了很多的View视图类型的支持，包括：jstlView、freemarkerView、pdfView等。我们最常用的视图就是jsp。</li>
+<li>一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由程序员根据业务需求开发具体的页面。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>说明：在springmvc的各个组件中，处理器映射器、处理器适配器、视图解析器称为springmvc的三大组件。<br>需要用户开放的组件有handler、view</li>
+</ul>
 <h2 id="Mybatis跟SpringMvc跟Spring架构整合"><a href="#Mybatis跟SpringMvc跟Spring架构整合" class="headerlink" title="Mybatis跟SpringMvc跟Spring架构整合"></a>Mybatis跟SpringMvc跟Spring架构整合</h2><ul>
 <li><code>model.addAttribute(&quot;item&quot;,items);</code>其实就是将数据放入了request域中并做了扩展</li>
 <li>SpringMvc规定只有controller方法返回一个普通的字符串，就认为是页面的名称，会走视图解析器拼接完整的页面路径</li>
@@ -801,7 +846,7 @@ springMVC作用
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#springMVC"><span class="nav-number">1.</span> <span class="nav-text">springMVC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是springMVC"><span class="nav-number">1.1.</span> <span class="nav-text">什么是springMVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springMVC作用"><span class="nav-number">1.2.</span> <span class="nav-text">springMVC作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#入门程序"><span class="nav-number">1.3.</span> <span class="nav-text">入门程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springMvc的三大组件："><span class="nav-number">1.4.</span> <span class="nav-text">springMvc的三大组件：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis跟SpringMvc跟Spring架构整合"><span class="nav-number">1.5.</span> <span class="nav-text">Mybatis跟SpringMvc跟Spring架构整合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#架构整合思路"><span class="nav-number">1.5.1.</span> <span class="nav-text">架构整合思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体实现"><span class="nav-number">1.5.2.</span> <span class="nav-text">具体实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数绑定"><span class="nav-number">1.5.3.</span> <span class="nav-text">参数绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义转换"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">自定义转换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传入参数的注解"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">传入参数的注解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编码问题"><span class="nav-number">1.5.4.</span> <span class="nav-text">编码问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringMvc跟Struts2的区别"><span class="nav-number">1.6.</span> <span class="nav-text">SpringMvc跟Struts2的区别</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#springMVC"><span class="nav-number">1.</span> <span class="nav-text">springMVC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是springMVC"><span class="nav-number">1.1.</span> <span class="nav-text">什么是springMVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springMVC作用"><span class="nav-number">1.2.</span> <span class="nav-text">springMVC作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#入门程序"><span class="nav-number">1.3.</span> <span class="nav-text">入门程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springMvc的三大组件："><span class="nav-number">1.4.</span> <span class="nav-text">springMvc的三大组件：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#架构流程"><span class="nav-number">1.4.1.</span> <span class="nav-text">架构流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件说明"><span class="nav-number">1.4.2.</span> <span class="nav-text">组件说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis跟SpringMvc跟Spring架构整合"><span class="nav-number">1.5.</span> <span class="nav-text">Mybatis跟SpringMvc跟Spring架构整合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#架构整合思路"><span class="nav-number">1.5.1.</span> <span class="nav-text">架构整合思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体实现"><span class="nav-number">1.5.2.</span> <span class="nav-text">具体实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数绑定"><span class="nav-number">1.5.3.</span> <span class="nav-text">参数绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义转换"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">自定义转换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传入参数的注解"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">传入参数的注解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编码问题"><span class="nav-number">1.5.4.</span> <span class="nav-text">编码问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringMvc跟Struts2的区别"><span class="nav-number">1.6.</span> <span class="nav-text">SpringMvc跟Struts2的区别</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
@@ -819,8 +864,8 @@ springMVC作用
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

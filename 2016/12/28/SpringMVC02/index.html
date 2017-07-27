@@ -99,7 +99,7 @@
 
 可以在QuertVo定义一个int[] ids;这样在页面的 &amp;lt;input type=&amp;quot;checkbox&amp;quot">
 <meta property="og:image" content="https://markzc.github.io/uploads/springMvc/dca05914-fe30-430e-b33d-24a6579ed2f6.png">
-<meta property="og:updated_time" content="2016-12-28T07:27:38.210Z">
+<meta property="og:updated_time" content="2016-12-30T09:56:30.459Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC第二阶段">
 <meta name="twitter:description" content="SpringMvc[TOC]
@@ -536,7 +536,7 @@
 <ul>
 <li>然后再配置文件配置一下</li>
 </ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">mvc:interceptor</span>&gt;</span></div><div class="line">         <span class="comment">&lt;!-- 拦截所有路径 --&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">mvc:mapping</span> <span class="attr">path</span>=<span class="string">"/**"</span>/&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.zc.interceptor.Interceptor01"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">mvc:interceptor</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">mvc:interceptor</span>&gt;</span></div><div class="line">         <span class="comment">&lt;!-- 拦截所有路径 --&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">mvc:mapping</span> <span class="attr">path</span>=<span class="string">"/**"</span>/&gt;</span></div><div class="line">          <span class="comment">&lt;!-- 不拦截某个路径 --&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">mvc:exclude-mapping</span> <span class="attr">path</span>=<span class="string">"/user/**"</span>/&gt;</span> </div><div class="line">         <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.zc.interceptor.Interceptor01"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">mvc:interceptor</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></div></pre></td></tr></table></figure>
 <ul>
 <li>然后每次请求中执行顺序：<code>preCompletion</code> , <code>postCompletion</code> , <code>afterCompletion</code></li>
 </ul>
@@ -795,8 +795,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
