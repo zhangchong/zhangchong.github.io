@@ -1,0 +1,1181 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="hadoop," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="什么是hadoop
+解决问题
+
+海量数据的存储(HDFS)
+海量数据的分析(MapReduce)
+资源管理调度(YARN)
+
+
+作者：Doug Cutting
+
+受Google三篇论文的启发(GFS、MapReduce、BigTable)
+
+从1.0向2.0的阶段最重要的改变是增加了YARN资源管理调度框架，它可以为不同的分析框架提供资源调度，把hadoop从一个框架转换成为了一个平台。
+
+had">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop第一阶段">
+<meta property="og:url" content="https://zhangchong.github.io/2017/07/08/hadoop01/index.html">
+<meta property="og:site_name" content="张冲的BLOG">
+<meta property="og:description" content="什么是hadoop
+解决问题
+
+海量数据的存储(HDFS)
+海量数据的分析(MapReduce)
+资源管理调度(YARN)
+
+
+作者：Doug Cutting
+
+受Google三篇论文的启发(GFS、MapReduce、BigTable)
+
+从1.0向2.0的阶段最重要的改变是增加了YARN资源管理调度框架，它可以为不同的分析框架提供资源调度，把hadoop从一个框架转换成为了一个平台。
+
+had">
+<meta property="og:image" content="https://zhangchong.github.io/uploads/hadoop/hadoop01/11.jpg">
+<meta property="og:image" content="https://zhangchong.github.io/uploads/hadoop/hadoop01/22.jpg">
+<meta property="og:updated_time" content="2017-09-28T02:04:03.792Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hadoop第一阶段">
+<meta name="twitter:description" content="什么是hadoop
+解决问题
+
+海量数据的存储(HDFS)
+海量数据的分析(MapReduce)
+资源管理调度(YARN)
+
+
+作者：Doug Cutting
+
+受Google三篇论文的启发(GFS、MapReduce、BigTable)
+
+从1.0向2.0的阶段最重要的改变是增加了YARN资源管理调度框架，它可以为不同的分析框架提供资源调度，把hadoop从一个框架转换成为了一个平台。
+
+had">
+<meta name="twitter:image" content="https://zhangchong.github.io/uploads/hadoop/hadoop01/11.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://zhangchong.github.io/2017/07/08/hadoop01/"/>
+
+
+  <title> hadoop第一阶段 | 张冲的BLOG </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲的BLOG</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hadoop第一阶段
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-07-08T15:52:36+08:00" content="2017-07-08">
+              2017-07-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/07/08/hadoop01/" class="leancloud_visitors" data-flag-title="hadoop第一阶段">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是hadoop"><a href="#什么是hadoop" class="headerlink" title="什么是hadoop"></a>什么是hadoop</h2><ul>
+<li><p>解决问题</p>
+<ul>
+<li>海量数据的存储(HDFS)</li>
+<li>海量数据的分析(MapReduce)</li>
+<li>资源管理调度(YARN)</li>
+</ul>
+</li>
+<li><p>作者：Doug Cutting</p>
+</li>
+<li><p>受Google三篇论文的启发(GFS、MapReduce、BigTable)</p>
+</li>
+<li><p>从1.0向2.0的阶段最重要的改变是增加了YARN资源管理调度框架，它可以为不同的分析框架提供资源调度，把hadoop从一个框架转换成为了一个平台。</p>
+</li>
+<li><p>hadoop擅长日志分析，facebook就用Hive来进行日志分析。</p>
+</li>
+</ul>
+<h2 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h2><p><img src="/uploads/hadoop/hadoop01/11.jpg" alt=""></p>
+<ul>
+<li>DataNode 存储</li>
+<li><p>NameNode 管理存储的数据</p>
+</li>
+<li><p>怎么解决海量数据的计算：<br>例如统计一个hdfs中有多少条数据，hadoop把这个过程分为两个阶段，一个是map阶段，就是统计每个dataNode中有多少条数据，然后是reduce阶段统计每个map计算出来的数据。可以把每个datanode节点放到一台机器上，这样就可以实现并发计算。</p>
+</li>
+</ul>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p>现在新项目一般用2.2.0，比较稳定新。现在也有公司常用的是Cloudera自己封装的hadoop版本CDH，上面的API跟原生的API还是有点区别。还有一个HDP（Hortonworks Data Platform）比较流行的商业产品。</p>
+</blockquote>
+<h3 id="虚拟机配置"><a href="#虚拟机配置" class="headerlink" title="虚拟机配置"></a>虚拟机配置</h3><p>一般都部署在linux中，window也能用。</p>
+<p>vmware搭建虚拟机的时候，会给虚拟机生成一个虚拟网关，然后虚拟机的网卡连接这个虚拟网关，同时给window产生一个虚拟的网卡也会链接这个虚拟网关，所以这个网关跟两个虚拟的网卡都必须在同一个网段。</p>
+<p><img src="/uploads/hadoop/hadoop01/22.jpg" alt=""></p>
+<ul>
+<li>配置ip地址可以直接用ui页面，也可以用setup命令。修改然后重新启动网络服务service network restart。<ul>
+<li>可以通过修改配置文件的方式：<code>/etc/sysconfig/network-script/ifcfg-eth0</code>在后边。然后重启网络服务。<ul>
+<li>linux中让机器重启的时候不使用ui页面。可以修改/etc/inittab中的配置，把最后的级别改为3. <code>id: 3:initdefault</code></li>
+<li>让普通用户具有sudo执行权限，切换到root用户然后 <code>vi /etc/sudoers</code> 加一行 <code>hadoop All=(ALL)      ALL</code></li>
+<li>修改主机名/etc/sysconfig/network.</li>
+<li>修改环境变量/etc/profile   让它生效:source /etc/profile</li>
+<li>关闭防火墙：sudo iptables stop</li>
+<li>查看防火墙状态：sudo iptables statu</li>
+<li>查看防火墙的启动级别：sudo chkconfig iptables –list</li>
+<li>关闭开机启动防火墙：sudo chkconfig iptables off</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="安装hadoop"><a href="#安装hadoop" class="headerlink" title="安装hadoop"></a>安装hadoop</h3><ul>
+<li>上传解压</li>
+<li>lib 本地库   ， include 也是本地库</li>
+<li><p>hadoop中的jar包放在了share中的hadoop中，而doc则是放的文档没什么用</p>
+</li>
+<li><p>修改一些文件<code>hadoop-env.sh</code>里面的环境变量JAVA_HOME</p>
+</li>
+<li>core-site在configuration中配置一些核心配置</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://ip:9000/<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">propetry</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>/home/soft/app/hadoop/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">propetry</span>&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li><p>配置hdfs-site.xml 参数，大多都有默认值，现在配置下面几个：也是跟上面的配置形式一样</p>
+<ul>
+<li>dfs.replication 副本数：一般配置3个，默认128</li>
+</ul>
+</li>
+<li><p>把mapred-site.xml.templent 去掉最后的后缀要不hadoop不会执行。</p>
+<ul>
+<li><code>mapreduce.framework.name:yarn</code>指定mapreduce程序用yarn来跑</li>
+</ul>
+</li>
+<li><p>yarn-site.xml中：</p>
+<ul>
+<li>yarn.resourcemanager.hostname:ip 配置yarn中的老大</li>
+<li>yarn.nodemanager.aux-services : mapreduce_shuffle 指定mapreduce程序里面map产生的结果怎么传递给reduce采用shuffle机制</li>
+</ul>
+</li>
+<li><p>slaves中，里面是启动datanode的地址</p>
+<ul>
+<li>默认是localhost ，如果是多台集群，就要把所有的地址加在这里。</li>
+</ul>
+</li>
+<li><p>配置环境变量/etc/peofile</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export HADOOP_HOME=/home/soft/app/hadoop.../</div><div class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</div></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ul>
+<li>启动时先格式化 : hadoop namenode -format  它会在规定hdfs存储的目录下新增几个文件</li>
+<li><p>启动：sbin</p>
+<ul>
+<li>start-all.sh 启动所有进程</li>
+<li>start-dfs.sh 启动hdfs</li>
+<li>start-yarn.sh 启动yarn</li>
+</ul>
+</li>
+<li><p>推荐单独启动，能更好的体现出hadoop的性能。一般先启动hdfs再启动yarn,启动时会输密码。</p>
+<ul>
+<li>可以通过ssh认证之后即不用输入密码。</li>
+</ul>
+</li>
+<li><p>0.0.0.0广播地址</p>
+</li>
+<li>jps查看进程</li>
+<li>内置了一个web服务：ip:50070</li>
+</ul>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><ul>
+<li>上传一个文件：hadoop fs -put 文件名 hdfs://地址ip:9000</li>
+<li>下载：hadoop fs -get hdfs://地址ip:9000/要下载的文件名</li>
+<li>查看文件：<code>hadoop fs -ls hdfs上的路劲</code></li>
+<li><p>显示结果：<code>hadooop fs -cat hdfs上的路劲</code></p>
+</li>
+<li><p>运行一个小程序： /share/hadoop/mapreduce/ 这个文件夹里面的jar包<br><code>hadoop jar hadoop-mapreduce-example-2.4.1.jar pi 5 5</code></p>
+<ul>
+<li>pi表示计算圆周率</li>
+<li>第一个5表示map的任务数量</li>
+<li>第二个5表示map的取样数，越多表示正确率越大</li>
+</ul>
+</li>
+<li>另外一个小程序计算whatcount,计算一个英文文档中每个单词出现的总次数<ul>
+<li>先新建一个文本，放入到级群里<code>hadoop fs -mkdir /workcount</code>然后在创建<code>hadoop fs -mkdir /workcount/input</code>不能同时创建否则会报错，把文档上传<code>hadoop fs -put test.txt /wordcount/input</code></li>
+<li>运行：<code>hadoop jar hadoop-mapreduce-example-2.4.1.jar wordcount /wordcount/input /wordcount/output</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="实现机制"><a href="#实现机制" class="headerlink" title="实现机制"></a>实现机制</h3><p>HDFS的实现思想：</p>
+<ol>
+<li>hdfs是通过分布式集群来存储文件，为客户端提供了一个便捷的访问方式，就是一个虚拟的目录</li>
+<li>文件存储到hdfs集群中去的时候是被切分成block的</li>
+<li>文件的block存放在若干台datanode节点上的，随机存储</li>
+<li>hdfs文件系统中的文件与真实的block之间有映射关系，由namenode管理</li>
+<li>每一个blocek在集群中会存储多个副本，好处是可以提高数据的可靠性还可以提高访问的吞吐量</li>
+</ol>
+<h3 id="shell访问方式"><a href="#shell访问方式" class="headerlink" title="shell访问方式"></a>shell访问方式</h3><ul>
+<li>查看帮助目录：hadoop fs</li>
+<li>hadoop fs -ls<ul>
+<li>第一个d是文件夹的意思，然后是可读可写可执行，然后有三组，一个是所属用户一个是所属组一个是其他人。</li>
+</ul>
+</li>
+<li>修改所属人的权限：<ul>
+<li><code>hadoop fs -chown  所属人：所属组 文件名称</code></li>
+</ul>
+</li>
+<li>hadoop fs -cp 文件 文件夹：复制</li>
+<li>hadoop fs -df -h 目录：查看一个目录下有多少空间 -h 是便于阅读的意思</li>
+<li>查看目录下的所有文件的大小<code>haddop fs -du -s -h hdfs://ip:9000/*</code></li>
+<li>删除：<code>hadoop fs -rm -r /aa/bb</code></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="张冲 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎扫一扫上面的微信关注我，一起交流！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创，点击打赏！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/wechat-pay.PNG" alt="张冲 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/zhifubao-pay.PNG" alt="张冲 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hadoop/" rel="tag">#hadoop</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/01/hbase/" rel="next" title="Hbase">
+                <i class="fa fa-chevron-left"></i> Hbase
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/23/hadoop02/" rel="prev" title="hadoop第二阶段">
+                hadoop第二阶段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+   <div>
+  
+    <div>
+    
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTc2My82MzI5">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+</div>
+  
+</div>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="张冲" />
+          <p class="site-author-name" itemprop="name">张冲</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">48</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhangchong" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3490969043" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/john_zc" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/zhangchong" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是hadoop"><span class="nav-number">1.</span> <span class="nav-text">什么是hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HDFS"><span class="nav-number">2.</span> <span class="nav-text">HDFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟机配置"><span class="nav-number">3.1.</span> <span class="nav-text">虚拟机配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装hadoop"><span class="nav-number">3.2.</span> <span class="nav-text">安装hadoop</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">4.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#操作"><span class="nav-number">4.1.</span> <span class="nav-text">操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现机制"><span class="nav-number">4.2.</span> <span class="nav-text">实现机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell访问方式"><span class="nav-number">4.3.</span> <span class="nav-text">shell访问方式</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张冲</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,1059 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="hadoop," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="hdfsNameNode工作机制
+hdfs写文件的过程，以及怎么保证元数据不丢失
+首先向namenode申请上传文件，nameNode中的元数据返回要分配的DataNode有哪些
+然后客户端会分别把要存的block写入datanode，只要要存的block存入成功就会返回成功信息
+datanode之间在形成管道，来写入block的副本，如果副本写入错误，datanode则会自动在别的datanod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop第二阶段">
+<meta property="og:url" content="https://zhangchong.github.io/2017/07/23/hadoop02/index.html">
+<meta property="og:site_name" content="张冲的BLOG">
+<meta property="og:description" content="hdfsNameNode工作机制
+hdfs写文件的过程，以及怎么保证元数据不丢失
+首先向namenode申请上传文件，nameNode中的元数据返回要分配的DataNode有哪些
+然后客户端会分别把要存的block写入datanode，只要要存的block存入成功就会返回成功信息
+datanode之间在形成管道，来写入block的副本，如果副本写入错误，datanode则会自动在别的datanod">
+<meta property="og:image" content="https://zhangchong.github.io/uploads/hadoop/hadoop02/11.png">
+<meta property="og:image" content="https://zhangchong.github.io/uploads/hadoop/hadoop02/22.png">
+<meta property="og:image" content="https://zhangchong.github.io/uploads/hadoop/hadoop02/33.jpg">
+<meta property="og:updated_time" content="2017-09-28T02:08:20.002Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hadoop第二阶段">
+<meta name="twitter:description" content="hdfsNameNode工作机制
+hdfs写文件的过程，以及怎么保证元数据不丢失
+首先向namenode申请上传文件，nameNode中的元数据返回要分配的DataNode有哪些
+然后客户端会分别把要存的block写入datanode，只要要存的block存入成功就会返回成功信息
+datanode之间在形成管道，来写入block的副本，如果副本写入错误，datanode则会自动在别的datanod">
+<meta name="twitter:image" content="https://zhangchong.github.io/uploads/hadoop/hadoop02/11.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://zhangchong.github.io/2017/07/23/hadoop02/"/>
+
+
+  <title> hadoop第二阶段 | 张冲的BLOG </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张冲的BLOG</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hadoop第二阶段
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-07-23T09:55:57+08:00" content="2017-07-23">
+              2017-07-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/07/23/hadoop02/" class="leancloud_visitors" data-flag-title="hadoop第二阶段">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="hdfs"><a href="#hdfs" class="headerlink" title="hdfs"></a>hdfs</h2><h3 id="NameNode工作机制"><a href="#NameNode工作机制" class="headerlink" title="NameNode工作机制"></a>NameNode工作机制</h3><ul>
+<li>hdfs写文件的过程，以及怎么保证元数据不丢失<ul>
+<li>首先向namenode申请上传文件，nameNode中的元数据返回要分配的DataNode有哪些</li>
+<li>然后客户端会分别把要存的block写入datanode，只要要存的block存入成功就会返回成功信息</li>
+<li>datanode之间在形成管道，来写入block的副本，如果副本写入错误，datanode则会自动在别的datanode中重新写一次</li>
+<li>hdfs中有一个edits log日志文件来记录block存在哪些datanode中，当上传文件时nameNode首先往edits log文件中记录操作日志，当存入完成之后会把这些信息存入内存中。</li>
+<li>每当editslog写满时，需要将这一段时间的新的元数据刷到fsimage也就是磁盘文件中去，这一步是由SecondaryNameNode来操作的<ul>
+<li>首先editlogs满了会通知secondaryNameNode进行checkpoint操作，然后namenode会停止往editlogs中写数据并切换到一个新的edit new，在后面会重新命名为edits。</li>
+<li>然后secondaryNameNode会下载nameNode中的fsimage跟editlogs中的文件，进行合并生成一个新的fsimage.checkpoint文件</li>
+<li>在把这个文件上传给NameNode替换掉以前的fsimage文件，一切重新开始。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/uploads/hadoop/hadoop02/11.png" alt=""></p>
+<ul>
+<li><p>什么时候checkpoint？</p>
+<ul>
+<li>fs.checkpoint.period 指定两次checkpoint的最大时间间隔，默认3600秒</li>
+<li>fs.checkpoint.size 规定edits文件的最大值，一旦超过这个值则强制checkpoint，不管是否达到最大时间间隔，默认大小是64M。</li>
+</ul>
+</li>
+<li><p>但是还有一个问题，在进行checkpoint时突然宕机了，再次重启虽然可以保证元数据的不丢失，但是在这个同时还会有应用在跟hdfs进行交互，这时怎么办。</p>
+<ul>
+<li>可以有两个NameNode这是就要涉及到hdfs的高可用性的知识了，在后边再介绍</li>
+</ul>
+</li>
+<li>在写数据的时候其实有一个规则，在存的时候首先第一个block会存在namenode直接连的那个最近的datanode，它的副本会优先放在别的机架上，如果还有副本就会在本机架上在找一个datanode</li>
+<li>namenode中的文件存在了data  — &gt; name  —-&gt;current 中</li>
+</ul>
+<h3 id="dataNode"><a href="#dataNode" class="headerlink" title="dataNode"></a>dataNode</h3><blockquote>
+<p>提供真实文件数据的存储服务</p>
+</blockquote>
+<ul>
+<li>文件块：最基本的存储单位。对于文件内容而言，一个文件的长度大小是size，那么从文件的０偏移开始，按照固定的大小，顺序对文件进行划分并编号，划分好的每一个块称一个Block。HDFS默认Block大小是128MB，以一个256MB文件，共有256/128=2个Block.(dfs.block.size)</li>
+<li><p>不同于普通文件系统的是，HDFS中，如果一个文件小于一个数据块的大小，并不占用整个数据块存储空间。</p>
+</li>
+<li><p>存在datanode中的数据，可以直接找到他然后如果少于一个block并且是文件可以直接打开，如果分为了两个block可以把他们追加在一起，然后再解压还是能用的，追加<code>cat 文件1 &gt;&gt; 文件2</code></p>
+</li>
+</ul>
+<h2 id="java操作hdfs"><a href="#java操作hdfs" class="headerlink" title="java操作hdfs"></a>java操作hdfs</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HdfsUtil</span> </span>&#123;</div><div class="line">    </div><div class="line">    FileSystem fs = <span class="keyword">null</span>;</div><div class="line">    <span class="meta">@Before</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">        </div><div class="line">        <span class="comment">//读取classpath下的xxx-site.xml 配置文件，并解析其内容，封装到conf对象中</span></div><div class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</div><div class="line">        </div><div class="line">        <span class="comment">//也可以在代码中对conf中的配置信息进行手动设置，会覆盖掉配置文件中的读取的值,也就是可以写core-site.xml</span></div><div class="line">        conf.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://weekend110:9000/"</span>);</div><div class="line">        </div><div class="line">        <span class="comment">//根据配置信息，去获取一个具体文件系统的客户端操作实例对象</span></div><div class="line">        fs = FileSystem.get(<span class="keyword">new</span> URI(<span class="string">"hdfs://weekend110:9000/"</span>),conf,<span class="string">"hadoop"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 上传文件，比较底层的写法</div><div class="line">            在这里会有一个问题，就是身份问题，因为创建的hadoop身份是linux的用户，所以可以修改`右键---&gt;run----&gt;run configurations`在argument中的VM arguments中加一个`-DHADOOP_USER_NAME=bingbing(linux系统名字)。</div><div class="line">           也可以终极解决就是像before中配置的那样，在获得client的时候多加两个参数：fs = FileSystem.get(new URI("hdfs://weekend110:9000/"),conf,"hadoop");</div><div class="line">     * </div><div class="line">     * <span class="doctag">@throws</span> Exception</div><div class="line">     */ </div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">upload</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line"></div><div class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</div><div class="line">        conf.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://weekend110:9000/"</span>);</div><div class="line">        </div><div class="line">        FileSystem fs = FileSystem.get(conf);</div><div class="line">        </div><div class="line">        Path dst = <span class="keyword">new</span> Path(<span class="string">"hdfs://weekend110:9000/aa/qingshu.txt"</span>);</div><div class="line">        </div><div class="line">        FSDataOutputStream os = fs.create(dst);</div><div class="line">        </div><div class="line">        FileInputStream is = <span class="keyword">new</span> FileInputStream(<span class="string">"c:/qingshu.txt"</span>);</div><div class="line">        </div><div class="line">        IOUtils.copy(is, os);</div><div class="line">        </div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 上传文件，封装好的写法</div><div class="line">     * <span class="doctag">@throws</span> Exception</div><div class="line">     * <span class="doctag">@throws</span> IOException</div><div class="line">     */</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">upload2</span><span class="params">()</span> <span class="keyword">throws</span> Exception, IOException</span>&#123;</div><div class="line">        </div><div class="line">        fs.copyFromLocalFile(<span class="keyword">new</span> Path(<span class="string">"c:/qingshu.txt"</span>), <span class="keyword">new</span> Path(<span class="string">"hdfs://weekend110:9000/aaa/bbb/ccc/qingshu2.txt"</span>));</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 下载文件</div><div class="line">     * <span class="doctag">@throws</span> Exception </div><div class="line">     * <span class="doctag">@throws</span> IllegalArgumentException </div><div class="line">     */</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">download</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        </div><div class="line">        fs.copyToLocalFile(<span class="keyword">new</span> Path(<span class="string">"hdfs://weekend110:9000/aa/qingshu2.txt"</span>), <span class="keyword">new</span> Path(<span class="string">"c:/qingshu2.txt"</span>));</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 查看文件信息</div><div class="line">     * <span class="doctag">@throws</span> IOException </div><div class="line">     * <span class="doctag">@throws</span> IllegalArgumentException </div><div class="line">     * <span class="doctag">@throws</span> FileNotFoundException </div><div class="line">     * </div><div class="line">     */</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">listFiles</span><span class="params">()</span> <span class="keyword">throws</span> FileNotFoundException, IllegalArgumentException, IOException </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">// listFiles列出的是文件信息，而且提供递归遍历</span></div><div class="line">        RemoteIterator&lt;LocatedFileStatus&gt; files = fs.listFiles(<span class="keyword">new</span> Path(<span class="string">"/"</span>), <span class="keyword">true</span>);</div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(files.hasNext())&#123;</div><div class="line">            LocatedFileStatus file = files.next();</div><div class="line">            Path filePath = file.getPath();</div><div class="line">            String fileName = filePath.getName();</div><div class="line">            System.out.println(fileName);</div><div class="line">        &#125;</div><div class="line">        System.out.println(<span class="string">"---------------------------------"</span>);</div><div class="line">        <span class="comment">//listStatus 可以列出文件和文件夹的信息，但是不提供自带的递归遍历</span></div><div class="line">        FileStatus[] listStatus = fs.listStatus(<span class="keyword">new</span> Path(<span class="string">"/"</span>));</div><div class="line">        <span class="keyword">for</span>(FileStatus status: listStatus)&#123;</div><div class="line">            String name = status.getPath().getName();</div><div class="line">            System.out.println(name + (status.isDirectory()?<span class="string">" is dir"</span>:<span class="string">" is file"</span>));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 创建文件夹</div><div class="line">     * <span class="doctag">@throws</span> Exception </div><div class="line">     * <span class="doctag">@throws</span> IllegalArgumentException </div><div class="line">     */</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mkdir</span><span class="params">()</span> <span class="keyword">throws</span> IllegalArgumentException, Exception </span>&#123;</div><div class="line">        fs.mkdirs(<span class="keyword">new</span> Path(<span class="string">"/aaa/bbb/ccc"</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除文件或文件夹</div><div class="line">     * <span class="doctag">@throws</span> IOException </div><div class="line">     * <span class="doctag">@throws</span> IllegalArgumentException </div><div class="line">     */</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rm</span><span class="params">()</span> <span class="keyword">throws</span> IllegalArgumentException, IOException </span>&#123;</div><div class="line">        fs.delete(<span class="keyword">new</span> Path(<span class="string">"/aa"</span>), <span class="keyword">true</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</div><div class="line">        conf.set(<span class="string">"fs.defaultFS"</span>, <span class="string">"hdfs://weekend110:9000/"</span>);</div><div class="line">        FileSystem fs = FileSystem.get(conf);</div><div class="line">        FSDataInputStream is = fs.open(<span class="keyword">new</span> Path(<span class="string">"/jdk-7u65-linux-i586.tar.gz"</span>));</div><div class="line">        FileOutputStream os = <span class="keyword">new</span> FileOutputStream(<span class="string">"c:/jdk7.tgz"</span>);</div><div class="line">        IOUtils.copy(is, os);</div><div class="line">    &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="RPC远程过程调用"><a href="#RPC远程过程调用" class="headerlink" title="RPC远程过程调用"></a>RPC远程过程调用</h2><ul>
+<li>普通远程通信，tcp或soap</li>
+</ul>
+<p><img src="/uploads/hadoop/hadoop02/22.png" alt=""></p>
+<ul>
+<li>hadoop自己封装的一个远程调用协议就是RPC,效率特别高</li>
+</ul>
+<p><img src="/uploads/hadoop/hadoop02/33.jpg" alt=""></p>
+<h3 id="java实现"><a href="#java实现" class="headerlink" title="java实现"></a>java实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//接口跟实现类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">LoginServiceInterface</span> </span>&#123;</div><div class="line">        <span class="comment">//必须有跟客户端的一样版本号</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> versionID=<span class="number">1L</span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">(String username,String password)</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginServiceImpl</span> <span class="keyword">implements</span> <span class="title">LoginServiceInterface</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">(String username, String password)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> username + <span class="string">" logged in successfully!"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//服务端</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> HadoopIllegalArgumentException, IOException </span>&#123;</div><div class="line">        Builder builder = <span class="keyword">new</span> RPC.Builder(<span class="keyword">new</span> Configuration());</div><div class="line">        builder.setBindAddress(<span class="string">"weekend110"</span>).setPort(<span class="number">10000</span>).setProtocol(LoginServiceInterface.class).setInstance(<span class="keyword">new</span> LoginServiceImpl());</div><div class="line">        Server server = builder.build();</div><div class="line">        server.start(); </div><div class="line">    &#125;</div><div class="line">DJLCNV</div><div class="line"></div><div class="line"><span class="comment">//客户端</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginController</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;    </div><div class="line">                <span class="comment">//1L是个长整型的版本号</span></div><div class="line">        LoginServiceInterface proxy = RPC.getProxy(LoginServiceInterface.class, <span class="number">1L</span>, <span class="keyword">new</span> InetSocketAddress(<span class="string">"weekend110"</span>, <span class="number">10000</span>), <span class="keyword">new</span> Configuration());</div><div class="line">        String result = proxy.login(<span class="string">"mijie"</span>, <span class="string">"123456"</span>); </div><div class="line">        System.out.println(result);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="张冲 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎扫一扫上面的微信关注我，一起交流！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创，点击打赏！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/wechat-pay.PNG" alt="张冲 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/zhifubao-pay.PNG" alt="张冲 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hadoop/" rel="tag">#hadoop</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/08/hadoop01/" rel="next" title="hadoop第一阶段">
+                <i class="fa fa-chevron-left"></i> hadoop第一阶段
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/25/hadoop03/" rel="prev" title="hadoop第三阶段">
+                hadoop第三阶段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+   <div>
+  
+    <div>
+    
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTc2My82MzI5">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+</div>
+  
+</div>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/1.jpg"
+               alt="张冲" />
+          <p class="site-author-name" itemprop="name">张冲</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re gonna get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">48</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zhangchong" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3490969043" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/john_zc" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/john_zc" title="csdn" target="_blank">csdn</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/zhangchong" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://weibo.com/3490969043" title="weibo" target="_blank">weibo</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#hdfs"><span class="nav-number">1.</span> <span class="nav-text">hdfs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NameNode工作机制"><span class="nav-number">1.1.</span> <span class="nav-text">NameNode工作机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dataNode"><span class="nav-number">1.2.</span> <span class="nav-text">dataNode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java操作hdfs"><span class="nav-number">2.</span> <span class="nav-text">java操作hdfs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPC远程过程调用"><span class="nav-number">3.</span> <span class="nav-text">RPC远程过程调用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#java实现"><span class="nav-number">3.1.</span> <span class="nav-text">java实现</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张冲</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("22dObQGNrAe90ze3Kbtmu5hG-gzGzoHsz", "0j5eGtmDLCCURrOtIpv1gw2X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
