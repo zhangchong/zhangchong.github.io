@@ -1,3 +1,14 @@
+$.getScript('https://www.googletagmanager.com/gtag/js?id=UA-141258140-1');
+
+$(function() {
+    window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141258140-1');
+});
+
+
 /* global NexT: true */
 
 NexT.utils = NexT.$u = {
